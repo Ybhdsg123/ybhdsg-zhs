@@ -1,0 +1,17 @@
+{
+  "name": "ybhdsg",
+  "version": "1.0.0",
+  "description": "哑巴湖大水怪的山水游记",
+  "main": "index.js",
+  "author": "zhs",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.29",
+    "vue": "^3.2.45"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  }
+}
