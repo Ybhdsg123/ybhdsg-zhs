@@ -10,7 +10,7 @@ export default defineConfig({
     logo: "/cat.svg",
     siteTitle: "哑巴湖大水怪的山水游记", // 这里写 false 就不显示，不写读取上面的 title
     socialLinks: [
-      { icon: "github", link: "https://github.com/gumingWu/vitepress-fun" },
+      { icon: "github", link: "https://github.com/Ybhdsg123/ybhdsg-zhs" },
     ],
     // 导航
     nav: [
