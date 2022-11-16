@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  base: "/ybhdsg-zhs",
+  base: "/ybhdsg-zhs/",
   // 页面标题
   title: "哑巴湖大水怪",
   titleTemplate: "我的网站",
