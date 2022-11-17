@@ -27,10 +27,3 @@ features:
     title: Simple and minimal, always
     details: Lorem ipsum...
 ---
-
-<style>
-  h3{
-    color:#f40
-  }
-</style>
-<h3>哈哈哈</h3>
