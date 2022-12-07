@@ -11,9 +11,9 @@ hero:
   actions:
     - theme: brand
       text: 进入笔记
-      link: /guide/what-is-vitepress
+      link: /pages/index/
     - theme: alt
-      text: View on GitHub
+      text: 给GitHub点个start
       link: https://github.com/vuejs/vitepress
 # 层级跟hero一样
 features:
@@ -24,6 +24,6 @@ features:
     title: Power of Vue meets Markdown
     details: Lorem ipsum...
   - icon: 🛠️
-    title: Simple and minimal, always
+    title: vitePress相关
     details: Lorem ipsum...
 ---
