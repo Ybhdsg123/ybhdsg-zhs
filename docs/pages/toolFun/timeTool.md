@@ -1,10 +1,10 @@
 # 时间相关
 
-### 1. 获取当天时间
+## 1. 获取当天时间
 
 ```js
 /*
- ** val="timeStamp" 返回时间戳 毫秒
+ ** val="timeStamp" 返回时间戳 毫秒，否则返回格式为 "2022-12-09"
  */
 export const getCurrentDay = (val = "timeStamp") => {
   let currentDay = new Date();
@@ -19,7 +19,7 @@ export const getCurrentDay = (val = "timeStamp") => {
 };
 ```
 
-### 2. 根据某一天获取本周的时间戳
+## 2. 根据某一天获取本周的时间戳
 
 ```js
 /*
@@ -42,42 +42,115 @@ lastDay,
 ![结果](../../public//images/timeTool-weekTimeS.png)
 
 > 想要获取时间戳的话 获取到返回的对象后 `/1000` 得到秒数
-> 例如 let weekFirst = getWeekdays(1670774400000).firstDay / 1000
+> 例如 `let weekFirst = getWeekdays(1670774400000).firstDay / 1000`
 
-### 3. 根据某一天获取本月的第一天及最后一天
+## 3. 根据某一天获取本月的第一天及最后一天
+
+### 3.1 根据传入时间来判断
 
 ```js
-export function getMonthFrist(timestamp) {
-let date = new Date(timestamp);
-let year = date.getFullYear();
-let month = date.getMonth();
-return new Date(year, month, 1);
+// 本月第一天
+export function getMonthFrist(time, formMat = "timestamp") {
+  let date = new Date(time);
+  let year = date.getFullYear();
+  let month = date.getMonth();
+  let result = new Date(year, month, 1);
+  return formMat == "timestamp" ? result.getTime() / 1000 : result;
 }
-export function getMonthLast(timestamp) {
-let date = new Date(timestamp);
-let year = date.getFullYear();
-let month = date.getMonth();
-return (new Date(year, month + 1, 0) / 1000 + 86399) \* 1000;
+// 本月最后一天
+export function getMonthLast(time) {
+  let date = new Date(time);
+  let year = date.getFullYear();
+  let month = date.getMonth();
+  return (new Date(year, month + 1, 0) / 1000 + 86399) * 1000;
 }
-
 ```
 
+### 3.2 根据当天时间获取
+
 ```js
- // koroFileHeader 文件头部注释
-  "fileheader.customMade": {
-    "Author": "zhs", // 文件作者
-    "Date": "Do not edit", // 文件创建时间
-    "LastEditors": "JDY", // 文件最后编辑者
-    "LastEditTime": "Do not edit", // 文件最后编辑时间
-    "Description": "" // 介绍文件的作用、文件的入参、出参。
-  },
-  // 函数主食
-  "fileheader.cursorMode": {
-    "description": "", // 函数注释生成之后，光标移动到这里
-    "param": "", // param 开启函数参数自动提取 需要将光标放在函数行或者函数上方的空白行
-    "Author": "zhs", // 函数作者
-    "Date": "Do not edit"
-  },
-  "editor.language.colorizedBracketPairs": [],
-  "editor.language.brackets": []
+// 获取一个月的第一天 时间戳
+export const firstMonthDay = () => {
+  let time = new Date();
+  time.setDate(1); // 将当前日期设置成第一天
+  let year = time.getFullYear();
+  let month = time.getMonth() + 1;
+  let day = time.getDate();
+  let firstDay = new Date(year + "-" + month + "-" + day);
+  return firstDay.getTime();
+};
+// 获取一个月的最后一天 时间戳
+export const lastMonthDay = () => {
+  let time = new Date();
+  let year = time.getFullYear();
+  let month = time.getMonth() + 1;
+  // 这里传入的是整数时间，返回的是下个月的第一天，因为月份是0-11
+  let nextMonthFirthDay = new Date(year, month, 1); // 下个月的第一天
+  let oneDay = 60 * 60 * 24 * 1000; // 一天的时间毫秒数
+  let endDay = new Date(nextMonthFirthDay - oneDay);
+  let day = endDay.getDate(); // 本月最后一天
+  let lastDay = new Date(`${year}-${month}-${day} 23:59:59`);
+  return lastDay.getTime();
+};
+```
+
+## 4. 格式化时间
+
+### 4.1 格式化时间 2021-12-31 11:25:11
+
+```
+export function formatTime(timestamp) {
+if (!Number(timestamp)) {
+return "-";
+}
+const date = new Date(timestamp * 1000);
+const y = date.getFullYear();
+let MM = date.getMonth() + 1;
+MM = MM < 10 ? "0" + MM : MM;
+let d = date.getDate();
+d = d < 10 ? "0" + d : d;
+let h = date.getHours();
+h = h < 10 ? "0" + h : h;
+let m = date.getMinutes();
+m = m < 10 ? "0" + m : m;
+let s = date.getSeconds();
+s = s < 10 ? "0" + s : s;
+return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
+}
+```
+
+### 4.2 格式化时间 2021-12-31 上午
+
+```
+export function formatTime1(timestamp) {
+if (!Number(timestamp)) {
+return "-";
+}
+const date = new Date(timestamp * 1000);
+const y = date.getFullYear();
+let MM = date.getMonth() + 1;
+MM = MM < 10 ? "0" + MM : MM;
+let d = date.getDate();
+d = d < 10 ? "0" + d : d;
+let h = date.getHours();
+h = h < 12 ? "上午" : "下午";
+return y + "-" + MM + "-" + d + " " + h;
+}
+```
+
+### 4.3 格式化时间 2021-12-31
+
+```
+export function formatTime2(timestamp) {
+if (!Number(timestamp)) {
+return "-";
+}
+const date = new Date(timestamp * 1000);
+const y = date.getFullYear();
+let MM = date.getMonth() + 1;
+MM = MM < 10 ? "0" + MM : MM;
+let d = date.getDate();
+d = d < 10 ? "0" + d : d;
+return y + "-" + MM + "-" + d ;
+}
 ```

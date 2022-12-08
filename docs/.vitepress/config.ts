@@ -30,7 +30,7 @@ export default defineConfig({
     // 主题色按钮 左侧导航
     nav: [
       { text: "掘金", link: "https://juejin.cn/user/761326894326280" },
-      { text: "Configs", link: "/configs" },
+      { text: "简书", link: "https://www.jianshu.com/u/ac97502b9e92" },
       { text: "Changelog", link: "https://github.com/..." },
     ],
     // 侧边栏
@@ -38,6 +38,14 @@ export default defineConfig({
       {
         text: "工具函数",
         items: [{ text: "时间相关", link: "/pages/toolFun/timeTool" }],
+      },
+      {
+        text: "vscode相关插件和快捷键",
+        items: [{ text: "相关插件", link: "/pages/vscodeTool/" }],
+      },
+      {
+        text: "uniapp相关",
+        items: [{ text: "常用组件", link: "/pages/uniapp/uniapp-components" }],
       },
       // {
       //   text: "VUE3相关",
