@@ -1,3 +1,4 @@
+// defineConfig 帮助程序应该提供智能感知，无需JSDOC注释
 import { defineConfig } from "vitepress";
 export default defineConfig({
   base: "/ybhdsg-zhs/",
@@ -11,12 +12,19 @@ export default defineConfig({
       dark: "solarized-dark",
     },
   },
+  // 国际化相关
+  locales: {
+    // 键名是该语言所属的子路径
+    // 作为特例，默认语言可以使用 '/' 作为其路径。
+    "/": {
+      lang: "zh-CN", // 将会被设置为 <html> 的 lang 属性
+    },
+  },
   // 主题配置
   themeConfig: {
     // 网站的标题和logo
     logo: "/cat.svg",
     siteTitle: "哑巴湖大水怪的山水游记", // 这里写 false 就不显示，不写读取上面的 title
-
     // 主题色按钮 右侧社交链接
     socialLinks: [
       { icon: "github", link: "https://github.com/Ybhdsg123/ybhdsg-zhs" },
@@ -47,6 +55,13 @@ export default defineConfig({
         text: "uniapp相关",
         items: [{ text: "常用组件", link: "/pages/uniapp/uniapp-components" }],
       },
+      {
+        text: "git相关",
+        items: [
+          { text: "gitHub遇到的问题", link: "/pages/git/githubQuestion/" },
+        ],
+      },
+
       // {
       //   text: "VUE3相关",
       //   items: [{ text: "快速开始", link: "/pages/index/" }],
