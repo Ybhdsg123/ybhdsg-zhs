@@ -17,13 +17,26 @@ hero:
       link: https://github.com/vuejs/vitepress
 # 层级跟hero一样
 features:
-  - icon: 😊
-    title: Vite, The DX that can't be beat
-    details: Lorem ipsum...
+  - icon: 👍
+    title: vue3相关
+    details: vue3常用api知识点...
+    link: "/pages/toolFun/timeTool.md"
   - icon: 🖖
-    title: Power of Vue meets Markdown
-    details: Lorem ipsum...
+    title: vue2相关
+    details: vue2常用api知识点...
+  - icon: 🧚🏼‍♀️
+    title: git相关
+    details: vue2常用api知识点...
+  - icon: 🥳
+    title: vs code相关
+    details: vs code常用插件和快捷键...
+    link: "/pages/vscodeTool/"
+  - icon: 🤪
+    title: git相关
+    details: git相关知识和遇到的问题...
+    link: "/pages/git/githubQuestion/"
   - icon: 🛠️
-    title: vitePress相关
-    details: Lorem ipsum...
+    title: 工具函数
+    details: 各种常用的工具函数等...
+    link: "/pages/toolFun/timeTool.md"
 ---

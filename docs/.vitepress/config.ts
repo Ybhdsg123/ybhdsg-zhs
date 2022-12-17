@@ -45,7 +45,10 @@ export default defineConfig({
     sidebar: [
       {
         text: "工具函数",
-        items: [{ text: "时间相关", link: "/pages/toolFun/timeTool" }],
+        items: [
+          { text: "时间相关", link: "/pages/toolFun/timeTool" },
+          { text: "图片相关", link: "/pages/toolFun/imgTool" },
+        ],
       },
       {
         text: "vscode相关插件和快捷键",
