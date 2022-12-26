@@ -20,7 +20,7 @@ features:
   - icon: 👍
     title: vue3相关
     details: vue3常用api知识点...
-    link: "/pages/toolFun/timeTool.md"
+    link: "/pages/vue3/basic/note"
   - icon: 🖖
     title: vue2相关
     details: vue2常用api知识点...

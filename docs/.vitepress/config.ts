@@ -8,8 +8,8 @@ export default defineConfig({
   // 修改markdown 代码块主题（跟themeConfig 同级）
   markdown: {
     theme: {
-      light: "solarized-light",
-      dark: "solarized-dark",
+      light: "vitesse-light",
+      dark: "vitesse-dark",
     },
   },
   // 国际化相关
@@ -43,6 +43,16 @@ export default defineConfig({
     ],
     // 侧边栏
     sidebar: [
+      {
+        text: "vue3相关知识点",
+        items: [
+          { text: "注意点", link: "/pages/vue3/basic/note" },
+          { text: "reactive", link: "/pages/vue3/basic/reactive" },
+          { text: "ref", link: "/pages/vue3/basic/ref" },
+          { text: "计算属性", link: "/pages/vue3/basic/computed" },
+          { text: "图片相关", link: "/pages/toolFun/imgTool" },
+        ],
+      },
       {
         text: "工具函数",
         items: [
