@@ -1,0 +1,2 @@
+import{_ as t,c as a,o as s,b as e}from"./app.78f8628b.js";const f=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"pages/uniapp/index.md"}'),n={name:"pages/uniapp/index.md"},o=e("pre",null,[e("code",null,`			this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight // \u83B7\u53D6\u72B6\u6001\u680F\u9AD8\u5EA6
+`)],-1),r=[o];function c(i,p,d,_,l,u){return s(),a("div",null,r)}const h=t(n,[["render",c]]);export{f as __pageData,h as default};
