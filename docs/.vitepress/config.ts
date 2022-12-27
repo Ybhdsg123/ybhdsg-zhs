@@ -49,8 +49,7 @@ export default defineConfig({
           { text: "注意点", link: "/pages/vue3/basic/note" },
           { text: "reactive", link: "/pages/vue3/basic/reactive" },
           { text: "ref", link: "/pages/vue3/basic/ref" },
-          { text: "计算属性", link: "/pages/vue3/basic/computed" },
-          { text: "图片相关", link: "/pages/toolFun/imgTool" },
+          { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
         ],
       },
       {
