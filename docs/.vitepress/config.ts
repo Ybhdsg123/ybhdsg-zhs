@@ -44,11 +44,24 @@ export default defineConfig({
     // 侧边栏
     sidebar: [
       {
-        text: "vue3相关知识点",
+        text: "vue3基础",
         items: [
           { text: "注意点", link: "/pages/vue3/basic/note" },
           { text: "reactive", link: "/pages/vue3/basic/reactive" },
           { text: "ref", link: "/pages/vue3/basic/ref" },
+          { text: "v-model", link: "/pages/vue3/basic/v-models" },
+          { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
+        ],
+      },
+      {
+        text: "vue3组件",
+        items: [
+          {
+            text: "组件的一些注意点",
+            link: "/pages/vue3/components/componentNote",
+          },
+          { text: "组件注册", link: "/pages/vue3/components/reg" },
+          { text: "组件插槽", link: "/pages/vue3/components/slot" },
           { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
         ],
       },

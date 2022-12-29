@@ -171,16 +171,16 @@ module.exports = {
 >    `@click.self.prevent` 则只会阻止对元素本身的点击事件的默认行为。
 > 2. 请勿同时使用 `.passive` 和 `.prevent`，因为 `.passive` 已经向浏览器表明了你不想阻止事件的默认行为。如果你这么做了，则 `.prevent` 会被忽略，并且浏览器会抛出警告。
 
-```js
-// 单击事件将停止传递
+```html
+<!-- 单击事件将停止传递 -->
 <a @click.stop="doThis"></a>
 
-// 提交事件将不再重新加载页面 阻止默认事件
+<!-- 提交事件将不再重新加载页面 阻止默认事件 -->
 <form @submit.prevent="onSubmit"></form>
 
-// 修饰语可以使用链式书写
+<!-- 修饰语可以使用链式书写 -->
 <a @click.stop.prevent="doThat"></a>
-// 也可以只有修饰符
+<!-- 也可以只有修饰符 -->
 <form @submit.prevent />
 
 <!-- 仅当 event.target 是元素本身时才会触发事件处理器 -->
@@ -194,7 +194,7 @@ module.exports = {
 <!-- 点击事件最多被触发一次 -->
 <a @click.once="doThis"></a>
 
-// 事件的默认行为立即执行，无需等待事件回调执行完毕
+<!-- 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
 <!-- 滚动事件的默认行为 (scrolling) 将立即发生而非等待 `onScroll` 完成 -->
 <!-- 以防其中包含 `event.preventDefault()`  -->
 <div @scroll.passive="onScroll">...</div>
@@ -204,18 +204,18 @@ module.exports = {
 
 ```js
 <img
-    @wheel.prevent="zoom"
-    @pointerdown="pointerdownHandler"
-    @pointerup="pointerupHandler"
-    @pointermove="pointermoveHandler"
-      />
+  @wheel.prevent="zoom"
+  @pointerdown="pointerdownHandler"
+  @pointerup="pointerupHandler"
+  @pointermove="pointermoveHandler"
+/>
 // 鼠标滚轮事件
 function zoom(event) {
   if (!event.deltaY) {
     return;
   }
   // console.log(event.deltaY); // event.deltaY 的正负判断滚轮是朝上还是朝下：
-  // event.preventDefault(); // 阻止默认行为的话，mousewheel 事件第三个参数需为 passive：false，阻止默认行为是配合passive使用
+  // event.preventDefault(); // 阻止默认行为的话
   if (event.deltaY < 0) {
     scaleNum.value += 0.1; // 放大
   } else if (event.deltaY > 0) {
@@ -226,7 +226,7 @@ function zoom(event) {
 function pointerdownHandler(e) {}
 // 鼠标/手指抬起
 function pointerupHandler(e) {}
-// 鼠标/手指移动
+//鼠标/手指移动
 function pointermoveHandler(e) {}
 ```
 
@@ -243,7 +243,7 @@ function pointermoveHandler(e) {}
 1. **同步语句创建**的侦听器会在宿主组件卸载时**自动停止**
 2. **异步回调创建**的侦听器**必须手动停止**，以防内存泄漏
 
-## 11. ref
+## 11. 组件的 ref
 
 > 1. 你只可以在**组件挂载后**才能访问模板引用，在初次渲染时会是 null
 > 2. 如果你需要侦听一个模板引用 ref 的变化，确保考虑到其值为 null 的情况：
@@ -262,8 +262,8 @@ watchEffect(() => {
 >    应该注意的是，`ref 数组并不保证与源数组相同的顺序`。(需要 v3.2.25 及以上版本)
 > 4. `ref attribute` 还可以绑定为一个函数，会在每次组件更新时都被调用。该函数会收到元素引用作为其第一个参数
 
-```js
-<input :ref="(el) => { /* 将 el 赋值给一个数据属性或 ref 变量 */ }">
+```html
+<input :ref="(el) => { /* 将 el 赋值给一个数据属性或 ref 变量 */ }" />
 ```
 
 注意我们这里需要使用动态的 `:ref`绑定才能够传入一个函数。`当绑定的元素被卸载时，函数也会被调用一次，此时的 el 参数会是 null`。你当然也可以绑定一个组件方法而不是内联函数
