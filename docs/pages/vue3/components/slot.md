@@ -19,3 +19,75 @@
   <template v-slot:header>{/* header 插槽的内容放这里 */}</template>
 </BaseLayout>
 ```
+
+## 3. 动态插槽名
+
+```html
+<base-layout>
+  <template v-slot:[dynamicSlotName]> ... </template>
+  <!-- 缩写为 -->
+  <template #[dynamicSlotName]> ... </template>
+</base-layout>
+```
+
+## 4. 默认作用域插槽
+
+**默认插槽：** 通过子组件标签上的 v-slot 指令，直接接收到了一个插槽 props 对象：
+
+```html
+<!-- <MyComponent> 的模板 -->
+<div>
+  <slot :text="greetingMessage" :count="1"></slot>
+</div>
+```
+
+```js
+<MyComponent v-slot="slotProps">
+  {{ slotProps.text }} {{ slotProps.count }}
+</MyComponent>
+// 可以在 v-slot 中使用解构：
+<MyComponent v-slot="{ text, count }">
+  {{ text }} {{ count }}
+</MyComponent>
+```
+
+## 5. 具名作用域插槽
+
+```vue
+<template>
+  <MyComponent>
+    <template v-slot:header="slotProps">
+      {{ slotProps }}
+    </template>
+  </MyComponent>
+  // 缩写
+  <MyComponent>
+    <template #header="headerProps">
+      {{ headerProps }}
+    </template>
+  </MyComponent>
+</template>
+```
+
+> 注意插槽上的 `name` 是一个 **Vue 特别保留的 attribute**，不会作为 props 传递给插槽。因此最终 `headerProps` 的结果是 `{ message: 'hello' }`。
+
+```html
+<slot name="header" message="hello"></slot>
+```
+
+> 混用了具名插槽与默认插槽，则需要为默认插槽使用显式的 `<template>` 标签。
+
+```vue
+<template>
+  <MyComponent>
+    <!-- 使用显式的默认插槽 -->
+    <template #default="{ message }">
+      <p>{{ message }}</p>
+    </template>
+
+    <template #footer>
+      <p>Here's some contact info</p>
+    </template>
+  </MyComponent>
+</template>
+```

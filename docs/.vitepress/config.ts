@@ -6,12 +6,12 @@ export default defineConfig({
   title: "哑巴湖大水怪",
   titleTemplate: "我的网站",
   // 修改markdown 代码块主题（跟themeConfig 同级）
-  markdown: {
-    theme: {
-      light: "vitesse-light",
-      dark: "vitesse-dark",
-    },
-  },
+  // markdown: {
+  //   theme: {
+  //     light: "vitesse-light",
+  //     dark: "vitesse-dark",
+  //   },
+  // },
   // 国际化相关
   locales: {
     // 键名是该语言所属的子路径
@@ -62,7 +62,7 @@ export default defineConfig({
           },
           { text: "组件注册", link: "/pages/vue3/components/reg" },
           { text: "组件插槽", link: "/pages/vue3/components/slot" },
-          { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
+          { text: "依赖注入", link: "/pages/vue3/components/provide" },
         ],
       },
       {
@@ -78,7 +78,11 @@ export default defineConfig({
       },
       {
         text: "uniapp相关",
-        items: [{ text: "常用组件", link: "/pages/uniapp/uniapp-components" }],
+        items: [
+          { text: "常用api等", link: "/pages/uniapp/" },
+          { text: "上传图片组件", link: "/pages/uniapp/components-uploadImg" },
+          { text: "日历组件", link: "/pages/uniapp/calendar" },
+        ],
       },
       {
         text: "git相关",
