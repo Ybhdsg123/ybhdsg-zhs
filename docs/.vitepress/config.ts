@@ -44,6 +44,12 @@ export default defineConfig({
     // 侧边栏
     sidebar: [
       {
+        text: "vue3,vite,pina系统搭建相关过程",
+        items: [
+          { text: "主要步骤", link: "/pages/vue3-element-admin/anxinPC" },
+        ],
+      },
+      {
         text: "vue3基础",
         items: [
           { text: "注意点", link: "/pages/vue3/basic/note" },
