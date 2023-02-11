@@ -24,6 +24,10 @@ features:
   - icon: 🖖
     title: vue2相关
     details: vue2常用api知识点...
+  - icon: 🤪
+    title: 面试相关
+    details: 面试相关的知识点...
+    link: "/pages/interviews/html"
   - icon: 🧚🏼‍♀️
     title: git相关
     details: vue2常用api知识点...
@@ -31,10 +35,10 @@ features:
     title: vs code相关
     details: vs code常用插件和快捷键...
     link: "/pages/vscodeTool/"
-  - icon: 🤪
-    title: git相关
-    details: git相关知识和遇到的问题...
-    link: "/pages/git/githubQuestion/"
+  # - icon: 🤪
+  #   title: git相关
+  #   details: git相关知识和遇到的问题...
+  #   link: "/pages/git/githubQuestion/"
   - icon: 🛠️
     title: 工具函数
     details: 各种常用的工具函数等...

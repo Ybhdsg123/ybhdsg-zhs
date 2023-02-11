@@ -25,6 +25,20 @@ const fullName = computed({
     [firstName.value, lastName.value] = newValue.split(" ");
   },
 });
+
+const author = reactive({
+  name: "John Doe",
+  books: [
+    "Vue 2 - Advanced Guide",
+    "Vue 3 - Basic Guide",
+    "Vue 4 - The Mystery",
+  ],
+});
+
+// 一个计算属性 ref
+const publishedBooksMessage = computed(() => {
+  return author.books.length > 0 ? "Yes" : "No";
+});
 </script>
 ```
 
@@ -66,7 +80,7 @@ watch([x, () => y.value], ([newX, newY]) => {
 });
 ```
 
-注意，你不能直接侦听响应式对象的属性值，需要用一个返回该属性的 getter 函数：
+**注意**，你不能直接侦听响应式对象的属性值，需要用一个返回该属性的 **getter 函数**：
 
 ```js
 const obj = reactive({ count: 0 });
@@ -98,6 +112,53 @@ watch(
   () => {
     // 仅当 state.someObject 被替换时触发
   }
+);
+```
+
+## 深层侦听器和立即执行
+
+**深层侦听器** ：直接给 `watch()` 传入一个响应式对象，会隐式地创建一个深层侦听器——该回调函数在所有嵌套的变更时都会被触发，**相比之下，一个返回响应式对象的 getter 函数，只有在返回不同的对象时，才会触发回调：**
+
+```js
+// 响应式对象
+const obj = reactive({ count: 0 });
+watch(obj, (newValue, oldValue) => {
+  // 在嵌套的属性变更时触发
+  // 注意：`newValue` 此处和 `oldValue` 是相等的
+  // 因为它们是同一个对象！
+});
+obj.count++;
+
+// 响应式对象的 getter 函数
+watch(
+  () => state.someObject,
+  () => {
+    // 仅当 state.someObject 被替换时触发
+  }
+);
+
+// 深层侦听器
+watch(
+  () => state.someObject,
+  (newValue, oldValue) => {
+    // 注意：`newValue` 此处和 `oldValue` 是相等的
+    // *除非* state.someObject 被整个替换了
+  },
+  { deep: true }
+);
+```
+
+**即时回调的侦听器**：`watch` 默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
+
+我们可以通过传入 `immediate: true` 选项来强制侦听器的回调立即执行：
+
+```js
+watch(
+  source,
+  (newValue, oldValue) => {
+    // 立即执行，且当 `source` 改变时再次执行
+  },
+  { immediate: true }
 );
 ```
 

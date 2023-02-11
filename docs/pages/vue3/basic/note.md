@@ -161,6 +161,16 @@ module.exports = {
 </li>
 ```
 
+> 在外新包装一层 `<template>` 再在其上使用 v-for 可以解决这个问题 (这也更加明显易读)：
+
+```js
+<template v-for="todo in todos">
+  <li v-if="!todo.isComplete">
+    {{ todo.name }}
+  </li>
+</template>
+```
+
 > 3. Vue 默认按照“就地更新”的策略来更新通过 v-for 渲染的元素列表。默认模式是高效的，**但只适用于列表渲染输出的结果不依赖子组件状态或者临时 DOM 状态 (例如表单输入值) 的情况。**
 > 4. key 绑定的值期望是一个`基础类型的值`，例如字符串或 number 类型。**不要用对象作为 v-for 的 key**。
 

@@ -47,8 +47,8 @@
 15. `One Dark Pro`：颜色主题
 16. `VS Code Counter`：统计你的代码行数，点击 Vscode 顶部菜单 查看 -> 命令面板 ，输入 count
 17. `koroFileHeader`: 文件头部注释和函数注释的插件
-
-> **_在 settings.json 中配置 fileheader_**
+18. `GitHub Repositories`: 远程查看 github 上的仓库代码
+    > **_在 settings.json 中配置 fileheader_**
 
 ```js
 // 文件头部注释

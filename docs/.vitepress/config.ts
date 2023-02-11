@@ -50,6 +50,18 @@ export default defineConfig({
         ],
       },
       {
+        text: "面试相关",
+        items: [
+          { text: "html方面", link: "/pages/interviews/html" },
+          { text: "css方面", link: "/pages/interviews/css" },
+          { text: "js方面", link: "/pages/interviews/js" },
+          { text: "http方面", link: "/pages/interviews/http" },
+          { text: "git方面", link: "/pages/interviews/git" },
+          { text: "vue方面", link: "/pages/interviews/vue" },
+          { text: "事件循环", link: "/pages/interviews/eventLoop" },
+        ],
+      },
+      {
         text: "vue3基础",
         items: [
           { text: "注意点", link: "/pages/vue3/basic/note" },
@@ -72,6 +84,14 @@ export default defineConfig({
         ],
       },
       {
+        text: "uniapp相关",
+        items: [
+          { text: "常用api等", link: "/pages/uniapp/" },
+          { text: "上传图片组件", link: "/pages/uniapp/components-uploadImg" },
+          { text: "日历组件", link: "/pages/uniapp/calendar" },
+        ],
+      },
+      {
         text: "工具函数",
         items: [
           { text: "时间相关", link: "/pages/toolFun/timeTool" },
@@ -82,14 +102,7 @@ export default defineConfig({
         text: "vscode相关插件和快捷键",
         items: [{ text: "相关插件", link: "/pages/vscodeTool/" }],
       },
-      {
-        text: "uniapp相关",
-        items: [
-          { text: "常用api等", link: "/pages/uniapp/" },
-          { text: "上传图片组件", link: "/pages/uniapp/components-uploadImg" },
-          { text: "日历组件", link: "/pages/uniapp/calendar" },
-        ],
-      },
+
       {
         text: "git相关",
         items: [
@@ -97,10 +110,6 @@ export default defineConfig({
         ],
       },
 
-      // {
-      //   text: "VUE3相关",
-      //   items: [{ text: "快速开始", link: "/pages/index/" }],
-      // },
       // {
       //   text: "Vite相关",
       //   items: [{ text: "快速开始", link: "/pages/index/" }],
@@ -115,10 +124,6 @@ export default defineConfig({
       // },
       // {
       //   text: "VitePress相关",
-      //   items: [{ text: "快速开始", link: "/pages/index/" }],
-      // },
-      // {
-      //   text: "VUE2相关",
       //   items: [{ text: "快速开始", link: "/pages/index/" }],
       // },
     ],
