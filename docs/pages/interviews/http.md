@@ -71,7 +71,7 @@ Host: www.abc.com
 
 HTTP 响应报⽂的组成: **响应⾏、响应头、空⾏、响应体。**
 
-<img src="images/image-20210219125038371.png" alt="image-20210219125038371" style="zoom:40%;" />
+<img src="./images/image-20210219125038371.png" alt="image-20210219125038371" style="zoom:40%;" />
 
 **响应行**
 
@@ -684,5 +684,3 @@ TCP 是一个端到端的 **可靠** 面相连接的协议，
 HTTP 基于传输层 TCP 协议不用担心数据传输的各种问题（当发生错误时，可以重传）
 
 根据这个 IP，找到对应的服务器，发起 TCP 的三次握手 ([tcp 三次握手四次挥手](https://blog.csdn.net/qq_38950316/article/details/81087809) )
-
-![image-20201209160422978](images/image-20201209160422978.png)

@@ -76,7 +76,7 @@ ViewModel 底层会做好绑定属性的监听，当 ViewModel 中的数据变�
 
 **生命周期示意图**
 
-<img src="images/image-20210224084130350.png" alt="image-20210224084130350"  />
+<img src="./images/image-20210224084130350.png" alt="image-20210224084130350"  />
 
 ## 4. 在 Vue 中网络请求应该放在哪个生命周期中发起？
 

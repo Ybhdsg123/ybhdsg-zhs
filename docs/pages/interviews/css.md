@@ -258,7 +258,7 @@ overflow: hidden; /_ 将 overflow 设置为非 visible 值可触发 BFC _/
 box-sizing: content-box; (默认值)
 
 在标准盒模型下，元素的宽（width）和高（height）值即为盒模型中内容（content）的实际宽高值。
-<img src="images/image-20210214150511841.png" alt="image-20210214150511841" style="zoom:25%;" />
+<img src="./images/image-20210214150511841.png" alt="image-20210214150511841" style="zoom:25%;" />
 因此，计算一个元素宽度的公式如下(不考虑 margin, margin 是外边距, 如果是计算占用页面的空间, 就要带上 margin)：
 
 > 盒子宽度 = `border-left` + `padding-left` + `width` + `padding-right` + `border-right`
@@ -270,7 +270,7 @@ box-sizing: content-box; (默认值)
 box-sizing: border-box; (目前主流常用值)
 
 在怪异盒模型下，元素的 width 和 height 值却不是 content 的实际宽高，而是去除 margin 后剩下的元素占用区域的宽高，即：
-<img src="images/image-20210214151037552.png" alt="image-20210214151037552" style="zoom:25%;" />
+<img src="./images/image-20210214151037552.png" alt="image-20210214151037552" style="zoom:25%;" />
 因此，计算一个元素占用了页面总宽度的公式如下：
 
 > 盒子宽度 = `width`

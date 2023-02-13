@@ -176,7 +176,7 @@ js 全局有全局可执行上下文, 每个函数调用时, 有着函数的可�
 
 而因为它的原型对象也有 `__proto__`，因此这样就串联形成一个链式结构，也就是我们称为的原型链。
 
-<img src="images/image-20210218212449526.png" alt="image-20210218212449526" style="zoom:50%;" />
+<img src="./images/image-20210218212449526.png" alt="image-20210218212449526" style="zoom:50%;" />
 
 ## 6. 谈谈你对闭包的理解？
 
@@ -561,7 +561,7 @@ WebSocket 协议与 HTTP 协议保持兼容，但它不会融⼊ HTTP 协议，�
 
 HTTP 和 WebSocket 的连接通信比较图：
 
-<img src="images/image-20210221101152845.png" alt="image-20210221101152845" style="zoom:30%;" />
+<img src="./images/image-20210221101152845.png" alt="image-20210221101152845" style="zoom:30%;" />
 
 ## 14. 什么是浏览器的同源策略？
 

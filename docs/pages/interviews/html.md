@@ -216,7 +216,7 @@ script 标签存在两个属性，defer 和 async，因此 script 标签 的使�
 
 下图是使用了 defer、async、和未使用时的运行情况对比：
 
-<img src="images/image-20210209172314832.png" alt="image-20210209172314832" />
+<img src="./images/image-20210209172314832.png" alt="image-20210209172314832" />
 
 > 【上图的图例说明】
 >

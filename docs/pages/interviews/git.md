@@ -60,7 +60,7 @@ hotfix 分⽀是从某个已经发布的 Tag 上创建出来来，用于紧急�
 
 **使用 Merge**
 
-<img src="images/image-20210222132936016.png" alt="image-20210222132936016" style="zoom:30%;" />
+<img src="./images/image-20210222132936016.png" alt="image-20210222132936016" style="zoom:30%;" />
 
 `merge` 会⾃动创建⼀个新的 `commit`， 如果合并时遇到冲突的话，只需要修改后重新 `commit`。
 
@@ -70,7 +70,7 @@ hotfix 分⽀是从某个已经发布的 Tag 上创建出来来，用于紧急�
 
 **使用 Rebase**
 
-<img src="images/image-20210222133524146.png" alt="image-20210222133524146" style="zoom:30%;" />
+<img src="./images/image-20210222133524146.png" alt="image-20210222133524146" style="zoom:30%;" />
 
 `rebase` 会合并之前的 `commit` 历史。
 
