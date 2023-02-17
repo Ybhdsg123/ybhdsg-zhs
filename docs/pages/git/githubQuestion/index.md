@@ -1,6 +1,6 @@
 # gitHub 遇到的问题
 
-### 1. 常用指令
+## 1. 常用指令
 
 > 1.1 `ssh -T git@github.com` 验证是否与 gitHub 的连接，
 > 连接成功： `Hi yourName! You've successfully authenticated, but GitHub does not provide shell access.`
@@ -37,7 +37,7 @@
 
 > `git remote rename old_name new_name`: 修改仓库名
 
-### 2.出现`git@github.com: Permission denied (publickey)`错误时解决办法
+## 2.出现`git@github.com: Permission denied (publickey)`错误时解决办法
 
 **第一步**：生成 SSH key
 
@@ -48,3 +48,19 @@
 **第四步**：输入命令：`ssh-add ~/.ssh/id_rsa`，文件路径是`~/.ssh/id_rsa`，如果自己生成时保存的为`~/.ssh/id_rsa.github`,就改成这个
 
 **第五步**：在 gitHub 上添加一个 SSH key，根据路径找到以.pub 结尾的文件，将公钥文件复制到 Github 中
+
+## 3. git push 时需要输入账号密码（不使用 https 上传）
+
+**第一步**：`git remote -v` 查看当前链接的远程仓库地址
+
+```js
+$ git remote -v
+origin  https://github.com/tianqixin/runoob-git-test (fetch)
+origin  https://github.com/tianqixin/runoob-git-test (push)
+```
+
+**第二步**：`git remote set-url origin  remote's URL` 修改当前链接的远程仓库形式
+
+```js
+$ git remote set-url origin git@github.com:tianqixin/runoob-git-test.git
+```

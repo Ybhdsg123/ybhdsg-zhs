@@ -66,91 +66,63 @@ export function getMonthLast(time) {
 }
 ```
 
-### 3.2 根据当天时间获取
-
-```js
-// 获取一个月的第一天 时间戳
-export const firstMonthDay = () => {
-  let time = new Date();
-  time.setDate(1); // 将当前日期设置成第一天
-  let year = time.getFullYear();
-  let month = time.getMonth() + 1;
-  let day = time.getDate();
-  let firstDay = new Date(year + "-" + month + "-" + day);
-  return firstDay.getTime();
-};
-// 获取一个月的最后一天 时间戳
-export const lastMonthDay = () => {
-  let time = new Date();
-  let year = time.getFullYear();
-  let month = time.getMonth() + 1;
-  // 这里传入的是整数时间，返回的是下个月的第一天，因为月份是0-11
-  let nextMonthFirthDay = new Date(year, month, 1); // 下个月的第一天
-  let oneDay = 60 * 60 * 24 * 1000; // 一天的时间毫秒数
-  let endDay = new Date(nextMonthFirthDay - oneDay);
-  let day = endDay.getDate(); // 本月最后一天
-  let lastDay = new Date(`${year}-${month}-${day} 23:59:59`);
-  return lastDay.getTime();
-};
-```
-
 ## 4. 格式化时间
 
 ### 4.1 格式化时间 2021-12-31 11:25:11
 
-```
+```js
 export function formatTime(timestamp) {
-if (!Number(timestamp)) {
-return "-";
-}
-const date = new Date(timestamp * 1000);
-const y = date.getFullYear();
-let MM = date.getMonth() + 1;
-MM = MM < 10 ? "0" + MM : MM;
-let d = date.getDate();
-d = d < 10 ? "0" + d : d;
-let h = date.getHours();
-h = h < 10 ? "0" + h : h;
-let m = date.getMinutes();
-m = m < 10 ? "0" + m : m;
-let s = date.getSeconds();
-s = s < 10 ? "0" + s : s;
-return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
+  if (!Number(timestamp)) {
+    return "-";
+  }
+  const date = new Date(timestamp * 1000);
+  const y = date.getFullYear();
+  let MM = date.getMonth() + 1;
+  MM = MM < 10 ? "0" + MM : MM;
+  let d = date.getDate();
+  d = d < 10 ? "0" + d : d;
+  let h = date.getHours();
+  h = h < 10 ? "0" + h : h;
+  let m = date.getMinutes();
+  m = m < 10 ? "0" + m : m;
+  let s = date.getSeconds();
+  s = s < 10 ? "0" + s : s;
+  return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
 }
 ```
 
 ### 4.2 格式化时间 2021-12-31 上午
 
-```
+```js
 export function formatTime1(timestamp) {
-if (!Number(timestamp)) {
-return "-";
-}
-const date = new Date(timestamp * 1000);
-const y = date.getFullYear();
-let MM = date.getMonth() + 1;
-MM = MM < 10 ? "0" + MM : MM;
-let d = date.getDate();
-d = d < 10 ? "0" + d : d;
-let h = date.getHours();
-h = h < 12 ? "上午" : "下午";
-return y + "-" + MM + "-" + d + " " + h;
+  if (!Number(timestamp)) {
+    return "-";
+  }
+  const date = new Date(timestamp * 1000);
+  const y = date.getFullYear();
+  let MM = date.getMonth() + 1;
+  MM = MM < 10 ? "0" + MM : MM;
+  let d = date.getDate();
+  d = d < 10 ? "0" + d : d;
+  let h = date.getHours();
+  h = h < 12 ? "上午" : "下午";
+  return y + "-" + MM + "-" + d + " " + h;
 }
 ```
 
 ### 4.3 格式化时间 2021-12-31
 
-```
+```js
 export function formatTime2(timestamp) {
-if (!Number(timestamp)) {
-return "-";
-}
-const date = new Date(timestamp * 1000);
-const y = date.getFullYear();
-let MM = date.getMonth() + 1;
-MM = MM < 10 ? "0" + MM : MM;
-let d = date.getDate();
-d = d < 10 ? "0" + d : d;
-return y + "-" + MM + "-" + d ;
+  if (!Number(timestamp)) {
+    return "-";
+  }
+  const date = new Date(timestamp * 1000);
+  const y = date.getFullYear();
+  let MM = date.getMonth() + 1;
+  MM = MM < 10 ? "0" + MM : MM;
+  let d = date.getDate();
+  d = d < 10 ? "0" + d : d;
+  return y + "-" + MM + "-" + d;
 }
 ```

@@ -1,6 +1,6 @@
 # GIT 相关
 
-## 你们的 Git 工作流是什么样的？
+## 1. 你们的 Git 工作流是什么样的？
 
 每个公司采用的 Git 工作流都可能会有差别，有的比较规范，有的比较随意。在这里介绍一个名为 GitFlow 的 git 标准操作流程。
 
@@ -52,7 +52,7 @@ hotfix 分⽀是从某个已经发布的 Tag 上创建出来来，用于紧急�
 
 [参考文章：Git 工作流](https://www.ruanyifeng.com/blog/2015/12/git-workflow.html)
 
-## Git 的 rebase 和 merge 的区别是什么？
+## 2. Git 的 rebase 和 merge 的区别是什么？
 
 `git rebase` 和 `git merge` 两个命令都⽤于从⼀个分⽀获取内容并合并到当前分⽀。
 

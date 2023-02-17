@@ -47,11 +47,18 @@ export default defineConfig({
         text: "vue3,vite,pina系统搭建相关过程",
         items: [
           { text: "主要步骤", link: "/pages/vue3-element-admin/anxinPC" },
+          { text: "常用的方法", link: "/pages/vue3-element-admin/fileTool" },
+          {
+            text: "Vue 响应式原理",
+            link: "/pages/vue3-element-admin/definePropertyAndProxy",
+          },
         ],
       },
       {
         text: "面试相关",
         items: [
+          { text: "常见问题", link: "/pages/interviews/handwriteFn" },
+          { text: "Webpack面试题", link: "/pages/interviews/webpack" },
           { text: "html方面", link: "/pages/interviews/html" },
           { text: "css方面", link: "/pages/interviews/css" },
           { text: "js方面", link: "/pages/interviews/js" },
@@ -90,6 +97,10 @@ export default defineConfig({
           { text: "上传图片组件", link: "/pages/uniapp/components-uploadImg" },
           { text: "日历组件", link: "/pages/uniapp/calendar" },
         ],
+      },
+      {
+        text: "vite",
+        items: [{ text: "vite相关", link: "/pages/vite/" }],
       },
       {
         text: "工具函数",
