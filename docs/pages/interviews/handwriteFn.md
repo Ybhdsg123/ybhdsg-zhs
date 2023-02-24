@@ -1,4 +1,4 @@
-# 常见问题
+# 常见手写函数
 
 [这些手写你都会吗](https://mp.weixin.qq.com/s/e3m_dS37HqiFvPefYH5Jrg)
 
@@ -16,7 +16,7 @@ function map(arr, callBack) {
   //   newArr.push(callBack(arr[index], index, arr));
   // }
   arr.forEach((item, index, arr) => {
-    newArr.push(callBack(arr[index], index, arr));
+    newArr.push(callBack(item, index, arr));
   });
   return newArr;
 }
@@ -451,28 +451,28 @@ call() 方法使用一个指定的 this 值和单独给出的一个或多个参�
 ```js
 Function.prototype._call = function (ctx, ...args) {
   // 如果不为空，则需要进行对象包装
-  const o = ctx == undefined ? window : Object(ctx)
+  const o = ctx == undefined ? window : Object(ctx);
   // 给 ctx 添加独一无二的属性
-  const key = Symbol()
-  o[key] = this
+  const key = Symbol();
+  o[key] = this;
   // 执行函数，得到返回结果
-  const result = o[key](...args "key")
+  const result = o[key](...args);
   // 删除该属性
-  delete o[key]
-  return result
-}
+  delete o[key];
+  return result;
+};
 
 const obj = {
-  name: '11',
+  name: "11",
   fun() {
-    console.log(this.name)
-  }
-}
+    console.log(this.name);
+  },
+};
 
-const obj2 = { name: '22' }
-obj.fun() // 11
-obj.fun.call(obj2) // 22
-obj.fun._call(obj2) // 22
+const obj2 = { name: "22" };
+obj.fun(); // 11
+obj.fun.call(obj2); // 22
+obj.fun._call(obj2); // 22
 ```
 
 ## 7. Function.prototype.bind
@@ -553,11 +553,13 @@ const _shallowClone = (target) => {
 - 函数 正则 日期 ES6 新对象 等不是直接返回其地址，而是重新创建
 - 需要避免出现循环引用的情况
 
+**第一种**
+
 ```js
 const _completeDeepClone = (target, map = new WeakMap()) => {
   // 基本数据类型，直接返回
   if (typeof target !== "object" || target === null) return target;
-  // 函数 正则 日期 ES6新对象,执行构造题，返回新的对象
+  // 函数 正则 日期 ES6新对象,执行构造体，返回新的对象
   const constructor = target.constructor;
   if (/^(Function|RegExp|Date|Map|Set)$/i.test(constructor.name))
     return new constructor(target);
@@ -574,9 +576,35 @@ const _completeDeepClone = (target, map = new WeakMap()) => {
 };
 ```
 
+**第二种**
+
+```js
+function deepClone(obj) {
+  // 定义一个变量 并判断是数组还是对象
+  var objClone = Array.isArray(obj) ? [] : {};
+  // 判断obj存在并且是对象类型的时候 因为null也是object类型，所以要单独做判断
+  if (obj && typeof obj === "object" && obj != null) {
+    // 循环对象类型的obj
+    for (var key in obj) {
+      // 判断obj中是否存在key属性
+      if (obj.hasOwnProperty(key)) {
+        // 判断如果obj[key]存在并且obj[key]是对象类型的时候应该深拷贝，即在堆内存中开辟新的内存
+        if (obj[key] && typeof obj[key] === "object") {
+          objClone[key] = deepClone(obj[key]);
+        } else {
+          // 否则就是浅复制
+          objClone[key] = obj[key];
+        }
+      }
+    }
+  }
+  return objClone;
+}
+```
+
 ## 11. 节流
 
-节流函数（throttle）就是让事件处理函数（handler）在大于等于执行周期时才能执行，周期之内不执行，即事件一直被触发，那么事件将会按每小段固定时间一次的频率执行。
+节流函数（throttle）就是让事件处理函数（handler）在大于等于执行周期时才能执行，周期之内不执行，**即事件一直被触发，那么事件将会按每小段固定时间一次的频率执行。**
 
 ```js
 function throttle(fn, delay = 300) {

@@ -354,11 +354,17 @@ export default ({ mode }) => {
 
 ## 8. 公用组件的全局注册
 
-> `import.meta.glob('@/components/**/index.vue', {
-  eager: true
+::: info import.meta.glob
+
+1. `import.meta.glob('@/components/**/index.vue', {
+  eager: true,
+  import:'default'
 })`解析文件夹`@/components/**/index.vue`下所有的 index.vue 文件
 
-> `allRoutes`文件格式：![allRoutes](./img/globalCom%5Bonents.png)
+2. 设置 `import` 为 `default` 可以加载默认导出。加入后可以不使用 `.default.name`这样获取
+
+   :::
+   ![allRoutes`文件格式](./img/globalCom%5Bonents.png)
 
 - **主要实现代码**
 
@@ -484,7 +490,287 @@ user.increment();
 
 ## 10. [路由的注册](https://router.vuejs.org/zh/guide/#javascript)
 
-- **全部**
+::: details 路由的注册
+**一、常规注册就一个个写路由文件，不多说**
+
+**二、动态注册** 创建这样一个路由对象
+
+```js
+// 路由文件一般都这样
+const routerName = {
+  path: "/path",
+  name: "pathname",
+  component: () => import("@/views/..../index.vue"),
+  meta: {
+    title: "反馈管理",
+    icon: "icon-fankui",
+    hidden: true,
+  },
+};
+```
+
+1. 学习小程序页面配置写一个 js 文件，像这样
+
+```js
+// pgae.js
+const pageConfig = {
+  title: "反馈管理",
+  icon: "icon-fankui",
+  hidden: true,
+};
+export default pageConfig;
+```
+
+2. 可以通过 `import.meta.glob('@/views/**/**/**.js',{ eager: true, import:'default'})`，获取到文件内容，这里得到的就是路由元信息 `mata`，
+3. 上一步的到的是一个数组对象，对象类似于`{"导入的文件地址：文件内容"}`，路由的 `path` 和 `name` 可以通过文件地址名称设置，现在少的就是路由的`component`啦，
+4. `component`中的路由信息可以通过 `import.meta.glob('@/views/**/**/index.vue',)`来获取，`{ eager: true }`，加上获取的是 `model`内容，不加的话就是动态导入，现在一个路由对象就完成啦。
+   :::
+
+::: details 路由文件（/router/index.js)
+
+**注意事项**
+
+> 1.  使用`pinia`需要在路由注册后，不然无法实例化
+> 2.  在路由的前置守卫(`router.befroEach()`)中，**需要正确的条件判断添加动态路由，防止进入死循环**
+
+```js
+import { createRouter, createWebHashHistory } from "vue-router";
+import useStore from "@/store";
+import { localStorage } from "@/utils/storage";
+
+// 白名单
+const whiteList = ["/login", "/404"];
+// 路由信息
+const constantRoutes = [
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/login/index.vue"),
+    meta: {
+      title: "登录页面",
+    },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/views/errorPage/notFound.vue"),
+  },
+];
+
+// 创建路由实例
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: constantRoutes,
+  // 始终滚动到顶部
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
+});
+
+// 前置守卫
+router.beforeEach((to, from) => {
+  const { routesStore } = useStore();
+  const token = localStorage.get("ANXINPC_TOKEN");
+
+  // 有token
+  if (token) {
+    if (to.path === "/login") {
+      return from.fullPath;
+    } else {
+      // 需要条件判断是否在刷新时注册路由 防止进入死循环
+      if (routesStore.dynamicsRouters.length === 0) {
+        // 在 routesStore 中动态添加路由
+        routesStore.generateRoutes();
+        //  触发重定向
+        return to.fullPath;
+      } else {
+        return true;
+      }
+    }
+  } else {
+    routesStore.dynamicsRouters = [];
+    // 无token 去白名单
+    if (whiteList.includes(to.path)) {
+      return true;
+    } else {
+      return "/login";
+    }
+  }
+});
+// 后置守卫
+router.afterEach((to, form) => {
+  // 实例化pinia对象必须在这里，不然在路由注册时pinia没有完成实例化
+  const { routesStore } = useStore();
+  // to.matched 与给定路由地址匹配的标准化的路由记录数组。
+  const matchedRouters = to.matched;
+  // 面包屑
+  routesStore.setBreadcrumbList(matchedRouters);
+});
+
+export default router;
+```
+
+:::
+
+::: details 路由中要使用的方法
+
+```js
+import { deepClone } from "@/utils/tool";
+
+const Layout = () => import("@/layout/index.vue");
+
+// 公共路由
+const layoutRouter = {
+  path: "/layout",
+  name: "layout",
+  component: Layout,
+  meta: {
+    title: "首页",
+    icon: "cs1",
+    hidden: true,
+  },
+  children: [],
+};
+
+/**
+ * @description: 侧边栏单个的话加入到公共路由中
+ * @param {Array} dynamicRouter ===> 动态路由信息
+ * @Author: zhs
+ */
+export const toPublicRouter = (dynamicRouter = []) => {
+  const routers = deepClone(dynamicRouter);
+  routers.map((obj, index) => {
+    if (!(obj.children && obj.children.length > 0)) {
+      // 添加路由
+      layoutRouter.children.push(obj);
+    }
+  });
+  return layoutRouter;
+};
+
+/**
+ * @description: 只返回该角色有的路由信息
+ * @param {*} routers :所有的路由信息数组
+ * @param {*} permissionRoutingMarking :路由权限标识
+ * @Author: zhs
+ */
+export const getRoleRouters = (routers, permissionRoutingMarking = []) => {
+  if (routers.children && routers.children.length <= 0) return;
+  if (permissionRoutingMarking.length <= 0) return routers;
+
+  return routers.filter((obj) => {
+    if (obj.children) {
+      obj.children = getRoleRouters(obj.children, permissionRoutingMarking);
+    }
+    // 筛选出权限路由
+    if (permissionRoutingMarking.includes(obj.path)) {
+      // 并将 hidden 设置为true
+      obj.meta.hidden = true;
+      return true;
+    }
+  });
+};
+
+/**
+ * @description: // 通过  import.meta.glob 自动导入，但是顺序为遍历的顺序，其实就是文件夹下的 js文件 的顺序
+ *               // 可以在 路由对象中加一个排序字段 遍历时进行排序
+ * @param {object}  importRoutersObj  导入的文件对象信息
+ * @Author: zhs
+ */
+export const botchImportRouters = (importRoutersObj) => {
+  const componeyRouter = [];
+  for (let key in importRoutersObj) {
+    componeyRouter.push(importRoutersObj[key].default);
+  }
+  return componeyRouter;
+};
+
+export default { toPublicRouter, recursionRouter, botchImportRouters };
+```
+
+:::
+
+::: details `store`中的动态添加路由和重定向路由信息
+
+```js
+import { defineStore } from "pinia";
+import router from "@/router";
+import usestore from "../index";
+import {
+  permissionDynamicRouter,
+  allDynamicRouter,
+} from "@/router/dynamicRouter";
+import { recursionRouter, getRoleRouters } from "@/router/routerUtils";
+import { deepClone } from "@/utils/tool";
+import { localStorage } from "@/utils/storage";
+
+const useRoutesStore = defineStore({
+  id: "routesStore",
+  state: () => ({
+    breadcrumbList: [], // 面包屑信息
+    dynamicsRouters: [], // 动态路由信息
+    firstPage: "",
+  }),
+
+  actions: {
+    // 设置面包屑信息
+    setBreadcrumbList(list) {
+      this.breadcrumbList = list;
+    },
+    // 设置动态路由
+    generateRoutes() {
+      // localStorage 数据
+      const accountInfo = localStorage.get("ACCOUNT_INFO");
+      const permissionRoutingMarking = localStorage.get("PERMISSION_ROUTER");
+      const { userStore } = usestore(); // 拿到 userStore 中的数据
+      // 获取权限 id
+      const roleId = userStore.accountInfo?.role_id || accountInfo?.role_id;
+      // 权限标识
+      const roleMarks =
+        userStore.permissionRoutingMarking.length > 0
+          ? userStore.permissionRoutingMarking
+          : permissionRoutingMarking;
+      // 因为单个的路由信息添加进  /layout 中，标识中没有，这里添加一下
+      roleMarks.push("/layout");
+      // 判断动态路由  //0超管1人资2运营3人资+运营
+      this.dynamicsRouters =
+        roleId === 0
+          ? deepClone(allDynamicRouter)
+          : getRoleRouters(deepClone(permissionDynamicRouter), roleMarks);
+      this.filterFirstPage();
+      // 动态添加路由
+      this.dynamicsRouters.forEach((obj) => {
+        router.addRoute(obj);
+      });
+      // 添加重定向路由
+      router.addRoute({
+        path: "/",
+        name: "redirectPage",
+        redirect: this.firstPage,
+      });
+    },
+    filterFirstPage() {
+      // 权限路由第一个路由是否有children
+      const isChildren =
+        this.dynamicsRouters[0].children &&
+        this.dynamicsRouters[0].children.length > 0;
+      if (isChildren) {
+        this.firstPage = this.dynamicsRouters[0].children[0].path;
+      } else {
+        this.firstPage = this.dynamicsRouters[0].path;
+      }
+    },
+  },
+});
+
+export default useRoutesStore;
+```
+
+:::
 
 ## 11. Axios 网络请求库封装
 

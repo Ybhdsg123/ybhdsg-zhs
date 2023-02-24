@@ -49,15 +49,19 @@ export default defineConfig({
           { text: "主要步骤", link: "/pages/vue3-element-admin/anxinPC" },
           { text: "常用的方法", link: "/pages/vue3-element-admin/fileTool" },
           {
-            text: "Vue 响应式原理",
-            link: "/pages/vue3-element-admin/definePropertyAndProxy",
+            text: "Vue 核心（响应式原理&虚拟dom等）",
+            link: "/pages/vue3-element-admin/vueCore",
+          },
+          {
+            text: "vue常见技巧",
+            link: "/pages/vue3-element-admin/vueCommonTips",
           },
         ],
       },
       {
         text: "面试相关",
         items: [
-          { text: "常见问题", link: "/pages/interviews/handwriteFn" },
+          { text: "常见手写函数", link: "/pages/interviews/handwriteFn" },
           { text: "Webpack面试题", link: "/pages/interviews/webpack" },
           { text: "html方面", link: "/pages/interviews/html" },
           { text: "css方面", link: "/pages/interviews/css" },

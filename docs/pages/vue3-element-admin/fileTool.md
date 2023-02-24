@@ -3,19 +3,27 @@
 ## 1. 创建 a 链接并下载文件（导出 excel）
 
 ```js
-// 下载文件
+/**
+ * @description: 导出excel
+ * @param {binary} data 导出excel 二进制数据
+ * @param {string} fileName 导出excel文件名字，带后缀
+ * @Author: zhs
+ */
 export const exportExcel = (data, fileName) => {
   if (!data) {
     return;
   }
+  // 判断是否是二进制数据
+  let isArrayBuffer = data instanceof ArrayBuffer || data instanceof Blob;
   window.URL = window.URL || window.webkitURL; // 兼容性
   // 创建一个 URL 这个 URL 的生命周期和创建它的窗口中的 document 绑定。这个新的URL 对象表示指定的 File 对象或 Blob 对象。
-  let url = window.URL.createObjectURL(new Blob([data]));
+  let url = isArrayBuffer ? window.URL.createObjectURL(new Blob([data])) : data;
   let link = document.createElement("a"); // 创建一个a元素
   link.style.display = "none"; // 让a元素在页面中隐藏
   link.href = url; // 绑定 a 元素的 href 为当前的url
-  let exportName = fileName || "导出明细";
-  link.setAttribute("download", `${exportName}.xlsx`); // 设置 a 元素 download属性，属性值为后面的值
+  let exportName = fileName || "导出明细.xlsx";
+  link.setAttribute("download", exportName); // 设置 a 元素 download属性，属性值为后面的值
+  link.setAttribute("target", "_blank"); // 设置 a 元素 target属性，再开一个标签页打开或者下载
   document.body.appendChild(link); // 添加到页面中
   link.click(); // 点击a元素 下载excel文件
   window.URL.revokeObjectURL(url); //卸载url，释放内存
@@ -42,7 +50,7 @@ export const exportExcel = (data, fileName) => {
 //   window.URL.removeObjectURL(url)
 ```
 
-## 2. 下载图片 相关
+## 2. 根据链接下载文件 相关
 
 - **2.1 需要用到的插件**
 
@@ -56,19 +64,20 @@ import JSZip from "jszip";
 import FileSaver from "file-saver";
 ```
 
-- **2.2 单个图片下载**
+- **2.2 单个文件下载**
 
 ```js
 /**
- * @description: 单个图片下载
+ * @description: 单个文件下载 导出excel
  * @param {string} url 下载的url
- * @param {string} name 下载文件的名字
+ * @param {string} name 下载文件的名字 带后缀
+ * @Author: zhs
  */
 export const singleExportFile = (url, name) => {
   if (!name) {
-    FileSaver.saveAs(url); // 未传入导出图片名称
+    FileSaver.saveAs(url); // 未传入导出文件名称
   } else {
-    FileSaver.saveAs(url, `${name}.jpg`); // 通过fileSaver导出下载图片
+    FileSaver.saveAs(url, name); // 通过fileSaver导出下载文件
   }
 };
 ```
@@ -77,8 +86,8 @@ export const singleExportFile = (url, name) => {
 
 ```js
 /**
- * @description:  创建链接将图片转为 blob 并请求
- * @param {string} url
+ * @description:   将文件链接转为 二进制文件 创建链接 转为 blob 并请求
+ * @param {string} url 要下载的文件链接
  */
 function getImgArrayBuffer(url) {
   return new Promise((resolve, reject) => {
@@ -97,19 +106,20 @@ function getImgArrayBuffer(url) {
   });
 }
 /**
- * @description:批量图片导出
- * @param {Arrray} list 要下载的图片链接列表数组
+ * @description:批量文件导出
+ * @param {Arrray} list 要下载的文件链接列表数组
+ * @param list 格式 [{name:"",url:""}],name：名称带后缀，如a.pdf,b.png
+ * @param {String} fileName 导出完成后的压缩文件名称
+ * @Author: zhs
  */
-export const batchExportFile = (list) => {
+export const batchExportFile = (list, fileName = "压缩文件") => {
   let zip = new JSZip();
-  var imgObj = {};
   let promises = [];
   for (let obj of list) {
-    // 将图片信息转换为 blob 格式
-    const promise = getImgArrayBuffer(obj.qr_code)
+    const promise = getImgArrayBuffer(obj.url)
       .then((data) => {
-        zip.file(obj.title + ".jpg", data, { binary: true }); // 逐个添加文件
-        imgObj[obj.title] = data;
+        // obj.name： 文件名称，带后缀， data：文件内容，
+        zip.file(obj.name, data, { binary: true }); // 逐个添加文件
       })
       .catch((error) => {
         console.log(error);
@@ -117,11 +127,11 @@ export const batchExportFile = (list) => {
     promises.push(promise);
   }
   // console.log(promises)
-  // Promise.all 请求
+  // return
   Promise.all(promises).then(async () => {
     try {
       const content = await zip.generateAsync({ type: "blob" });
-      await FileSaver.saveAs(content, "压缩图片");
+      await FileSaver.saveAs(content, fileName);
       // const newDate = +new Date()
       // console.log('new-',newDate)
     } catch (error) {
