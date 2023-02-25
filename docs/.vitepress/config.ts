@@ -56,6 +56,10 @@ export default defineConfig({
             text: "vue常见技巧",
             link: "/pages/vue3-element-admin/vueCommonTips",
           },
+          {
+            text: "文件上传（原生）",
+            link: "/pages/vue3-element-admin/uploadFile",
+          },
         ],
       },
       {

@@ -1,5 +1,71 @@
 # CSS 面试相关
 
+::: details JavaScript 中获取或者修改 CSS 变量
+
+```js
+// 获取一个 Dom 节点上的 CSS 变量
+element.style.getPropertyValue("--my-var");
+
+// 获取任意 Dom 节点上的 CSS 变量
+getComputedStyle(element).getPropertyValue("--my-var");
+
+// 修改一个 Dom 节点上的 CSS 变量
+element.style.setProperty("--my-var", jsVar + 4);
+```
+
+:::
+
+::: details [JavaScript 中添加或者移除 CSS 类名](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/classList)
+
+```js
+const div = document.createElement("div");
+div.className = "foo";
+
+// 初始状态：<div class="foo"></div>
+console.log(div.outerHTML);
+
+// 使用 classList API 移除、添加类值
+div.classList.remove("foo");
+div.classList.add("anotherclass");
+
+// 添加或移除多个类值
+div.classList.add("foo", "bar", "baz");
+div.classList.remove("foo", "bar", "baz");
+
+// 使用展开语法添加或移除多个类值
+const cls = ["foo", "bar"];
+div.classList.add(...cls);
+div.classList.remove(...cls);
+
+// 如果 visible 类值已存在，则移除它，否则添加它
+div.classList.toggle("visible");
+
+// 将类值 "foo" 替换成 "bar"
+div.classList.replace("foo", "bar");
+```
+
+:::
+
+:::warning attr() 理论上能用于所有的 CSS 属性但目前支持的仅有伪元素的 content 属性，其他的属性和高级特性目前是实验性的
+
+````js
+<p data-foo="hello">world</p>
+p:before {
+    content:attr(data-foo) " ";
+}
+:::
+
+:::tip  获取伪元素的dom
+window.getComputedStyle(ele,null)
+
+这个函数可以获取dom对象的css的显示的属性。函数的第二个参数基本上直接填了null，而这个参数实际上就是解决伪元素的。
+
+window.getComputedStyle(ele,'after');
+
+window.getComputedStyle(ele,'before');
+
+:::
+
 ## 1. CSS 选择器的优先级顺序
 
 `内联样式` > `ID选择器` > `类选择器` > `标签选择器`
@@ -24,7 +90,7 @@
 
 ```html
 <div class="center">本内容会居中</div>
-```
+````
 
 ```css
 .center {

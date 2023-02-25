@@ -735,3 +735,27 @@ const elementIsInFocus = (el) => el === document.activeElement;
 elementIsInFocus(anyElement);
 // 元素处于焦点返回true，反之返回false
 ```
+
+## 21. 计算年龄
+
+```js
+function showAge() {
+  var birthday = new Date("2002-2-26");
+  var today = new Date();
+  // 设置当天时间为时分秒为 00:00:00
+  today.setHours(0), today.setMinutes(0), today.setMilliseconds(0);
+  // 本月生日日期
+  thisYearBirthday = new Date(
+    today.getFullYear(),
+    birthday.getMonth(),
+    birthday.getDate()
+  );
+  // 当天年份 - 传入日期的年份
+  var age = today.getFullYear() - birthday.getFullYear();
+  // 如果当天时间 < 本年生日时间 age--
+  if (today.getTime() < thisYearBirthday.getTime()) {
+    age--;
+  }
+  return age;
+}
+```
