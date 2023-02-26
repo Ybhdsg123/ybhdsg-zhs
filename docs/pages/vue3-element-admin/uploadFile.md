@@ -2,10 +2,10 @@
 
 ## html
 
-::: info input 属性
-`multiple`:多选文件
+::: tip input 属性
+`multiple`：多选文件
 
-`webkitdirectory`:选择文件夹
+`webkitdirectory`：选择文件夹
 :::
 
 :::details html 文件
@@ -17,31 +17,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>文件上传</title>
-    <link rel="stylesheet" href="./index.css" />
+    <title>文件上传demo</title>
+    <link rel="stylesheet" href="./css/index.css" />
   </head>
   <body>
-    <div class="upload">
-      <div class="upload-file">
-        <span class="add">+</span>
-        <input type="file" multiple webkitdirectory class="iptFile" />
+    <div class="upload select">
+      <!-- 选择区域 -->
+      <div class="upload-select">
+        <input type="file" />
       </div>
-      <div class="upload-process">
-        <img class="preview-img" src="" alt="预览图片" />
-        <!-- 上传进度的控制-->
-        <div class="process-bar" data-precent="0">
-          <div class="bar"></div>
+      <!-- 预览区域 -->
+      <div class="upload-progress" style="--percent: 20">
+        <div class="progress-bar">
+          <button>取消</button>
         </div>
-        <a class="close">X</a>
-        <a href="#" class="cacel">取消</a>
       </div>
+      <!-- 结果区域 -->
       <div class="upload-result">
-        <img src="" alt="展示图片" class="img-result" />
+        <button>X</button>
       </div>
+      <img src="./files/small.jpg" alt="" class="preview" />
     </div>
+    <script src="./js/index.js"></script>
   </body>
-
-  <script src="./index.js"></script>
 </html>
 ```
 
@@ -49,92 +47,202 @@
 
 ## css
 
-:::info attr()
-`attr()`: 可以将自定义属性值作用于伪元素
+:::tip
+
+1.  [attr()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/attr)
+
+    `attr()`: 可以将自定义属性值作用于伪元素
+
+    ```html
+    <p data-foo="hello">world</p>
+    p:before { content:attr(data-foo) " ";
+    ```
+
+2.  [counter()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter)
+
+    CSS 函数`counter()`，返回一个代表计数器的当前值的字符串。它通常和伪元素搭配使用，但是理论上可以在支持`<string>`值的任何地方使用。
+
+3.  [counter-reset](https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter-reset)
+
+    `counter-reset` 属性用于将 CSS 计数器 (en-US) 重置为制定值
+
+    ```css
+    .progress-bar::before {
+      counter-reset: progress var(--percent);
+      content: counter(progress) "%";
+    }
+    ```
+
+4.  [counter-increment](https://developer.mozilla.org/zh-CN/docs/Web/CSS/counter-increment)
+
+    `counter-increment`属性用于将 CSS Counters (en-US)的值增加给定值。可以使用 `counter-reset` 属性重置计数器的值。
+
 :::
 
 :::details css 文件
 
 ```css
 .upload {
-  position: relative;
-  width: 200px;
-  height: 200px;
-}
-.add {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  color: #6a6767;
-  transform: translate(-50%, -50%) scale(3.5);
-}
-/* 隐藏上传文件 */
-.iptFile {
-  width: 100%;
-  height: 100%;
-  opacity: 0;
+  --border-color: #dcdfe6;
+  --font-color: #8c939d;
+  --primary-color: #409eff;
+  --danger-color: #eb685e;
 }
 
-.preview-img,
-.img-result {
-  width: 200px;
-  height: 200px;
-}
-
-.upload-file {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  border: 1px dashed #ccc;
+.upload * {
   box-sizing: border-box;
 }
 
-/* 切换控制不同区域的显示 */
-.select .upload-file {
-  display: block;
-}
-.process .upload-process {
-  display: block;
-}
-.result .upload-result {
-  display: block;
-}
-/* 定位下面两个显示时的位置 */
-.upload-process,
-.upload-result {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  display: none;
-}
-/* 上传进度条 */
-.process-bar {
-  width: 200px;
-  height: 8px;
-  background-color: #6a6767;
-  margin: 20px 10px 20px 0;
-  border-radius: 4px;
-}
-.bar {
-  content: "";
-  display: flex;
-  height: 8px;
-  width: 0px;
-  border-radius: inherit;
-  background-image: linear-gradient(to right, #018eb2, #29c9eb);
-  transition: width;
-}
-.process-bar::after {
-  content: attr(data-precent) "%";
+.upload {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
-/* 关闭按钮 */
-.close {
+.upload .preview {
+  object-fit: contain;
+  z-index: 1;
+}
+
+.upload > * {
   position: absolute;
-  top: 0px;
-  right: 6px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.upload > div {
+  display: none;
+  z-index: 2;
+}
+
+.upload.select .upload-select {
+  display: block;
+}
+.upload.select .preview {
+  display: none;
+}
+
+.upload.progress .upload-progress {
+  display: block;
+}
+
+.upload.result .upload-result {
+  display: block;
+}
+
+.upload-select {
+  border-radius: inherit;
+  border: 1px dashed var(--border-color);
+  cursor: pointer;
+}
+.upload-select::before,
+.upload-select::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--font-color);
+  transform: translate(-50%, -50%);
+}
+.upload-select::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.upload-select input {
+  display: none;
+}
+.upload-select:hover {
+  border-color: var(--primary-color);
+}
+
+.upload-progress {
+  background: #00000080;
+}
+
+.progress-bar {
+  position: absolute;
+  width: 90%;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 12px;
+}
+.progress-bar::before {
+  counter-reset: progress var(--percent);
+  content: counter(progress) "%";
+  /* content: var(--percent); */
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  transform: translateX(-50%);
+}
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  border-radius: inherit;
+  width: calc(1% * var(--percent));
+  height: 100%;
+  background: var(--primary-color);
+}
+.upload-progress::after {
+  content: "文件上传中...";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 5px);
+  white-space: nowrap;
+  opacity: 0.8;
+  color: #fff;
+  font-size: 12px;
+}
+.upload button {
+  border: none;
+  outline: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  user-select: none;
+}
+.progress-bar button {
+  left: 50%;
+  position: absolute;
+  top: 25px;
+  transform: translateX(-50%);
+}
+.progress-bar button:hover {
+  color: var(--danger-color);
+}
+
+.upload-result {
+  border: 1px dashed var(--border-color);
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.upload-result button {
+  width: 30px;
+  height: 20px;
+  background: var(--font-color);
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 2px;
+  color: #fff;
+}
+.upload-result button:hover {
+  background: var(--danger-color);
 }
 ```
 
@@ -142,7 +250,7 @@
 
 ## js
 
-::: info 注意点
+::: tip 注意点
 
 1.  将 `div` 元素变为可拖拽元素(拖拽上传)
 
@@ -174,19 +282,13 @@ doms.selectFile.ondrop = (e) => {
 let $ = document.querySelector.bind(document);
 // 获取的dom
 const doms = {
-  upload: $(".upload"),
-  uploadFile: $(".upload-file"),
-  selectFile: $(".iptFile"),
-  previewImg: $(".preview-img"),
-  resultImg: $(".img-result"),
-  uploadProcess: $(".upload-process"),
-  uploadResult: $(".upload-result"),
-  cancel: $(".cancel"),
-  processBar: $(".process-bar"),
-  bar: $(".bar"),
-  cacelBtn: $(".cacel"),
-  close: $(".close"),
-  drap: $(".drap"),
+  img: $(".preview"),
+  container: $(".upload"),
+  select: $(".upload-select"),
+  selectFile: $(".upload-select input"),
+  progress: $(".upload-progress"),
+  cancelBtn: $(".upload-progress button"),
+  delBtn: $(".upload-result button"),
 };
 // const processBarBefore = window.getComputedStyle(doms.processBar, "before");
 // 上传完成的图片
@@ -197,12 +299,11 @@ let cancal = null;
 
 // 切换页面展示
 function showArea(val) {
-  doms.upload.className = `upload ${val}`;
+  doms.container.className = `upload ${val}`;
 }
-// 上传进度条变换
-function changeProcess(val) {
-  doms.processBar.dataset.precent = val / 2;
-  doms.bar.style.width = val + "px";
+// 设置进度条
+function setProgress(value) {
+  doms.progress.style.setProperty("--percent", value);
 }
 
 // 拖拽 当拖动的元素或选择文本输入有效的放置目标时，会触发此事件。 只触发一次
@@ -246,7 +347,7 @@ function changeHandler() {
   const reader = new FileReader();
   reader.onload = (e) => {
     resultImg = e.target.result;
-    doms.previewImg.src = resultImg;
+    doms.img.src = resultImg;
   };
   reader.readAsDataURL(files[0]);
   // 上传
@@ -323,7 +424,7 @@ function validateFile(file) {
 }
 
 // 取消按钮点击事件注册
-doms.cacelBtn.onclick = doms.close.onclick = cnacelHandler;
+doms.cacelBtn.onclick = doms.delBtn.onclick = cnacelHandler;
 ```
 
 :::
