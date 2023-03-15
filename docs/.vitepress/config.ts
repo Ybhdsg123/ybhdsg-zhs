@@ -70,7 +70,16 @@ export default defineConfig({
           { text: "html方面", link: "/pages/interviews/html" },
           { text: "css方面", link: "/pages/interviews/css" },
           { text: "js方面", link: "/pages/interviews/js" },
+          {
+            text: "网络分层模型和应用协议",
+            link: "/pages/interviews/networkrotocols",
+          },
+
           { text: "http方面", link: "/pages/interviews/http" },
+          {
+            text: "浏览器的通信能力",
+            link: "/pages/interviews/browser",
+          },
           { text: "git方面", link: "/pages/interviews/git" },
           { text: "vue方面", link: "/pages/interviews/vue" },
           { text: "事件循环", link: "/pages/interviews/eventLoop" },
