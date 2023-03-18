@@ -82,17 +82,18 @@ export default ({ mode, command }) => {
 };
 ```
 
-## import.meta.glob 获取文件夹下的文件
+## 2. `import.meta.glob` 获取文件夹下的文件
 
 ```js
-// 自动创建生成公共 component
+// 获取所有组件信息
 const allRoutes = import.meta.glob("@/components/**/index.vue", {
   eager: true,
+  import: "default",
 });
 export default {
   install(app) {
     for (let key in allRoutes) {
-      app.component(allRoutes[key].default.name, allRoutes[key].default);
+      app.component(allRoutes[key].name, allRoutes[key]);
     }
   },
 };

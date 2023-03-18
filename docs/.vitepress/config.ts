@@ -45,6 +45,8 @@ export default defineConfig({
     sidebar: [
       {
         text: "vue3,vite,pina系统搭建相关过程",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: false, // true:展开 false:收缩
         items: [
           { text: "主要步骤", link: "/pages/vue3-element-admin/anxinPC" },
           { text: "常用的方法", link: "/pages/vue3-element-admin/fileTool" },
@@ -57,29 +59,57 @@ export default defineConfig({
             link: "/pages/vue3-element-admin/vueCommonTips",
           },
           {
+            text: "vue常用指令",
+            link: "/pages/vue3-element-admin/vueDirectives",
+          },
+        ],
+      },
+      {
+        text: "基础三大件知识",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: false,
+        items: [
+          {
+            text: "JavaScript",
+            link: "/pages/base/js/",
+          },
+          {
+            text: "HTML",
+            link: "/pages/base/html/",
+          },
+          {
+            text: "CSS",
+            link: "/pages/base/css/",
+          },
+          {
+            text: "CSS特效",
+            link: "/pages/base/cssAnimation/",
+          },
+          {
             text: "文件上传（原生）",
-            link: "/pages/vue3-element-admin/uploadFile",
+            link: "/pages/base/uploadFile",
           },
         ],
       },
       {
         text: "面试相关",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: false,
         items: [
           { text: "常见手写函数", link: "/pages/interviews/handwriteFn" },
-          { text: "Webpack面试题", link: "/pages/interviews/webpack" },
-          { text: "html方面", link: "/pages/interviews/html" },
-          { text: "css方面", link: "/pages/interviews/css" },
-          { text: "js方面", link: "/pages/interviews/js" },
           {
             text: "网络分层模型和应用协议",
             link: "/pages/interviews/networkrotocols",
           },
-
-          { text: "http方面", link: "/pages/interviews/http" },
           {
             text: "浏览器的通信能力",
             link: "/pages/interviews/browser",
           },
+          { text: "Webpack面试题", link: "/pages/interviews/webpack" },
+          { text: "html方面", link: "/pages/interviews/html" },
+          { text: "css方面", link: "/pages/interviews/css" },
+          { text: "js方面", link: "/pages/interviews/js" },
+          { text: "http方面", link: "/pages/interviews/http" },
           { text: "git方面", link: "/pages/interviews/git" },
           { text: "vue方面", link: "/pages/interviews/vue" },
           { text: "事件循环", link: "/pages/interviews/eventLoop" },
@@ -87,6 +117,8 @@ export default defineConfig({
       },
       {
         text: "vue3基础",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [
           { text: "注意点", link: "/pages/vue3/basic/note" },
           { text: "reactive", link: "/pages/vue3/basic/reactive" },
@@ -97,6 +129,8 @@ export default defineConfig({
       },
       {
         text: "vue3组件",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [
           {
             text: "组件的一些注意点",
@@ -109,6 +143,8 @@ export default defineConfig({
       },
       {
         text: "uniapp相关",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [
           { text: "常用api等", link: "/pages/uniapp/" },
           { text: "上传图片组件", link: "/pages/uniapp/components-uploadImg" },
@@ -117,10 +153,14 @@ export default defineConfig({
       },
       {
         text: "vite",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [{ text: "vite相关", link: "/pages/vite/" }],
       },
       {
         text: "工具函数",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [
           { text: "时间相关", link: "/pages/toolFun/timeTool" },
           { text: "图片相关", link: "/pages/toolFun/imgTool" },
@@ -128,11 +168,15 @@ export default defineConfig({
       },
       {
         text: "vscode相关插件和快捷键",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [{ text: "相关插件", link: "/pages/vscodeTool/" }],
       },
 
       {
         text: "git相关",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
         items: [
           { text: "gitHub遇到的问题", link: "/pages/git/githubQuestion/" },
         ],

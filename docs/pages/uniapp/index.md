@@ -22,6 +22,8 @@ onLoad() {
 
 ## 2. 自定义状态栏
 
+:::details
+
 ```vue
 <template>
   <view class="cunstom-box" :style="{ backgroundColor: backgroundColor }">
@@ -97,6 +99,8 @@ export default {
 </style>
 ```
 
+:::
+
 ## 3. 滚动过程中实现吸顶效果
 
 > 1. 主要实现思路：获取某个元素在页面上**距离**顶部的距离，然后**监听**页面的滚动，当页面**滚动的距离-元素距离顶部距离>0**,就让该元素的 position 为`fixed`，否则就让其为 `relative`
@@ -107,6 +111,7 @@ export default {
 >    > 默认需要使用到 `selectorQuery.in` 方法。
 
 [**代码实例**](https://uniapp.dcloud.net.cn/api/ui/nodes-info.html#createselectorquery)
+:::details
 
 ```js
 const query = uni.createSelectorQuery().in(this);
@@ -119,7 +124,11 @@ query
   .exec();
 ```
 
+:::
+
 ### 主要实现代码
+
+:::details
 
 ```vue
 <template>
@@ -162,3 +171,19 @@ methods:{
 }
 </script>
 ```
+
+:::
+
+4. 修改标题
+
+:::details
+
+```js
+onReady() {
+			uni.setNavigationBarTitle({
+				title: this.status
+			});
+		},
+```
+
+:::
