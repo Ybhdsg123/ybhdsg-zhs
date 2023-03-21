@@ -22,9 +22,20 @@ export default defineConfig({
   },
   // 主题配置
   themeConfig: {
+    algolia: {
+      appId: "6CNZ25L7YU", // 需要替换
+      apiKey: "e53c455f0ac0c08324e6940af2916937", // 需要替换
+      indexName: "ybhdsg", // 需要替换
+      placeholder: "请输入关键词",
+      buttonText: "搜索",
+    },
     // 网站的标题和logo
     logo: "/cat.svg",
     siteTitle: "哑巴湖大水怪的山水游记", // 这里写 false 就不显示，不写读取上面的 title
+    docFooter: {
+      prev: "上一页",
+      next: "下一页",
+    },
     // 主题色按钮 右侧社交链接
     socialLinks: [
       { icon: "github", link: "https://github.com/Ybhdsg123/ybhdsg-zhs" },
