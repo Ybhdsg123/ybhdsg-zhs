@@ -1,0 +1,95 @@
+```js
+/**
+ * 观察某个对象的所有属性
+ * @param {Object} obj
+ */
+function observe(obj) {
+  for (const key in obj) {
+    let internalValue = obj[key];
+    let funcs = [];
+    Object.defineProperty(obj, key, {
+      get: function () {
+        //  依赖收集，记录：是哪个函数在用我
+        if (window.__func && !funcs.includes(window.__func)) {
+          funcs.push(window.__func);
+        }
+        return internalValue;
+      },
+      set: function (val) {
+        internalValue = val;
+        // 派发更新，运行：执行用我的函数
+        for (var i = 0; i < funcs.length; i++) {
+          funcs[i]();
+        }
+      },
+    });
+  }
+}
+
+function autorun(fn) {
+  window.__func = fn;
+  fn();
+  window.__func = null;
+}
+```
+
+```js
+var user = {
+  name: "袁进",
+  birth: "2002-5-7",
+};
+
+observe(user); // 观察
+
+// 显示姓氏
+function showFirstName() {
+  document.querySelector("#firstName").textContent = "姓：" + user.name[0];
+}
+
+// 显示名字
+function showLastName() {
+  document.querySelector("#lastName").textContent = "名：" + user.name.slice(1);
+}
+
+// 显示年龄
+function showAge() {
+  var birthday = new Date(user.birth);
+  var today = new Date();
+  today.setHours(0), today.setMinutes(0), today.setMilliseconds(0);
+  thisYearBirthday = new Date(
+    today.getFullYear(),
+    birthday.getMonth(),
+    birthday.getDate()
+  );
+  var age = today.getFullYear() - birthday.getFullYear();
+  if (today.getTime() < thisYearBirthday.getTime()) {
+    age--;
+  }
+  document.querySelector("#age").textContent = "年龄：" + age;
+}
+autorun(showFirstName);
+autorun(showLastName);
+autorun(showAge);
+```
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="card">
+      <p id="firstName"></p>
+      <p id="lastName"></p>
+      <p id="age"></p>
+    </div>
+    <input type="text" oninput="user.name = this.value" />
+    <input type="date" onchange="user.birth = this.value" />
+    <script src="./euv.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
