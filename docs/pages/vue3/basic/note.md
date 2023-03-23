@@ -58,71 +58,7 @@ console.log(proxy.nested === raw); // false
 
 ## 4. reactive() 的种种限制归根结底是因为 JavaScript 没有可以作用于所有值类型的 “引用” 机制。
 
-## 5. [响应性语法糖](https://cn.vuejs.org/guide/extras/reactivity-transform.html#refs-vs-reactive-variables)
-
-> 1. `$ref()` 方法是一个编译时的宏命令：它不是一个真实的、在运行时会调用的方法。而是用作 Vue 编译器的标记，表明最终的 count 变量需要是一个响应式变量。
-
-```vue
-<script setup>
-let count = $ref(0);
-console.log(count);
-function increment() {
-  count++;
-}
-</script>
-<template>
-  <button @click="increment">{{ count }}</button>
-</template>
-```
-
-**_显示启用_**
-
-> 2. 响应性语法糖目前**默认是关闭状态**，需要你显式选择启用。此外，以下列出的所有配置都需要 **vue@^3.2.25**。
-
-```js
-// Vite
-// vite.config.js
-export default {
-  plugins: [
-    vue({
-      reactivityTransform: true,
-    }),
-  ],
-};
-// vue-cli
-// vue.config.js
-module.exports = {
-  chainWebpack: (config) => {
-    config.module
-      .rule("vue")
-      .use("vue-loader")
-      .tap((options) => {
-        return {
-          ...options,
-          reactivityTransform: true,
-        };
-      });
-  },
-};
-
-// 仅用 webpack + vue-loader
-// webpack.config.js
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: "vue-loader",
-        options: {
-          reactivityTransform: true,
-        },
-      },
-    ],
-  },
-};
-```
-
-## 6. v-if 和 v-show
+## 5. v-if 和 v-show
 
 > 1. `v-if` 是一个指令，他必须依附于某个元素, 可以在一个 `<template>` 元素上使用 v-if，这只是一个不可见的包装器元素,最后渲染的结果并不会包含这个 `<template>` 元素。
 > 2. `v-show` 不支持在` <template>` 元素上使用，也不能和 v-else 搭配使用。`v-show` 仅切换了该元素上名为 `display` 的 CSS 属性。
@@ -130,7 +66,7 @@ module.exports = {
 > 4. `v-if` 也是**惰性的**：如果在初次渲染时条件值为 false，则不会做任何事。条件区块只有当条件首次变为 true 时才被渲染。
 > 5. 当 v-if 和 v-for 同时存在于一个元素上的时候，`v-if` 会首先被执行。
 
-## 7. v-for
+## 6. v-for
 
 > 1. `v-for` 来遍历一个对象的所有属性。遍历的顺序会基于对该对象调用 `Object.keys()` 的返回值来决定。
 
@@ -174,7 +110,7 @@ module.exports = {
 > 3. Vue 默认按照“就地更新”的策略来更新通过 v-for 渲染的元素列表。默认模式是高效的，**但只适用于列表渲染输出的结果不依赖子组件状态或者临时 DOM 状态 (例如表单输入值) 的情况。**
 > 4. key 绑定的值期望是一个`基础类型的值`，例如字符串或 number 类型。**不要用对象作为 v-for 的 key**。
 
-## 8. 事件修饰符
+## 7. 事件修饰符
 
 > 1. 使用修饰符时需要注意调用顺序，因为相关代码是以相同的顺序生成的。因此使用
 >    `@click.prevent.self` 会阻止元素及其子元素的所有点击事件的默认行为而
@@ -210,7 +146,7 @@ module.exports = {
 <div @scroll.passive="onScroll">...</div>
 ```
 
-## 9. 不常用事件
+## 8. 不常用事件
 
 ```js
 <img
@@ -240,7 +176,7 @@ function pointerupHandler(e) {}
 function pointermoveHandler(e) {}
 ```
 
-## 10. watch vs. watchEffect
+## 9. watch vs. watchEffect
 
 它们之间的主要区别是追踪响应式依赖的方式：
 
@@ -253,7 +189,7 @@ function pointermoveHandler(e) {}
 1. **同步语句创建**的侦听器会在宿主组件卸载时**自动停止**
 2. **异步回调创建**的侦听器**必须手动停止**，以防内存泄漏
 
-## 11. 组件的 ref
+## 10. 组件的 ref
 
 > 1. 你只可以在**组件挂载后**才能访问模板引用，在初次渲染时会是 null
 > 2. 如果你需要侦听一个模板引用 ref 的变化，确保考虑到其值为 null 的情况：

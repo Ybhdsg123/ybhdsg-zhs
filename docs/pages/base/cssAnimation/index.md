@@ -2,7 +2,11 @@
 
 [大佬特效仓库](https://gitee.com/wyanhui02/html_css_demo/blob/master/README.md)
 
+<!-- <TextExtensionLine/> -->
+
 ## 1. 文字裂开特效
+
+<TextSplitting/>
 
 :::details 文字裂开
 
@@ -98,6 +102,8 @@
 :::
 
 ## 2. 输入框
+
+<SpecialIpt/>
 
 :::details 不一样的输入框
 
@@ -243,6 +249,7 @@ const blurHandler = (e) => {
 
 ## 3. 闪光卡片
 
+<FlashCards/>
 :::details
 
 ```vue
@@ -303,6 +310,8 @@ const blurHandler = (e) => {
 :::
 
 ## 4. 炫彩爱心加载动画
+
+<LoveLoading/>
 
 :::details
 
@@ -473,6 +482,8 @@ const blurHandler = (e) => {
 
 ## 6. 菱形加载动画
 
+<RhombusLoading/>
+
 :::details
 
 ```vue
@@ -571,6 +582,8 @@ const blurHandler = (e) => {
 :::
 
 ## 7. 炫彩旋转加载动画
+
+<DazzleLoading/>
 
 :::details
 
@@ -938,3 +951,13 @@ h1::after {
 ```
 
 :::
+
+<script setup>
+import TextSplitting from './components/textSplitting.vue'
+import SpecialIpt from './components/specialIpt.vue'
+import FlashCards from './components/flashCards.vue'
+import LoveLoading from './components/loveLoading.vue'
+import RhombusLoading from './components/rhombusLoading.vue'
+import DazzleLoading from './components/dazzleLoading.vue'
+import TextExtensionLine from './components/textExtensionLine.vue'
+</script>

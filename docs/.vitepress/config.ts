@@ -48,16 +48,41 @@ export default defineConfig({
     ],
     // 主题色按钮 左侧导航
     nav: [
+      {
+        text: "面试相关",
+        items: [
+          {
+            text: "浏览器的通信能力",
+            link: "/pages/interviews/browser",
+          },
+          { text: "html方面", link: "/pages/interviews/html" },
+          { text: "css方面", link: "/pages/interviews/css" },
+          { text: "js方面", link: "/pages/interviews/js" },
+          { text: "git方面", link: "/pages/interviews/git" },
+          { text: "vue方面", link: "/pages/interviews/vue" },
+          { text: "事件循环", link: "/pages/interviews/eventLoop" },
+        ],
+      },
+      {
+        text: "vue3相关",
+        items: [
+          { text: "注意点", link: "/pages/vue3/basic/note" },
+          { text: "v-model", link: "/pages/vue3/basic/v-model" },
+          { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
+          { text: "组件插槽", link: "/pages/vue3/components/slot" },
+          { text: "依赖注入", link: "/pages/vue3/components/provide" },
+        ],
+      },
+      { text: "常见手写函数", link: "../pages/interviews/handwriteFn.md" },
       { text: "掘金", link: "https://juejin.cn/user/761326894326280" },
       { text: "简书", link: "https://www.jianshu.com/u/ac97502b9e92" },
-      { text: "Changelog", link: "https://github.com/..." },
     ],
     // 侧边栏
     sidebar: [
       {
         text: "vue3,vite,pina系统搭建相关过程",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false, // true:展开 false:收缩
+        collapsed: false, // true:搜索 false:展开
         items: [
           { text: "主要步骤", link: "/pages/vue3-element-admin/anxinPC" },
           { text: "常用的方法", link: "/pages/vue3-element-admin/fileTool" },
@@ -127,6 +152,15 @@ export default defineConfig({
         ],
       },
       {
+        text: "工具函数",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: true, // 默认收缩
+        items: [
+          { text: "时间相关", link: "/pages/toolFun/timeTool" },
+          { text: "图片相关", link: "/pages/toolFun/imgTool" },
+        ],
+      },
+      {
         text: "vue3基础",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
         collapsed: true, // 默认收缩
@@ -166,17 +200,12 @@ export default defineConfig({
         text: "vite",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
         collapsed: true, // 默认收缩
-        items: [{ text: "vite相关", link: "/pages/vite/" }],
-      },
-      {
-        text: "工具函数",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
         items: [
-          { text: "时间相关", link: "/pages/toolFun/timeTool" },
-          { text: "图片相关", link: "/pages/toolFun/imgTool" },
+          { text: "vite相关", link: "/pages/vite/" },
+          { text: "vitepress相关", link: "/pages/vite/vitepress" },
         ],
       },
+
       {
         text: "vscode相关插件和快捷键",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组

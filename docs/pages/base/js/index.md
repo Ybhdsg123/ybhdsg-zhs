@@ -88,6 +88,7 @@ let intersect = new Set([...a].filter((x) => b.has(x))); // set {2, 3}
 let difference = new Set([...a].filter((x) => !b.has(x))); // Set {1}
 ```
 
+:::
 **3.4 将伪数组转化为数组**
 :::details
 

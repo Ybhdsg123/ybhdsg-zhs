@@ -38,9 +38,9 @@ export default {
 
 **_1. 前置条件：_** 因为在`<script setup>`下，无法使用 name，可以写两个`script标签`解决，也可以使用插件 `vite-plugin-vue-setup-extend`来解决，
 
-1.1. 安装插件：`npm i vite-plugin-vue-setup-extend -D --save`
+- 1.1. 安装插件：`npm i vite-plugin-vue-setup-extend -D --save`
 
-1.2. 配置 vite.config.ts
+- 1.2. 配置 vite.config.ts
 
 ```js
 // /vite.config.ts
@@ -51,7 +51,7 @@ export default defineConfig({
 });
 ```
 
-1.3. 使用
+- 1.3. 使用
 
 ```js
 <script lang="ts" setup name="demo">

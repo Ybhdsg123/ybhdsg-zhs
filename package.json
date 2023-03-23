@@ -6,6 +6,7 @@
   "author": "zhs",
   "license": "MIT",
   "devDependencies": {
+    "sass": "^1.59.3",
     "vitepress": "^1.0.0-alpha.29",
     "vue": "^3.2.45"
   },
