@@ -2,7 +2,7 @@
 
 ## [vitePress 官网](https://vitepress.vuejs.org/guide/markdown)
 
-<img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-14-142005.png" alt="image-20220814222004395" style="zoom: 20%;" />
+<!-- <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-14-142005.png" alt="image-20220814222004395" style="zoom: 20%;" />
 
 <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-13-060434.png" alt="image-20220813140434032" style="zoom:50%;" />
 <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-14-143153.png" alt="image-20220814223152726" style="zoom: 50%;" />
@@ -10,7 +10,7 @@
 <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-15-013519.png" alt="image-20220815093518833" style="zoom:33%;" />
 <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-15-014216.png" alt="image-20220815094215982" style="zoom:30%;" />
 <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-15-014459.png" alt="image-20220815094458940" style="zoom:25%;" />
-<img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-23-100047.png" alt="image-20220823180047075" style="zoom:40%;" />
+<img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-23-100047.png" alt="image-20220823180047075" style="zoom:40%;" /> -->
 
 ## 1. 虚拟滚动插件：
 
@@ -53,14 +53,9 @@ Vue.use(VueVirtualScroller)
 
 ## 6. [破解前端面试（80% 应聘者不及格系列）：从闭包说起](https://juejin.cn/post/6844903474212143117)
 
-## 前言
+- [ECMAScript+ 面试宝典](https://es-interview.js.org/articles/02-ECMAScript+/02-javascript.html)
 
-- 前端进阶，那就是学，不停的学
-- 我自己也想整理归总一下，看过的很多优秀文章（大部分都看过移动端的看的较少，书籍），所以它来了，因为努力所以看的见，文章比较长，注意头发，希望对你们有所帮助
-- 划重点，资料多没有意义，重要的要去持续学习
-  ![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d385e9730ab04763aadb4a788bdf1d9f~tplv-k3u1fbpfcp-watermark.image)
-
-## es5/6/7/...
+## 7. es5/6/7/...
 
 - [【译】理解 Javascript 执行上下文和执行栈](https://juejin.cn/post/6844903704466833421)
 - [JavaScript 中的这些骚操作，你都知道吗？](https://juejin.cn/post/6844904168784658439)
@@ -106,7 +101,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d70d83222d9d42a397465fe367f849c8~tplv-k3u1fbpfcp-watermark.image)
 
-## css
+## 8.css
 
 - [css 加载会造成阻塞吗](https://segmentfault.com/a/1190000018130499)
 - [CSS 设置居中的方案总结-超全](https://juejin.cn/post/6844903560879013901)
@@ -128,8 +123,10 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/61a0824c51c2433493a546f7f4dc76fe~tplv-k3u1fbpfcp-watermark.image)
 
-## ts
+## 9. ts
 
+- [TypeScript 入门教程](http://ts.xcatliu.com/basics/declaration-files.html#declare-var)
+- [深入理解 TypeScript](http://martsforever-snapshot.gitee.io/typescript-book-chinese/typings/types.html)
 - [这些高阶 ts 内置泛型帮助类型，你用过几个](https://juejin.cn/post/6893071406481801224)
 - [Vue3.0 之前你必须知道的 TypeScript 实战技巧](https://juejin.cn/post/6844903939079405576)
 - [一份不可多得的 TS 学习指南（1.8W 字）](https://juejin.cn/post/6872111128135073806)
@@ -148,7 +145,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/891d55bafa4944dc9253aa8fea46ba4a~tplv-k3u1fbpfcp-watermark.image)
 
-## vue2/3
+## 10. vue2/3
 
 - [Vue3 自定义指令-10 个常见的实用指令，带详细讲解，快拿去收藏！！！](https://juejin.cn/post/6968996649515515917)
 - [Vue3 究竟好在哪里？（和 React Hook 的详细对比）](https://juejin.cn/post/6844904132109664264)
@@ -183,7 +180,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a25073d1333f4b1cb195455a985cc003~tplv-k3u1fbpfcp-watermark.image)
 
-## react
+## 11. react
 
 - [将 React 应用优化到 60fps](https://zhuanlan.zhihu.com/p/24959748)
 - [如何提高你的 React 应用的性能](https://juejin.cn/post/6844903518826938382)
@@ -214,7 +211,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b9590f041631444d822520c49a46d323~tplv-k3u1fbpfcp-watermark.image)
 
-## node
+## 12. node
 
 - [一个开箱即用，功能完善的 Express 项目](https://juejin.cn/post/6844904022080651277)
 - [《大前端进阶 Node.js》系列 P6 必备脚手架/CI 构建能力](https://juejin.cn/post/6844904101893898248)
@@ -225,7 +222,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1191a98c749a42038f9185c8dce98155~tplv-k3u1fbpfcp-watermark.image)
 
-## 浏览器
+## 13. 浏览器
 
 - [Chrome DevTools 中的这些骚操作，你都知道吗？](https://juejin.cn/post/6844904162602254350)
 - [面试官: 你了解前端路由吗?](https://juejin.cn/post/6844903589123457031)
@@ -237,7 +234,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bd417af5f6354ff9b632e3ec8006b154~tplv-k3u1fbpfcp-watermark.image)
 
-## 网络
+## 14. 网络
 
 - [设计一个无懈可击的浏览器缓存方案：关于思路，细节，ServiceWorker，以及 HTTP/2](https://zhuanlan.zhihu.com/p/28113197)
 - [关于三次握手与四次挥手面试官想考我们什么](https://juejin.cn/post/6844903834708344840)
@@ -257,7 +254,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/48d6e33b33354ad0ba8c1dcbcc72d28f~tplv-k3u1fbpfcp-watermark.image)
 
-## 性能优化
+## 15. 性能优化
 
 - [移动 spa 商城优化记（一）---首屏优化篇](https://juejin.cn/post/6844903577815613453)
 - [前端黑科技：美团网页首帧优化实践](https://juejin.cn/post/6844903715262955533)
@@ -276,7 +273,7 @@ Vue.use(VueVirtualScroller)
 
 ![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eedbe07a3d524b77807f3ab21c9e4f31~tplv-k3u1fbpfcp-watermark.image)
 
-## 工程化/架构/设计模式
+## 16. 工程化/架构/设计模式
 
 - [不好意思！耽误你的十分钟，让 MVVM 原理还给你](https://juejin.cn/post/6844903586103558158)
 - [让虚拟 DOM 和 DOM-diff 不再成为你的绊脚石](https://juejin.cn/post/6844903806132568072)
@@ -320,7 +317,7 @@ Vue.use(VueVirtualScroller)
 - [三年 Git 使用心得 & 常见问题整](https://juejin.cn/post/6844904191203213326)
 - [体积减少 80%！释放 webpack tree-shaking 的真正潜力](https://juejin.cn/post/6844903669100445710)
 
-## flutter/rn/Electron
+## 17. flutter/rn/Electron
 
 - [分享这半年的 Electron 应用开发和优化经验](https://juejin.cn/post/6844904029231775758)
 - [Flutter 开发踩坑记录（干货总结](https://juejin.cn/post/6844904074622697480)
@@ -347,7 +344,7 @@ Vue.use(VueVirtualScroller)
 - [写给前端工程师的 Flutter 教程](https://juejin.cn/post/6844903918351155213)
 - [移动混合开发中的 JSBridge](https://mp.weixin.qq.com/s/I812Cr1_tLGrvIRb9jsg-A)
 
-## 面试经验
+## 18. 面试经验
 
 - [必须要会的 50 个 React 面试题](https://juejin.cn/post/6844903806715559943)
 - [30 道 Vue 面试题，内含详细讲解（涵盖入门到精通，自测 Vue 掌握程度）](https://juejin.cn/post/6844903918753808398)
@@ -371,7 +368,7 @@ Vue.use(VueVirtualScroller)
 - [几道高级前端面试题解析](https://juejin.cn/post/6844903598707441672)
 - [前端笔试题面试题记录（上）](https://juejin.cn/post/6844903577421365255)
 
-## 安全
+## 19. 安全
 
 - [前端安全系列（一）：如何防止 XSS 攻击？](https://juejin.cn/post/6844903685122703367)
 - [前端安全系列之二：如何防止 CSRF 攻击？](https://juejin.cn/post/6844903689702866952)
@@ -382,7 +379,7 @@ Vue.use(VueVirtualScroller)
 - [15 张精美动图全面讲解 CORS](https://juejin.cn/post/6856556746706518024)
 - [【面试篇】寒冬求职之你必须要懂的 Web 安全](https://juejin.cn/post/6844903842635579405)
 
-## 开源项目
+## 20. 开源项目
 
 - [《吐血整理》系列 大厂前端组件库工具集合（PC 端、移动端、JS、CSS 等）](https://juejin.cn/post/6844904103114440718)
 - [这些神仙代码库值得每一个前端开发者收藏](https://juejin.cn/post/6844904178305728519)
@@ -391,7 +388,7 @@ Vue.use(VueVirtualScroller)
 - [这些开源项目，让你轻松应对十大工作场景](https://juejin.cn/post/6898098763772985352)
 - [前端进阶必备，github 优质资源整理分享！](https://juejin.cn/post/6844903902299553806)
 
-## 部署/监控
+## 21. 部署/监控
 
 - [谁说前端不需要懂-Nginx 反向代理与负载均衡](https://juejin.cn/post/6844903619465068551)
 - [【你应该了解的】详尽&全面的前端部署（从零起步，前端上线不用愁）](https://juejin.cn/post/6844904032218120200)
@@ -406,7 +403,7 @@ Vue.use(VueVirtualScroller)
 - [前端必备 Nginx 配置](https://juejin.cn/post/6844903942262882318)
 - [前端的 Nginx 知识梳理](https://juejin.cn/post/6914160814152744973)
 
-## 团队规则
+## 22. 团队规则
 
 - [ESLint 里的规则教会我，无规矩 不编程](https://juejin.cn/post/6844903608379506701)
 - [团队 React 代码规范制定](https://juejin.cn/post/6844903999074746381)
@@ -415,7 +412,7 @@ Vue.use(VueVirtualScroller)
 - [如何保障前端项目的代码质量](https://juejin.cn/post/6844903671457677325)
 - [在 Typescript 项目中，如何优雅的使用 ESLint 和 Prettier](https://juejin.cn/post/6844903880006844424)
 
-## 算法
+## 23. 算法
 
 - [leetcode](https://leetcode-cn.com/)
 - [写给前端的算法进阶指南，我是如何两个月零基础刷 200 题](https://juejin.cn/post/6847009772500156429)
@@ -424,7 +421,7 @@ Vue.use(VueVirtualScroller)
 - [前端面试遇到的算法题](https://juejin.cn/post/6844903575538106376)
 - [字节跳动最爱考的 64 道算法题（JS 版）](https://juejin.cn/post/6947842412102287373)
 
-## 杂谈
+## 24. 杂谈
 
 - [精读《为什么专家不再关心技术细节》](https://juejin.cn/post/6844903847060570126)
 - [关于前端学习路线的一些建议（内含经典自测题）](https://juejin.cn/post/6844903929755484167)
@@ -444,115 +441,3 @@ Vue.use(VueVirtualScroller)
 - [如何成为公司独当一面的工程师](https://juejin.cn/post/6844904001092206605)
 - [神三元在抖音架构组的八个月，他经历了什么？](https://juejin.cn/post/6963061994928898085)
 - [聊一聊加班严重时要如何自我提升](https://juejin.cn/post/6844903919731130381)
-
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/044a321940f148ad9002910b0e0c1b1e~tplv-k3u1fbpfcp-watermark.image)
-
-## 书籍推荐
-
-### css
-
-- css 世界
-- css 揭秘
-- 深入解析 CSS
-
-### js
-
-- 红宝书系列
-- 你不知道的 js 上中下
-- js 重难点实例精讲
-- 深入理解 es6
-- js 编程思想：从 es5 到 es9
-- js 忍者秘籍（第二版）
-- js 编程精解（原书第二版）
-- jsDOM 编程艺术（第二版）
-- js 框架设计
-
-### ts
-
-- 官方文档
-- 深入理解 ts
-- TypeScript 实战指南
-
-### 框架
-
-- vue
-
-  - vue.js 快跑
-  - vue.js 前端开发技术
-
-- react
-
-  - 深入理解 react-Router
-  - 深入浅出 React 和 Redux
-  - React+Redux 前端开发实战
-  - react 进阶之路
-
-### 工程化/架构
-
-- 前端函数式演进
-- Web 性能实战
-- 前端架构：从入门到微前端
-- 大型网站技术架构
-- webpack 实战：入门与调优
-- web 前端测试与集成
-
-### node
-
-- node10 实战
-- node 权威指南
-- Koa 与 Node.js 开发实战
-
-### 数据结构与算法
-
-- js 数据结构与算法
-- 剑指 offer
-- 算法图解
-- 大话数据结构
-
-### 网络
-
-- 图解 HTTP
-- 图解 TCP,UDP
-- HTTP/2 in Action 中文版
-
-### 可视化
-
-- SVG 动画
-- 快学熟用 D3
-
-### 设计模式
-
-- js 设计模式与实战开发实践
-
-### 面向未来
-
-- PWA 实战
-- 深入浅出 Serverless
-
-### 混合 APP
-
-- Flutter 技术入门与实战
-
-### 安全
-
-- 白帽子讲 web 安全（纪念版）
-- XSS 跨站脚本攻击刨析与防御
-- Web 前端贺客技术揭秘
-
-### 非技术书
-
-- 如何阅读一本书
-- 高效能人士的七个习惯
-- 少有人走的路
-- 如何高效学习：一年完成麻省理工 4 年课程
-- 早起魔法
-- 深度思考
-- 时间思维
-- 意志力
-- 沉思录
-- .......
-
-## 结语
-
-- 资源非常多，要能学完，不想进步都难，但是比较困难，愿大家涨薪涨薪再涨薪！
-- 这个月底会早上 6 点起床直播学习，干完这些题；欢迎加入群聊[6 点起床俱乐部](https://juejin.cn/user/1943592288395479/pins),一起努力学习！

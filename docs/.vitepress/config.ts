@@ -49,6 +49,13 @@ export default defineConfig({
     // 主题色按钮 左侧导航
     nav: [
       {
+        text: "cancvs",
+        items: [
+          { text: "基础知识", link: "../pages/canvas/index.md" },
+          // {text:'demo',link:'.'}
+        ],
+      },
+      {
         text: "面试相关",
         items: [
           {
