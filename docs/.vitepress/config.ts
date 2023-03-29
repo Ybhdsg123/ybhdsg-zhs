@@ -52,7 +52,7 @@ export default defineConfig({
         text: "cancvs",
         items: [
           { text: "基础知识", link: "../pages/canvas/index.md" },
-          // {text:'demo',link:'.'}
+          { text: "小demo", link: "../pages/canvas/demo.md" },
         ],
       },
       {
