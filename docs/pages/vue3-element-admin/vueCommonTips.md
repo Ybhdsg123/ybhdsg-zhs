@@ -132,3 +132,7 @@ onMounted(() => {
 ```
 
 :::
+
+## 5. 获取 app 文件的包名
+
+[github 插件地址](https://github.com/chenquincy/app-info-parser)
