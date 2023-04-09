@@ -1,7 +1,9 @@
 <template>
-  <canvas id="canvas-dom" width="600" height="300">
-    当前浏览器不支持canvas元素，请升级或更换浏览器！
-  </canvas>
+  <div style="width: 600px">
+    <canvas id="canvas-dom" width="600" height="300">
+      当前浏览器不支持canvas元素，请升级或更换浏览器！
+    </canvas>
+  </div>
 </template>
 
 <script setup>
@@ -10,6 +12,7 @@ import { onMounted } from "vue";
 onMounted(() => {
   // 获取 canvas 元素
   const canvasDom = document.getElementById("canvas-dom");
+  canvasDom.width = 600;
   // 判断是否支持 canvas
   if (canvasDom.getContext) {
     // 获取绘制的上下文
