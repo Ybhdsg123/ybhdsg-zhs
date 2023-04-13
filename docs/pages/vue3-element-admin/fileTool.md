@@ -251,7 +251,7 @@ export const excelToJson = async (excelFile) => {
 
 ## 4. 本地缓存相关
 
-- **window.localStorage**
+:::details **window.localStorage**
 
 ```js
 /**
@@ -285,7 +285,9 @@ export const localStorage = {
 };
 ```
 
-- **window.sessionStorage**
+:::
+
+:::details **window.sessionStorage**
 
 ```js
 /**
@@ -315,7 +317,9 @@ export const sessionStorage = {
 };
 ```
 
-- **cookie**
+:::
+
+:::details **cookie**
 
 ```js
 /**
@@ -401,6 +405,8 @@ export const docCookies = {
   },
 };
 ```
+
+:::
 
 ## 5. 根据某一天获取本月的第一天及最后一天
 
@@ -759,3 +765,57 @@ function showAge() {
   return age;
 }
 ```
+
+## 22. 对数据进行分组
+
+:::details
+
+```js
+**
+ * @description: 根据字段对数据进行分组
+ * @param {*} arr 要处理的源数据
+ * @param {*} fn 传入一个方法，指定根据什么字段返回数据(传入string类型的时候，特殊处理)
+ * @return 处理过的数据
+ * @Author: zhs
+ */
+export function groupBy(arr, fn) {
+  let result = {};
+  // 校验数据类型是不是 string 类型
+  const fnTypeOf = Object.prototype.toString
+    .call(fn)
+    .slice(8, -1)
+    .toLowerCase();
+  // 如果传入的是 string 类型的话，就将其包装成 function
+  if (fnTypeOf === "string") {
+    const fnStr = fn;
+    fn = (obj) => obj[fnStr];
+  }
+  for (let obj of arr) {
+    // 拿到处理的字段对应的值
+    const field = fn(obj);
+    // 没有就创建一个数组
+    if (!result[field]) {
+      result[field] = [];
+    }
+    // 否则就添加进去
+    result[field].push(obj);
+  }
+  return result;
+}
+const demo = [
+  { name: "zs", age: 12, gender: "女" },
+  { name: "ls", age: 13, gender: "男" },
+  { name: "zscs", age: 12, gender: "女" },
+];
+// 处理数组
+// const stra = groupBy([1, 2, 3, 1, 49, 9, 8], (obj) =>
+//   obj % 2 === 0 ? "偶数" : "奇数"
+// );
+// 传入 string 类型数据
+// console.log(groupBy(demo, "gender"));
+// 处理复杂的 多字段 数据
+// console.log(groupBy(demo, (obj) => `${obj.age}-${obj.gender}`));
+
+```
+
+:::
