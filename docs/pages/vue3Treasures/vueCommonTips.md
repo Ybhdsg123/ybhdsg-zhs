@@ -117,7 +117,7 @@ export const getRoleRouters = (routers, permissionRoutingMarking = []) => {
 
 :::
 
-## 4. vue 禁止复制
+## 4. vue 禁止复制 禁用右键
 
 :::details
 
@@ -127,6 +127,8 @@ import { onMounted } from "vue";
 onMounted(() => {
   // 禁用复制
   document.onselectstart = new Function("event.returnValue=false");
+  // 禁用右键
+  document.oncontextmenu = new Function("event.returnValue=false");
 });
 </script>
 ```
@@ -136,3 +138,45 @@ onMounted(() => {
 ## 5. 获取 app 文件的包名
 
 [github 插件地址](https://github.com/chenquincy/app-info-parser)
+
+## 6. 通过 `customRef()` 创建一个防抖的 ref(官网例子)
+
+:::details useDebouncedRef
+
+```js
+import {customRef} from 'vue'
+
+export const useDebouncedRef = (value,delay=200)=>{
+  let timer
+  return customRef((track,trigger)=>{
+    get(){
+      track()
+      return value
+    }
+    set(newValue){
+      clearTimeout(timer)
+      timer = setTimeout(()=>{
+        value = newValue
+       trigger()
+      },delay)
+    }
+  })
+}
+
+```
+
+:::
+
+::: details 使用
+
+```vue
+<script setup>
+import { useDebouncedRef } from "./***/useDebouncedRef.js";
+const text = useDebouncedRef("cehsi");
+</script>
+<template>
+  <input v-model="text" />
+</template>
+```
+
+:::

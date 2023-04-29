@@ -12,7 +12,7 @@
 
 [三次贝塞尔曲线工具网站](http://blogs.sitepointstatic.com/examples/tech/canvas-curves/bezier-curve.html)
 
-## 1. 基础知识
+## 1. 基础知识(https://juejin.cn/post/7161696893695688740)
 
 ```html
 <body>
@@ -41,12 +41,39 @@
 
 :::
 
-:::details `getContext()`可能的接收参数
+:::details `getContext(contextType, contextAttributes)`可能的接收参数
+
+<MyText text="contextType"/> 为绘制上下文的类型，类型参数有：
 
 - 1. `2d`：建立一个二维渲染上下文。这种情况可以用 `CanvasRenderingContext2D()`来替换 getContext('2d')。
 - 2. `webgl`（或 `experimental-webgl`）： 创建一个 WebGLRenderingContext 三维渲染上下文对象。只在实现 WebGL 版本 1(OpenGL ES 2.0)的浏览器上可用。
 - 3. `webgl2`（或 `experimental-webgl2`）：创建一个 WebGL2RenderingContext 三维渲染上下文对象。只在实现 WebGL 版本 2 (OpenGL ES 3.0)的浏览器上可用。
 - 4. `bitmaprenderer`：创建一个只提供将 canvas 内容替换为指定 ImageBitmap 功能的 ImageBitmapRenderingContext。
+
+<MyText text="contextAttributes"/> 为绘制上下文的属性，这些属性相对比较多
+
+>
+
+<MyText text="2D 类型的参数有："/>
+
+(1)、alpha 它的值为 Boolean 类型，如果设置为 false, 浏览器将认 Canvas 背景总是不透明的，这样可以做到一些性能提效。
+
+(2)、willReadFrequently，值也为 Boolean 类型，用于表明是否要重复操作，**频繁调用 getImageData()方法时能节省内存，但是仅 Gecko 内核浏览器支持**。
+
+(3)、storage 用于表明使用哪种方式存储，默认值 persisten，表示持久化存储。
+
+<MyText text="3D 类型的参数有："/>
+(1)、alpha 值为 Boolean 类型，指示画布是否包含 alpha 缓冲区。
+(2)、antialias 值为 Boolean 类型，指示是否开启抗锯齿。
+(3)、depth 值为 Boolean 类型，表示绘图缓冲区的深度缓冲区至少为 16 位。
+(4)、failIfMajorPerformanceCaveat 值为 Boolean 类型，指示如果系统性能较低，是否创建上下文。
+(5)、powerPreference：对用户代理的提示，指示 GPU 的哪种配置适合 WebGL 上下文。可能的值是：
+default: 自动选择模式，自动决定哪种 GPU 配置最合适，为默认值。
+high-performance: 高性能模式，优先考虑渲染性能而不是功耗。
+low-power: 节能模式，优先考虑节能而不是渲染性能。
+(6)、premultipliedAlpha 值为 Boolean 类型，表示页面合成器将假定绘图缓冲区包含具有预乘 alpha 的颜色。
+(7)、preserveDrawingBuffer 值为 Boolean 类型，如果值为 true，则不会清除缓冲区并保留其值，直到被清除或被使用者覆盖。
+(8)、stencil 值为 Boolean 类型，表示绘图缓冲区具有至少 8 位的模板缓冲区。
 
 :::
 

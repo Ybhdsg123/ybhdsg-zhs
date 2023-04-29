@@ -46,22 +46,28 @@ lastDay,
 
 ## 3. 根据某一天获取本月的第一天及最后一天
 
-### 3.1 根据传入时间来判断
-
 ```js
-// 本月第一天
+/**
+ * @description: 根据某一天获取本月的第一天及最后一天（不传默认为当前日期本月第一天）
+ * @param {number} time: 某天时间
+ * @param {string} formMat: 返回格式 默认毫秒
+ * @Author: zhs
+ * @return 毫秒数
+ */
 export function getMonthFrist(time, formMat = "timestamp") {
-  let date = new Date(time);
+  let date = time ? new Date(time) : new Date();
   let year = date.getFullYear();
   let month = date.getMonth();
   let result = new Date(year, month, 1);
-  return formMat == "timestamp" ? result.getTime() / 1000 : result;
+  return formMat === "timestamp" ? result.getTime() / 1000 : result;
 }
 // 本月最后一天
-export function getMonthLast(time) {
-  let date = new Date(time);
+export function getMonthLast(timestamp) {
+  let date = timestamp ? new Date(timestamp) : new Date();
   let year = date.getFullYear();
   let month = date.getMonth();
+  // day为0表示获取一个月最后一天，所以 month+1 然后加上一天的秒数
+  // 86300表示一天秒数，最后日期为 23:59:59
   return (new Date(year, month + 1, 0) / 1000 + 86399) * 1000;
 }
 ```
@@ -125,4 +131,28 @@ export function formatTime2(timestamp) {
   d = d < 10 ? "0" + d : d;
   return y + "-" + MM + "-" + d;
 }
+```
+
+## 5. 两日期之间相差的天数
+
+<!-- 传入毫秒数 -->
+
+```js
+const dayDiff = (date1, date2) => {
+  const d1 = date1 * 1;
+  const d2 = date2 * 1;
+  return Math.ceil(Math.abs(d1 - d2) / 86400000);
+};
+// dayDiff(1653926400000,1651248000000) => 31
+// dayDiff(new Date(2022,5,0), new Date(2022,4,0));  => 31
+// dayDiff(new Date("2021-10-21"), new Date("2022-02-12")) => 114;
+```
+
+## 6. 查询某天是否为工作日
+
+```js
+const isWeekday = (date) => date.getDay() % 6 !== 0;
+
+isWeekday(new Date(2022, 03, 11));
+// true
 ```

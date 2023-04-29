@@ -2,6 +2,8 @@
 
 ## [vitePress 官网](https://vitepress.vuejs.org/guide/markdown)
 
+## [Emoji 🎉 ](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.json)
+
 <!-- <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-14-142005.png" alt="image-20220814222004395" style="zoom: 20%;" />
 
 <img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2022-08-13-060434.png" alt="image-20220813140434032" style="zoom:50%;" />

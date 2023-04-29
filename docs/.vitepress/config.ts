@@ -59,26 +59,26 @@ export default defineConfig({
         text: "面试相关",
         items: [
           {
+            text: "网络分层模型和应用协议",
+            link: "/pages/interviews/networkrotocols",
+          },
+          {
             text: "浏览器的通信能力",
             link: "/pages/interviews/browser",
           },
+          { text: "Webpack面试题", link: "/pages/interviews/webpack" },
           { text: "html方面", link: "/pages/interviews/html" },
           { text: "css方面", link: "/pages/interviews/css" },
           { text: "js方面", link: "/pages/interviews/js" },
+          { text: "http方面", link: "/pages/interviews/http" },
           { text: "git方面", link: "/pages/interviews/git" },
           { text: "vue方面", link: "/pages/interviews/vue" },
           { text: "事件循环", link: "/pages/interviews/eventLoop" },
         ],
       },
       {
-        text: "vue3相关",
-        items: [
-          { text: "注意点", link: "/pages/vue3/basic/note" },
-          { text: "v-model", link: "/pages/vue3/basic/v-model" },
-          { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
-          { text: "组件插槽", link: "/pages/vue3/components/slot" },
-          { text: "依赖注入", link: "/pages/vue3/components/provide" },
-        ],
+        text: "vue3后台搭建",
+        link: "/pages/vue3-element-admin/anxinPC",
       },
       { text: "常见手写函数", link: "../pages/interviews/handwriteFn.md" },
       { text: "掘金", link: "https://juejin.cn/user/761326894326280" },
@@ -87,28 +87,52 @@ export default defineConfig({
     // 侧边栏
     sidebar: [
       {
-        text: "vue3,vite,pina系统搭建相关过程",
+        text: "vue3宝藏🏴‍☠️",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false, // true:搜索 false:展开
+        collapsed: false, // true:收缩 false:展开
         items: [
-          { text: "主要步骤", link: "/pages/vue3-element-admin/anxinPC" },
-          { text: "常用的方法", link: "/pages/vue3-element-admin/fileTool" },
           {
-            text: "Vue 核心（响应式原理&虚拟dom等）",
-            link: "/pages/vue3-element-admin/vueCore",
+            text: "vue组件",
+            link: "/pages/vue3Treasures/vueComponents",
           },
           {
             text: "vue常见技巧",
-            link: "/pages/vue3-element-admin/vueCommonTips",
+            link: "/pages/vue3Treasures/vueCommonTips",
           },
           {
             text: "vue常用指令",
-            link: "/pages/vue3-element-admin/vueDirectives",
+            link: "/pages/vue3Treasures/vueDirectives",
           },
         ],
       },
       {
-        text: "基础三大件知识",
+        text: "vue 核心",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: false, // true:收缩 false:展开
+        items: [
+          {
+            text: "响应式原理",
+            link: "/pages/vueCore/responsivePrinciples",
+          },
+          {
+            text: "虚拟dom",
+            link: "/pages/vueCore/virtualDom",
+          },
+        ],
+      },
+      {
+        text: "工具函数",
+        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
+        collapsed: false, // 默认收缩
+        items: [
+          { text: "常用的方法", link: "/pages/toolFun/fileTool" },
+          { text: "下载文件相关", link: "/pages/toolFun/download" },
+          { text: "时间相关", link: "/pages/toolFun/timeTool" },
+          { text: "图片相关", link: "/pages/toolFun/imgTool" },
+        ],
+      },
+      {
+        text: "基础三大件常用技巧",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
         collapsed: false,
         items: [
@@ -132,39 +156,6 @@ export default defineConfig({
             text: "文件上传（原生）",
             link: "/pages/base/uploadFile",
           },
-        ],
-      },
-      {
-        text: "面试相关",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false,
-        items: [
-          { text: "常见手写函数", link: "/pages/interviews/handwriteFn" },
-          {
-            text: "网络分层模型和应用协议",
-            link: "/pages/interviews/networkrotocols",
-          },
-          {
-            text: "浏览器的通信能力",
-            link: "/pages/interviews/browser",
-          },
-          { text: "Webpack面试题", link: "/pages/interviews/webpack" },
-          { text: "html方面", link: "/pages/interviews/html" },
-          { text: "css方面", link: "/pages/interviews/css" },
-          { text: "js方面", link: "/pages/interviews/js" },
-          { text: "http方面", link: "/pages/interviews/http" },
-          { text: "git方面", link: "/pages/interviews/git" },
-          { text: "vue方面", link: "/pages/interviews/vue" },
-          { text: "事件循环", link: "/pages/interviews/eventLoop" },
-        ],
-      },
-      {
-        text: "工具函数",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [
-          { text: "时间相关", link: "/pages/toolFun/timeTool" },
-          { text: "图片相关", link: "/pages/toolFun/imgTool" },
         ],
       },
       {
@@ -193,6 +184,7 @@ export default defineConfig({
           { text: "依赖注入", link: "/pages/vue3/components/provide" },
         ],
       },
+
       {
         text: "uniapp相关",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
@@ -228,23 +220,6 @@ export default defineConfig({
           { text: "gitHub遇到的问题", link: "/pages/git/githubQuestion/" },
         ],
       },
-
-      // {
-      //   text: "Vite相关",
-      //   items: [{ text: "快速开始", link: "/pages/index/" }],
-      // },
-      // {
-      //   text: "WebPack相关",
-      //   items: [{ text: "快速开始", link: "/pages/index/" }],
-      // },
-      // {
-      //   text: "pina相关",
-      //   items: [{ text: "快速开始", link: "/pages/index/" }],
-      // },
-      // {
-      //   text: "VitePress相关",
-      //   items: [{ text: "快速开始", link: "/pages/index/" }],
-      // },
     ],
   },
 });

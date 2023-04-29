@@ -364,7 +364,7 @@ export default ({ mode }) => {
 2. 设置 `import` 为 `default` 可以加载默认导出。加入后可以不使用 `.default.name`这样获取
 
    :::
-   ![allRoutes`文件格式](./img/globalCom%5Bonents.png)
+   ![allRoutes`文件格式](./img/globalComponents.png)
 
 - **主要实现代码**
 
@@ -440,7 +440,7 @@ app.mount("#app");
 
 ```js
 // src/store/modules/user.js
-// 用户状态模块
+// 用户状态模块  类似于 vuex 的写法，还有一种 setup 写法
 import { defineStore } from "pinia";
 const useUserStore = defineStore({
     id: "user", // 第一个参数是你的应用中 Store 的唯一 ID。

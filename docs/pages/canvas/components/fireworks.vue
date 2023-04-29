@@ -44,7 +44,7 @@ onMounted(() => {
 
   ctx3.fillStyle = "#ffffff";
   ctx3.shadowColor = "#cccccc";
-  ctx3.shadowBlur = 5;
+  // ctx3.shadowBlur = 5;
 
   // 动画循环
   (function loop() {

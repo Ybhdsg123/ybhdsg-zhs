@@ -1,158 +1,75 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>眼睛跟随鼠标转动</title>
+    <title>canvas - 拾色器</title>
     <style>
-      html,
-      body {
-        height: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        background-color: rgb(233, 171, 77);
+      /* 给画布增加一个阴影和圆角的样式 */
+      canvas {
+        box-shadow: 0px 0px 5px #ccc;
+        border-radius: 8px;
       }
-
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .my-eye {
-        width: 300px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .eye {
-        height: 100px;
-        width: 100px;
-        background-color: #fff;
-        border-radius: 100%;
-        position: relative;
-        z-index: 100;
-        box-shadow: 0 0 20px 2px rgb(233, 171, 77) inset,
-          0 0 10px 0px rgba(15, 15, 15, 0.1);
-      }
-
-      .eye::after {
-        content: "";
-        position: absolute;
-        z-index: 101;
+      div {
+        width: 430px;
         height: 30px;
-        width: 30px;
-        border-radius: 100%;
-        background-color: rgb(15, 15, 15);
-        border: 10px solid rgb(233, 171, 77);
-        box-shadow: 0 0 10px 1px rgb(233, 171, 77);
-        top: calc(50% - 24px);
-        left: calc(50% - 24px);
-      }
-
-      .left-eye::after {
-      }
-
-      .right-eye::after {
+        color: #fff;
+        box-shadow: 0px 0px 5px #ccc;
+        border-radius: 8px;
+        line-height: 30px;
+        padding: 10px;
       }
     </style>
   </head>
-
   <body>
-    <div class="my-eye">
-      <div class="eye left-eye"></div>
-      <div class="eye right-eye"></div>
-    </div>
+    <canvas id="canvas" width="450" height="800">
+      当前浏览器不支持canvas元素，请升级或更换浏览器！
+    </canvas>
+    <div id="hovered"></div>
+    <div id="selected"></div>
     <script>
-      document.onmousemove = function (e) {
-        // 设置伪元素样式
-        document.styleSheets[0].addRule(
-          `.eye::after`,
-          `top: 12px; left: 12px;`
-        );
+      // 获取 canvas 元素
+      var canvas = document.getElementById("canvas");
+      // 通过判断getContext方法是否存在来判断浏览器的支持性
+      if (canvas.getContext) {
+        // 获取绘图上下文
+        var ctx = canvas.getContext("2d");
+        var img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src =
+          "https://img1.baidu.com/it/u=4141276181,3458238270&fm=253&fmt=auto&app=138&f=JPEG";
+        img.onload = function () {
+          ctx.drawImage(img, 0, 0, 450, 800);
+          img.style.display = "none";
+        };
+        var hoveredColor = document.getElementById("hovered");
+        var selectedColor = document.getElementById("selected");
 
-        this.querySelectorAll(".eye").forEach((eye) => {
-          // 眼球位置
-          const boundingClientRect = eye.getBoundingClientRect();
-          const x = boundingClientRect.left + eye.offsetWidth / 2;
-          const y = boundingClientRect.top + eye.offsetHeight / 2;
-
-          // 计算弧度
-          const radian = Math.atan2(e.clientX - x, e.clientY - y);
-          // 计算角度
-          const rotation = 270 - radian * (180 / Math.PI);
-
-          eye.style.cssText += `
-                    transform: rotate(${rotation}deg);
-                `;
+        canvas.addEventListener("mousemove", function (event) {
+          pickColor("move", event, hoveredColor);
         });
-      };
-    </script>
-  </body>
-</html> -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      #character {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        background-color: #ccc;
-      }
-      #character .eye {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: rgb(192, 82, 82);
-        border-radius: 10px;
-      }
-      #character .eye.left {
-        left: 25px;
-        top: 25px;
-      }
-      #character .eye.right {
-        right: 25px;
-        top: 25px;
-      }
-    </style>
-    <script>
-      function updateEyes(character, x, y) {
-        // Calculate the position of the eyes relative to the character
-        // using the x and y coordinates of the mouse
-        var leftEyeX = x - character.offsetLeft;
-        var leftEyeY = y - character.offsetTop;
-        var rightEyeX = character.offsetWidth - leftEyeX;
-        var rightEyeY = leftEyeY;
-
-        // Update the position of the eyes
-        var leftEye = character.querySelector(".eye.left");
-        leftEye.style.left = leftEyeX + "px";
-        leftEye.style.top = leftEyeY + "px";
-        var rightEye = character.querySelector(".eye.right");
-        rightEye.style.left = rightEyeX + "px";
-        rightEye.style.top = rightEyeY + "px";
-      }
-
-      window.addEventListener("load", function () {
-        // Get a reference to the character
-        var character = document.getElementById("character");
-
-        // Listen for mouse movement events
-        document.addEventListener("mousemove", function (event) {
-          // Update the position of the eyes
-          updateEyes(character, event.clientX, event.clientY);
+        canvas.addEventListener("click", function (event) {
+          pickColor("click", event, selectedColor);
         });
-      });
+
+        function pickColor(type, event, destination) {
+          var x = event.layerX;
+          var y = event.layerY;
+          var pixel = ctx.getImageData(x, y, 1, 1);
+          var data = pixel.data;
+          const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${
+            data[3] / 255
+          })`;
+          destination.style.background = rgba;
+          if (type === "move") {
+            destination.textContent = "划过的颜色为：" + rgba;
+          } else {
+            destination.textContent = "选中的颜色为：" + rgba;
+          }
+          return rgba;
+        }
+      }
     </script>
-  </head>
-  <body>
-    <div id="character">
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-    </div>
   </body>
 </html>
