@@ -7,7 +7,7 @@
 
 <script setup>
 import bcgnMp3 from "../mp3/本草纲目.mp3";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 // 分析器节点
 const analyser = ref(null);
@@ -15,6 +15,8 @@ const analyser = ref(null);
 let dataArray = ref([]);
 // 是否已初始化
 let isInit = ref(false);
+
+let draw;
 
 onMounted(() => {
   const audio = document.querySelector("audio");
@@ -43,7 +45,7 @@ onMounted(() => {
     isInit.value = true;
   };
   // 把分析出来的波形绘制到canvas上
-  function draw() {
+  draw = () => {
     // 逐帧绘制
     requestAnimationFrame(draw);
 
@@ -69,8 +71,12 @@ onMounted(() => {
       ctx.fillRect(x1, y, barWidth - 2, barHeight); //填充右边区域
       ctx.fillRect(x2, y, barWidth - 2, barHeight); //填充左边区域
     }
-  }
+  };
   draw();
+});
+
+onUnmounted(() => {
+  window.requestAnimationFrame(draw);
 });
 </script>
 

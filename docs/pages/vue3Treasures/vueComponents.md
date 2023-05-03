@@ -4,18 +4,8 @@
 import AutoEllipsis from './components/autoEllipsis.vue'
 import Loading from './components/loading.vue'
 import ImgWatermark from './components/imgWatermark.vue'
+
 </script>
-
-## 3. 图片水印
-
-<ImgWatermark text="侵权必究">
-<!-- style="width:600px;height:300px" -->
-<div >
-  单行带后缀省略单行带后缀省略单行带后缀省略单行带后缀省略单行带后缀省略,
-  单行带后缀省略单行带后缀省略单行带后缀省略单行带后缀省略单行带后缀省略
-  单行带后缀省略单行带后缀省略单行带后缀省略单行带后缀省略单行带后缀省略
-</div>
-</ImgWatermark>
 
 ## 1. 自动省略文本
 
@@ -34,6 +24,7 @@ import ImgWatermark from './components/imgWatermark.vue'
 4. **textStyle**: [object] 展示文本的样式（改变字体大小就在这里修改）
 
 ```js
+
 <div style="width:80px" >
 <AutoEllipsis  text="1. 单行展示默认省略"/>
 </div>
@@ -61,6 +52,21 @@ import ImgWatermark from './components/imgWatermark.vue'
 
 > 代码地址：pages/vue3Treasures/components/loading.vue
 
-<!-- ## 3. 图片水印
+## 3. 图片水印
 
-<ImgWatermark/> -->
+<ImgWatermark text="侵权必究">
+<div >
+  MutationObserver 接口提供了监视对 DOM 树所做更改的能力。它被设计为旧的 Mutation Events 功能的替代品，该功能是 DOM3 Events 规范的一部分。
+
+disconnect():阻止 MutationObserver 实例继续接收的通知，直到再次调用其 observe() 方法，该观察者对象包含的回调函数都不会再被调用。
+
+observe():配置 MutationObserver 在 DOM 更改匹配给定选项时，通过其回调函数开始接收通知。
+
+takeRecords():从 MutationObserver 的通知队列中删除所有待处理的通知，并将它们返回到 MutationRecord 对象的新 Array 中。
+
+</div>
+</ImgWatermark>
+
+> 代码地址：pages/vue3Treasures/components/imgWatermark.vue
+
+> [MutationObserver----MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)

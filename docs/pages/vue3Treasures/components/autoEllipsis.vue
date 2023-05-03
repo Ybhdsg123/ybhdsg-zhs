@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 
 // props
 const props = defineProps({
@@ -57,7 +57,7 @@ const fs = parseInt(optionsStyle.fontSize);
 const isEllipsis = ref(false);
 
 // 这里每次页面变化都会执行到 理论上在onMounted里面就行，只有页面加载运行一次就OK
-nextTick(() => {
+onMounted(() => {
   // 拿到计算后的文本展示
   const { text, isShowEllipsis } = autoEllipsisHandler(
     autoEllipsisRef.value,
@@ -78,7 +78,7 @@ nextTick(() => {
 const autoEllipsisHandler = (container, text) => {
   let isShowEllipsis;
   // 获取容器的宽度
-  const autoEllipsisWidth = container.clientWidth;
+  const autoEllipsisWidth = container && container.clientWidth;
   // 计算出文本宽度
   const textWidth = getTextWidth(text.trim(), fs);
   // 判断 文本宽度 和 容器宽度 * 展示的行数
