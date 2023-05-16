@@ -20,7 +20,7 @@ export default function useWatermarkBg(props) {
     canvas.width = canvasSize;
     canvas.height = canvasSize;
     //
-    ctx.translate(canvas.width / 2, canvas.height / 2); 
+    ctx.translate(canvas.width / 2, canvas.height / 2);
     // 倾斜45度
     ctx.rotate((Math.PI / 180) * -45);
     // 文本颜色
@@ -34,7 +34,7 @@ export default function useWatermarkBg(props) {
       base64: canvas.toDataURL(),
       // canvas 大小
       size: canvasSize,
-      // 显示更清晰 需要 / devicePixelRatio
+      // 显示更清晰 需要 canvas大小 / devicePixelRatio
       styleSize: canvasSize / devicePixelRatio,
     };
   });

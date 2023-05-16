@@ -81,6 +81,7 @@ export default defineConfig({
         link: "/pages/vue3-element-admin/anxinPC",
       },
       { text: "常见手写函数", link: "../pages/interviews/handwriteFn.md" },
+      { text: "node", link: "../pages/node/" },
       { text: "掘金", link: "https://juejin.cn/user/761326894326280" },
       { text: "简书", link: "https://www.jianshu.com/u/ac97502b9e92" },
     ],

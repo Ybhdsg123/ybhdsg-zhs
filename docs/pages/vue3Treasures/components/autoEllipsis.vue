@@ -56,7 +56,7 @@ const fs = parseInt(optionsStyle.fontSize);
 // 判断文本宽度是否 >= 容器宽度
 const isEllipsis = ref(false);
 
-// 这里每次页面变化都会执行到 理论上在onMounted里面就行，只有页面加载运行一次就OK
+// nextTick 这里每次页面变化都会执行到 理论上在onMounted里面就行，只有页面加载运行一次就OK
 onMounted(() => {
   // 拿到计算后的文本展示
   const { text, isShowEllipsis } = autoEllipsisHandler(
@@ -91,7 +91,7 @@ const autoEllipsisHandler = (container, text) => {
     const suffix = text.split(".").reverse()[0];
     // 展示的后缀长度
     const suffixLength = Math.round((suffix.length + 1) * 0.5);
-    // 一行能展示的文本数量 / 2  将展示的文本数量平分为两半 - 后缀应该有的长度
+    // 一行能展示的文本数量 ==>  （容器的宽度 / 字体大小 * 展示的行数）- 后缀长度 - 2
     const inlineNum =
       (Math.ceil(autoEllipsisWidth / fs) * props.showLine).toFixed(0) -
       suffixLength -
@@ -107,7 +107,9 @@ const getTextWidth = (text, fontSize = 10) => {
   // 创建一个canva元素
   const canvasDom = document.createElement("canvas");
   const ctx = canvasDom.getContext("2d");
-  ctx.font = `${fontSize}px sans-serif`; // 设置字体样式 默认字体大小是10px
+  const dpr = window.devicePixelRatio || 1;
+  const fs = dpr * fontSize;
+  ctx.font = `${fs}px sans-serif`; // 设置字体样式 默认字体大小是10px
   // 通过canvas来获取文本的宽度
   const textMetrics = ctx.measureText(text);
   // 直接得到文本的宽度
@@ -116,7 +118,7 @@ const getTextWidth = (text, fontSize = 10) => {
   const actualBoundingBoxWidth =
     textMetrics.actualBoundingBoxRight + textMetrics.actualBoundingBoxLeft;
   // 返回它们两中最大的那个元素
-  return Math.max(width, actualBoundingBoxWidth);
+  return Math.max(width * dpr, actualBoundingBoxWidth * dpr);
 };
 </script>
 

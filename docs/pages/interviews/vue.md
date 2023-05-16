@@ -1,5 +1,7 @@
 # vue2 相关
 
+[vue 原理面试](https://mp.weixin.qq.com/s/3KIaI65HqaD2hSM3NMFEOg)
+
 ## 1. 什么是 MVVM？
 
 **Model 层**

@@ -1,93 +1,13 @@
 # vite 相关
 
-## 1. 整体配置项目
-
-```js
-import { defineConfig, loadEnv } from "vite";
-import vue from "@vitejs/plugin-vue";
-import path from "path";
-
-// element-plus 按需导入-自动导入
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-
-// svg图标
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
-// setup下name书写
-import VueSetupExtend from "vite-plugin-vue-setup-extend";
-// 在模块的最高层中使用 await 操作符
-import TopLevelAwait from "vite-plugin-top-level-await";
-
-export default ({ mode, command }) => {
-  const env = loadEnv(mode, process.cwd());
-  return defineConfig({
-    base: "./",
-    plugins: [
-      vue(),
-      // name组件的注册
-      VueSetupExtend(),
-      // element-plus 按需导入-自动导入
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-      // svg图标
-      createSvgIconsPlugin({
-        // 指定需要缓存的图标文件夹
-        iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
-        // 指定symbolId格式
-        symbolId: "icon-[dir]-[name]",
-      }),
-      // 在模块的最高层中使用 await 操作符
-      TopLevelAwait({
-        // The export name of top-level await promise for each chunk module
-        promiseExportName: "__tla",
-        // The function to generate import names of top-level await promise in each chunk module
-        promiseImportName: (i) => `__tla_${i}`,
-      }),
-    ],
-    // 本地反向代理解决浏览器跨域限制
-    server: {
-      // hmr: true,
-      host: "localhost",
-      port: Number(env.VITE_APP_PORT), // 开启端口号
-      open: true, // 启动后是否自动打开浏览器
-      proxy: {
-        [env.VITE_APP_BASE_URL]: {
-          target: "https://ax-dev.lhygb.com/api", // 自己项目地址
-          ws: true,
-          changeOrigin: true, // 开启跨越
-          // 以 ^ 开头，将被识别为 RegExp。
-          // 这样写的话需要针对不同环境配置这个请求变量，并且需要注意前面这个 ^ 要进行 \ 转义
-          rewrite: (path) => path.replace(/^\/api/, "/"),
-          // rewrite: (path) =>
-          //   path.replace(new RegExp('^' + env.VITE_APP_BASE_URL), '')
-        },
-      },
-    },
-    build: {
-      sourcemap: true,
-      assetsDir: "platform", // 打包后的文件夹
-    },
-    resolve: {
-      alias: {
-        "@": path.resolve("./src"), // 相对路径别名配置，使用 @ 代替 src
-        "~/": `${path.resolve(__dirname, "src")}/`,
-      },
-    },
-  });
-};
-```
-
-## 2. `import.meta.glob` 获取文件夹下的文件
+## 1. [`import.meta.glob`](https://cn.vitejs.dev/guide/features.html#glob-import) 获取文件夹下的文件
 
 ```js
 // 获取所有组件信息
 const allRoutes = import.meta.glob("@/components/**/index.vue", {
+  //设置为 true 直接引入所有的模块（例如依赖于这些模块中的副作用首先被应用）
   eager: true,
+  // 加载默认导出，不加这个需要这样获取文件  allRoutes[key].default.name
   import: "default",
 });
 export default {
@@ -98,3 +18,24 @@ export default {
   },
 };
 ```
+
+## 2. vite 比 webpack 快的原因
+
+:::details `webpack`：分析依赖 ==> 编译打包 ==> 交给本地服务器渲染
+
+- 分析各个模块之间的依赖，再进行打包，然后通过`webpack-dev-server`请求，显示结果。
+- 项目体积变大，`bundle`体积增加，影响热更新速度
+
+:::
+
+::: `vite`: 开发阶段通过 `esbuild`构建，生产环境通过 `rollup` 进行构建
+
+- 开发阶段：采用 `esbuild` 进行依赖预购建，依赖不改变，不需要重新构建，通过浏览器自身的 `ES Modules(ESM)` ，给`<scrup` 写上 `type='module'`，来使用浏览器的 esm 模块加载模块，当浏览器发起相应模块的请求时，Vite 内置的基于 Koa 构建的 web 服务器会拦截 ES Module 请求，并通过 path 找到想要目录的文件，通过简单的处理再返回给浏览器。
+
+:::
+
+:::tip 总结
+
+`vite` 在开发阶段构建项目时会将其构建成 ESM 的形式，这让浏览器来决定什么使用要加载什么模块，然后 Vite 拦截并处理浏览器对模型加载的请求，从而实现真正的按需加载，**不再需要打包**。
+
+:::

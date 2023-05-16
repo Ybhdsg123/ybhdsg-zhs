@@ -40,7 +40,7 @@ let div;
 // 创建一个 flag 为了让 watchEffect收集依赖运行
 const flag = ref(0);
 
-// 收集依赖
+// 收集依赖 防篡改
 watchEffect(() => {
   // 收集一下 flag 的依赖，下面自动运行
   flag.value;
@@ -51,7 +51,7 @@ watchEffect(() => {
   if (div) {
     div.remove();
   }
-  const { base64, styleSize } = watermarkData.value;
+  const { base64, size, styleSize } = watermarkData.value;
   // 创建一个div
   div = document.createElement("div");
   div.style.backgroundImage = `url(${base64})`;

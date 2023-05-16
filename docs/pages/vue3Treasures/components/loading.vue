@@ -18,16 +18,17 @@ const mapSize = {
   large: 200,
 };
 const sizes = mapSize[props.size];
-
+const dpr = window.devicePixelRatio;
 // 判断输入的值是否为内置别名
 const loading_size = sizes ? sizes + "px" : props.size + "px";
 </script>
 
 <style lang="scss" scoped>
 $size: v-bind("loading_size");
+$dpr: v-bind("dpr");
 .my-loading {
-  width: $size;
-  height: $size;
+  width: calc($size / $dpr);
+  height: calc($size / $dpr);
   background: royalblue;
   -webkit-mask: radial-gradient(
         closest-side circle,

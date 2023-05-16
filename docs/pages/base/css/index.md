@@ -38,3 +38,19 @@ saturate 饱和度: -webkit-filter: saturate(1000%);
 ```
 
 :::
+
+## 2. [css 的层/堆叠上下文](https://juejin.cn/post/7230460443189084197)
+
+> **从底层到顶层顺序：** 背景图/边框 ==> `z-index` 为**负数** ==> 块级元素 ==> `float` 元素 ==> 行内元素 ==> **z-index= 1 / auto** ==> `z-index` 为**正数**
+
+## 3. [css 新建图层](https://juejin.cn/post/7051926604666109988#heading-1)
+
+:::details 产生新图层的原因
+
+- 根元素
+- 有 z-index 是负值的子元素
+- 有 3D 转换
+- position：fixed
+- 与其他元素可能重叠
+- will-change 样式的值为 opacity、transform、transform-style、perspective、filter、backdrop-filter 这 6 个之一
+  :::

@@ -234,3 +234,9 @@ function importCssByUrl(url) {
 ```
 
 :::
+
+## 6. structuredClone() 方法使用`结构化克隆算法`将给定的值进行`深拷贝`。
+
+> https://mp.weixin.qq.com/s/dLvyW_xmT3PAZ6ZrkrvYjA
+
+> mdn : https://developer.mozilla.org/zh-CN/docs/Web/API/structuredClone
