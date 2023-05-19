@@ -1,5 +1,14 @@
 ## element plus 组件
 
+<script setup>
+  import FuzzySearchData from './components/fuzzySearchData.vue'
+  const data = [
+  {name:'item1',job_id:1,child:[{name:'item1-1',job_id:12,},{name:'item1-2',job_id:13,}]},
+  {name:'item2',job_id:2,child:[{name:'item2-1',job_id:22,},{name:'item2-2',job_id:23,}]},
+  {name:'item3',job_id:3,child:[{name:'item3-1',job_id:32,},{name:'item3-2',job_id:33,}]},
+  ]
+</script>
+
 ## 1. 导入 excel 文件并上传组件
 
 :::tip
@@ -110,6 +119,22 @@ const beforeUpload = (file, filelist) => {};
 
 :::
 
-## 2. 图片上传组件
+## 2. 前端自己实现模糊搜索组件
+
+<FuzzySearchData :data='data'/>
+
+:::details 使用
+
+```js
+<FuzzySearchData :data='data'/>
+// data格式
+ const data = [
+  {name:'item1',job_id:1,child:[{name:'item1-1',job_id:12,},{name:'item1-2',job_id:13,}]},
+  ]
+```
+
+:::
+
+## 3. 图片上传组件
 
 组件位置：`pages/vue3-element-admin/components/imgUpload.vue`
