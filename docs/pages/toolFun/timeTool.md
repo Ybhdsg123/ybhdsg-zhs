@@ -23,18 +23,18 @@ export const getCurrentDay = (val = "timeStamp") => {
 
 ```js
 /*
-** timestamp 入参时间戳(毫秒）或者字符串格式都可以
-*** getWeekdays('2022-12-7') getWeekdays(1670774400000)
+ ** timestamp 入参时间戳(毫秒）或者字符串格式都可以
+ *** getWeekdays('2022-12-7') getWeekdays(1670774400000)
  */
 export function getWeekdays(timestamp) {
-let date = new Date(timestamp).setHours(0, 0, 0, 0);
-let dayOfToday = new Date(date).getDay();
-let firstDay = new Date(date + (1 - dayOfToday) _ 86400 _ 1000);
-let lastDay = new Date(date + (7 - dayOfToday) _ 86401 _ 1000);
-return {
-firstDay,
-lastDay,
-};
+  let date = new Date(timestamp).setHours(0, 0, 0, 0);
+  let dayOfToday = new Date(date).getDay();
+  let firstDay = new Date(date + (1 - dayOfToday) - 86400 - 1000);
+  let lastDay = new Date(date + (7 - dayOfToday) - 86401 - 1000);
+  return {
+    firstDay,
+    lastDay,
+  };
 }
 ```
 

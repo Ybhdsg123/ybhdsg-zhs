@@ -2,6 +2,12 @@
 
 > 参考`有来技术团队` [vue3-element-admin](https://www.youlai.tech/pages/5d571c/#%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B) 自己跟着搭建了一遍
 
+> vue3.3 特性了解：https://juejin.cn/post/7231940493256032316#heading-21
+
+> `defineOptions`不用再引入插件写 name 啦
+
+> `defineModel` 简化 双向绑定的 prop
+
 ## 1. 项目初始化
 
 > [Vite 官方中文文档](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)：https://cn.vitejs.dev/guide/
@@ -783,10 +789,17 @@ import router from "@/router";
 // loading实例
 let loadingInstance = null;
 
+// 默认config
+const baseConfig = {
+  loading: false,
+  autoError: true,
+  loadingText: "正在请求中...",
+};
+
 // 创建实例
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
-  timeout: 3000,
+  timeout: 6000,
   headers: { "Content-Type": "application/json;charset=utf-8" },
 });
 
@@ -833,11 +846,13 @@ service.interceptors.response.use(
       let message = res && res.data && res.data.message;
       if (message instanceof Object) {
         for (let k in message) {
-          ElMessage.error(message[k]);
+          // autoError:true，自动提示错误信息，控制台会警告，没有处理错误（没有try catch)
+          res.config.autoError && ElMessage.error(message[k]);
           return Promise.reject(res.data);
         }
       } else {
-        ElMessage.error(message);
+        res.config.autoError && ElMessage.error(message);
+        return Promise.reject(res.data);
       }
       // return res.data
       // 响应的 code !== 200 就reject
@@ -871,6 +886,8 @@ service.interceptors.response.use(
     } else {
       err.message = "连接服务器出错";
     }
+    // 微信登录失败
+    window.location.href = window.location.href.split("?")[0];
     ElMessage.error(err.message);
     // console.log(err, '响应拦截器err')
     return Promise.reject(err && err.response); // 请求错误让请求走到catch而不是then
@@ -878,35 +895,23 @@ service.interceptors.response.use(
 );
 //  常用请求方法封装
 const http = {};
-http.get = (
-  url,
-  data,
-  config = { loading: false, loadingText: "正在请求中..." }
-) => {
-  return service.get(url, { params: data }, config);
+http.get = (url, params, config) => {
+  const configOptions = { ...baseConfig, ...config };
+  return service.get(url, { params }, configOptions);
 };
 
-http.post = (
-  url,
-  data,
-  config = { loading: false, loadingText: "正在请求中..." }
-) => {
-  return service.post(url, data, config);
+http.post = (url, data, config) => {
+  const configOptions = { ...baseConfig, ...config };
+  return service.post(url, data, configOptions);
 };
 
-http.put = (
-  url,
-  data,
-  config = { loading: true, loadingText: "正在请求中..." }
-) => {
-  return service.put(url, data, config);
+http.put = (url, data, config) => {
+  const configOptions = { ...baseConfig, ...config };
+  return service.put(url, data, configOptions);
 };
-http.delete = (
-  url,
-  data,
-  config = { loading: true, loadingText: "正在请求中..." }
-) => {
-  return service.delete(url, { params: data }, config);
+http.delete = (url, data, config) => {
+  const configOptions = { ...baseConfig, ...config };
+  return service.delete(url, { params: data }, configOptions);
 };
 
 /**
@@ -916,19 +921,29 @@ http.delete = (
  * @param {Object} config 请求头配置和剩余参数
  * @Author: zhs
  */
-http.export = (
-  url,
-  data,
-  config = {
-    loading: false,
-    loadingText: "正在导出中...",
+http.export = (url, data, config) => {
+  const configOptions = {
+    ...baseConfig,
     responseType: "arraybuffer",
-  }
-) => {
-  return service.post(url, data, config);
+    ...config,
+  };
+  return service.post(url, data, configOptions);
 };
 
+// 上传excel
+http.postFile = (url, data, config) => {
+  const configOptions = {
+    ...baseConfig,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    ...config,
+  };
+  return service.post(url, data, configOptions);
+};
 export default http;
+
+// export default service
 ```
 
 - **上传图片**

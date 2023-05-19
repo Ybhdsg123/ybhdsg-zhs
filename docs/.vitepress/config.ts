@@ -77,8 +77,14 @@ export default defineConfig({
         ],
       },
       {
-        text: "vue3后台搭建",
-        link: "/pages/vue3-element-admin/anxinPC",
+        text: "vue3后台系统",
+        items: [
+          { text: "搭建过程", link: "/pages/vue3-element-admin/anxinPC" },
+          {
+            text: "element plus组件",
+            link: "/pages/vue3-element-admin/epComponents",
+          },
+        ],
       },
       { text: "常见手写函数", link: "../pages/interviews/handwriteFn.md" },
       { text: "node", link: "../pages/node/" },
@@ -127,7 +133,7 @@ export default defineConfig({
         collapsed: false, // 默认收缩
         items: [
           { text: "常用的方法", link: "/pages/toolFun/fileTool" },
-          { text: "下载文件相关", link: "/pages/toolFun/download" },
+          { text: "文件相关", link: "/pages/toolFun/download" },
           { text: "时间相关", link: "/pages/toolFun/timeTool" },
           { text: "图片相关", link: "/pages/toolFun/imgTool" },
         ],

@@ -1,5 +1,9 @@
 # vue [常见指令](https://cn.vuejs.org/guide/reusability/custom-directives.html#introduction)
 
+<script setup>
+  import DebounceDir from './directive/debounceDir.vue'
+</script>
+
 ## 一、注册自定义指令
 
 1. 在 `<script setup>` 中，**任何以 v 开头的驼峰式命名的变量都可以被用作一个自定义指令**。`vFocus `即可以在模板中以 `v-focus` 的形式使用。
@@ -101,9 +105,9 @@ onst myDirective = {
 
 ::: details 指令的钩子参数
 
-> `el: ` 指令绑定到的元素。这可以用于直接操作 DOM。
+#### 1. el: 指令绑定到的元素。这可以用于直接操作 DOM。
 
-> `binding`：一个对象，包含以下属性。
+#### 2. binding：一个对象，包含以下属性。
 
 - `value`：**传递给指令的值。例如在 `v-my-directive="1 + 1"` 中，值是 2。**
 - `oldValue`：之前的值，仅在 beforeUpdate 和 updated 中可用。无论值是否更改，它都可用。
@@ -117,6 +121,19 @@ onst myDirective = {
 > `prevNode`：之前的渲染中代表指令所绑定元素的 VNode。仅在 beforeUpdate 和 updated 钩子中可用。
 
 :::
+
+举例来说
+
+```js
+<div v-example:demo.foo="onClick">
+
+  {
+  arg: '1', // :值 为参数
+  modifiers: { bar: true }, //  .值 为修饰符对象
+  value: /* `onClick` 的值 */, // =值 为value的
+  oldValue: /* 上一次更新时 `onClick` 的值 */
+}
+```
 
 通过下方的指令的 `binding`图片可以看到，在本例中，
 
@@ -137,7 +154,10 @@ onst myDirective = {
 // 禁止选中
 export const disabledSelect = {
   mounted(el) {
+    // 禁用选择 复制
     el.onselectstart = new Function("event.returnValue=false");
+    // 禁用右键
+    // el.oncontextmenu = new Function("event.returnValue=false");
   },
 };
 ```
@@ -185,20 +205,36 @@ const vFocus = {
 
 **2. `v-debounce` 点击防抖**
 
+#### 例子
+
+<DebounceDir/>
+
 ::: details v-debounce
 
 ```vue
 <template>
-  <el-button v-debounce:[demo].foo="onClick">点击</el-button>
+  <button
+    style="padding:3px;border:1px solid #409eff"
+    v-debounce:[demo].foo="onClick"
+  >
+    多次点击
+  </button>
+  {{ demo }}
 </template>
 
 <script setup>
 import { ref } from "vue";
-const demo = ref(1);
+
+// 这里 time 就是延迟时间，event就是执行的事件 例如 click 或者 input
+const demo = ref({
+  time: 1000,
+  event: "click",
+});
 
 // 点击事件
 function onClick() {
   // console.log(demo.value)
+  demo.value.time++;
   console.log("Only triggered once when clicked many times quickly");
 }
 
@@ -217,9 +253,14 @@ const debounce = (fn, wait = 1000) => {
 // 防抖指令
 const vDebounce = {
   mounted(el, binding) {
-    // console.log(binding)
-    // 注册点击事件，传入 binding.value => onClick，和延时时间 binding.arg
-    el.addEventListener("click", debounce(binding.value, binding.arg));
+    // 指令参数
+    // 格式：object {event:注册的事件,time:延时的时间}
+    const args = binding.arg;
+    if (!args) {
+      throw Error('请传入类似于{time:1000,event:"click"}格式的指令参数');
+    }
+    // 注册点击事件，传入 binding.value => onClick，和延时时间 args.arg
+    el.addEventListener(args.event, debounce(binding.value, args.time));
   },
 };
 </script>
@@ -277,7 +318,10 @@ const vDebounceClick = {
 //  禁止选中
 export const disabledSelect = {
   mounted(el) {
+    // 禁用选择 复制
     el.onselectstart = new Function("event.returnValue=false");
+    // 禁用右键
+    // el.oncontextmenu = new Function("event.returnValue=false");
   },
 };
 ```
