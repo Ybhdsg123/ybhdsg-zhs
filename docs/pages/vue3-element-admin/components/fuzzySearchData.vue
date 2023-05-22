@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, nextTick } from "vue";
+import { ref, watchEffect, onMounted, nextTick } from "vue";
 import { fuzzySearchBykeyword, debounce } from "../tools/tool";
 
 // props
@@ -115,7 +115,7 @@ const searchContentRef = ref(null);
 
 //获取整个容器高度
 const height = ref();
-nextTick(() => {
+onMounted(() => {
   height.value = searchContentRef.value.offsetHeight + "px";
 });
 
