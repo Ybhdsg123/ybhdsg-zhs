@@ -36,3 +36,28 @@ user-select:none;
   content="upgrade-insecure-requests"
 />
 ```
+
+## 3. a 元素
+
+:::details
+
+1. 锚点：
+
+```html
+<h2 id="Mailing_address">邮寄地址</h2>
+<!-- 链接到某个文件的特定地方 -->
+<p>请将信件邮寄至<a href="contacts.html#Mailing_address">我们的地址</a></p>
+<!-- 链接到本文件的特定地方 -->
+<p>本页面底部可以找到<a href="#Mailing_address">公司邮寄地址</a></p>
+```
+
+2. `download`属性，下载文件保存的名称
+3. 发送邮件：`mailto:` URL 协议实现。
+   [更多发送邮件相关](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Introduction_to_HTML/Creating_hyperlinks#%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E9%93%BE%E6%8E%A5)
+   > 电子邮件地址是可选的。如果你省略了它（也就是说，你的 href 属性仅仅只是简单的“mailto:”），发送新的电子邮件的窗口也会被用户的邮件客户端打开，只是没有收件人的地址信息，这通常在“分享”链接是很有用的，用户可以给他们选择的地址发送邮件。
+
+```html
+<a href="mailto:nowhere@mozilla.org">向 nowhere 发邮件</a>
+```
+
+:::

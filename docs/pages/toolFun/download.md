@@ -22,7 +22,7 @@ export const exportExcel = (data, fileName) => {
   link.style.display = "none"; // 让a元素在页面中隐藏
   link.href = url; // 绑定 a 元素的 href 为当前的url
   let exportName = fileName || "导出明细.xlsx";
-  link.setAttribute("download", exportName); // 设置 a 元素 download属性，属性值为后面的值
+  link.setAttribute("download", exportName); // 设置 a 元素 download属性(下载保存的文件名称)，属性值为后面的值
   link.setAttribute("target", "_blank"); // 设置 a 元素 target属性，再开一个标签页打开或者下载
   document.body.appendChild(link); // 添加到页面中
   link.click(); // 点击a元素 下载excel文件
