@@ -789,9 +789,10 @@ import router from "@/router";
 // loading实例
 let loadingInstance = null;
 
-// 默认config
+// 默认 自定义的config
 const baseConfig = {
   loading: false,
+  // 是否自动提示错误信息，控制台会警告，没有处理错误（没有try catch)
   autoError: true,
   loadingText: "正在请求中...",
 };
@@ -801,12 +802,12 @@ const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
   timeout: 6000,
   headers: { "Content-Type": "application/json;charset=utf-8" },
+  ...baseConfig, // 默认请求配置 放在这里
 });
 
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    // loading
     if (config.loading) {
       loadingInstance = ElLoading.service({ text: config.loadingText });
     } else {
@@ -846,7 +847,6 @@ service.interceptors.response.use(
       let message = res && res.data && res.data.message;
       if (message instanceof Object) {
         for (let k in message) {
-          // autoError:true，自动提示错误信息，控制台会警告，没有处理错误（没有try catch)
           res.config.autoError && ElMessage.error(message[k]);
           return Promise.reject(res.data);
         }
@@ -896,22 +896,21 @@ service.interceptors.response.use(
 //  常用请求方法封装
 const http = {};
 http.get = (url, params, config) => {
-  const configOptions = { ...baseConfig, ...config };
-  return service.get(url, { params }, configOptions);
+  // 请求的配置需要和 params 同级
+  // { params, ...config } ===> 等同于 { params:params, ...config }
+  return service.get(url, { params, ...config });
 };
 
 http.post = (url, data, config) => {
-  const configOptions = { ...baseConfig, ...config };
-  return service.post(url, data, configOptions);
+  // config 请求的配置，直接传第三个
+  return service.post(url, data, config);
 };
 
 http.put = (url, data, config) => {
-  const configOptions = { ...baseConfig, ...config };
-  return service.put(url, data, configOptions);
+  return service.put(url, data, config);
 };
 http.delete = (url, data, config) => {
-  const configOptions = { ...baseConfig, ...config };
-  return service.delete(url, { params: data }, configOptions);
+  return service.delete(url, { params: data, ...config });
 };
 
 /**
@@ -923,7 +922,6 @@ http.delete = (url, data, config) => {
  */
 http.export = (url, data, config) => {
   const configOptions = {
-    ...baseConfig,
     responseType: "arraybuffer",
     ...config,
   };
@@ -933,7 +931,6 @@ http.export = (url, data, config) => {
 // 上传excel
 http.postFile = (url, data, config) => {
   const configOptions = {
-    ...baseConfig,
     headers: {
       "Content-Type": "multipart/form-data",
     },

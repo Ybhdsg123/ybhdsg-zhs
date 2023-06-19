@@ -14,6 +14,14 @@ import CrashBallLoading from './components/crashBallLoading.vue'
 
 1. 通过自定义 `data` 和 伪元素的 `attr` 显示展示的文本
 
+   [attr()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/attr)
+   : 可以将自定义属性值作用于伪元素
+
+   ```html
+   <p data-foo="hello">world</p>
+   &:before { content: attr(data-foo)}
+   ```
+
 :::
 
 <div style="width:80px" >

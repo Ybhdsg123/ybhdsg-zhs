@@ -125,12 +125,23 @@ const beforeUpload = (file, filelist) => {};
 
 :::details 使用
 
-```js
-<FuzzySearchData :data='data'/>
-// data格式
- const data = [
-  {name:'item1',job_id:1,child:[{name:'item1-1',job_id:12,},{name:'item1-2',job_id:13,}]},
-  ]
+**如果需要搜索后清除选中的值，需要手动调用组件实例的`clearSelected`方法**
+
+1. `data`格式 :[{name:'item1',job_id:1,child:[{name:'item1-1',job_id:12,},{name:'item1-2',job_id:13,}]}]
+2. `defaultValue`: 默认值(只需要传显示的名字 )
+3. `@selectedJob`: 是 emits 选中值的事件
+4. `disabled`: 是否禁止
+
+```vue
+<template>
+  <FuzzySearchData
+    :disabled="dialogStatus"
+    :data="jobs"
+    :defaultValue="defaultValue"
+    @selectedJob="selectedJob"
+    ref="searchBoxRef"
+  />
+</template>
 ```
 
 :::

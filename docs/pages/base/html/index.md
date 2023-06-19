@@ -37,7 +37,7 @@ user-select:none;
 />
 ```
 
-## 3. a 元素
+## 3. a 元素的应用
 
 :::details
 
@@ -58,6 +58,38 @@ user-select:none;
 
 ```html
 <a href="mailto:nowhere@mozilla.org">向 nowhere 发邮件</a>
+```
+
+:::
+
+## 4. 系统主题色改变
+
+:::details css
+
+```css
+@media (prefers-color-scheme: light) {
+  /* 亮色主题下的css变量和样式 */
+}
+@media (prefers-color-scheme: dark) {
+  /* 暗色主题下的css变量和样式 */
+}
+```
+
+:::
+
+:::details js
+
+```js
+// 通过 matchMeida 监听当前系统的主题色 dark：暗色 light：亮色
+const scheme = window.matchMedia("prefers-color-scheme: dark");
+// 返回值 scheme 中的 matches 为true表示符合当前检测的主题
+// 例如在当前检测下，系统主题为 暗色主题的话 matches=true
+
+// 可以监听系统主题色的改改变
+scheme.addEventListener("change", (e) => {
+  // 主题色从 暗色-亮色会触发该方法
+  console.log(e);
+});
 ```
 
 :::

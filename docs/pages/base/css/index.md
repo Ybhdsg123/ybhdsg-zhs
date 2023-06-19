@@ -1,5 +1,11 @@
 # css
 
+**Flexbox 布局最适合应用程序的组件和小规模布局（一维布局），而 Grid 布局则适用于更大规模的布局（二维布局）**
+
+[Grid 布局链接](https://www.zhangxinxu.com/wordpress/2018/11/display-grid-css-css3/)：Grid 布局中，`float`，`display:inline-block`，`display:table-cell`，`vertical-align`以及`column-*`这些**属性和声明对 grid 子项是没有任何作用的**。面试经常会问的，一定要记得。
+
+[Flexbox 布局链接](https://www.zhangxinxu.com/wordpress/2018/10/display-flex-css3-css/)：**flex 子元素**的设置 ` float``，clear ` 以及 `vertical-align` 属性都是没有用的。
+
 ## 1. 网站置灰
 
 :::tip
@@ -54,3 +60,34 @@ saturate 饱和度: -webkit-filter: saturate(1000%);
 - 与其他元素可能重叠
 - will-change 样式的值为 opacity、transform、transform-style、perspective、filter、backdrop-filter 这 6 个之一
   :::
+
+## 4. 多行省略
+
+```css
+/* 用来限制在一个块元素显示的文本的行数 */
+-webkit-line-clamp: v-bind("props.showLine");
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+```
+
+## 5. 滚动条样式改变
+
+```css
+// 修改滚动条样式 大小
+&::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+// 滚动条样式
+&::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #888;
+}
+// 轨道
+&::-webkit-scrollbar-track {
+  border-radius: 10px;
+  /*滚动条里面轨道*/
+  // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+```

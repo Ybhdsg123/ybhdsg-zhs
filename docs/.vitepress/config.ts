@@ -22,6 +22,7 @@ export default defineConfig({
   },
   // 主题配置
   themeConfig: {
+    // 全局搜索
     algolia: {
       appId: "6CNZ25L7YU", // 需要替换
       apiKey: "e53c455f0ac0c08324e6940af2916937", // 需要替换
@@ -48,6 +49,10 @@ export default defineConfig({
     ],
     // 主题色按钮 左侧导航
     nav: [
+      {
+        text: "Threejs",
+        link: "../pages/threejs/threejs.md",
+      },
       {
         text: "cancvs",
         items: [
@@ -95,8 +100,6 @@ export default defineConfig({
     sidebar: [
       {
         text: "vue3宝藏🏴‍☠️",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false, // true:收缩 false:展开
         items: [
           {
             text: "vue组件",
@@ -114,8 +117,6 @@ export default defineConfig({
       },
       {
         text: "vue 核心",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false, // true:收缩 false:展开
         items: [
           {
             text: "响应式原理",
@@ -125,12 +126,14 @@ export default defineConfig({
             text: "虚拟dom",
             link: "/pages/vueCore/virtualDom",
           },
+          {
+            text: "diff算法",
+            link: "/pages/vueCore/diff",
+          },
         ],
       },
       {
         text: "工具函数",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false, // 默认收缩
         items: [
           { text: "常用的方法", link: "/pages/toolFun/tools" },
           { text: "文件相关", link: "/pages/toolFun/download" },
@@ -139,10 +142,14 @@ export default defineConfig({
         ],
       },
       {
-        text: "基础三大件常用技巧",
+        text: "好记性不如烂笔头",
         collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
         collapsed: false,
         items: [
+          {
+            text: "算法",
+            link: "/pages/base/leetcode/",
+          },
           {
             text: "JavaScript",
             link: "/pages/base/js/",
@@ -173,7 +180,7 @@ export default defineConfig({
           { text: "注意点", link: "/pages/vue3/basic/note" },
           { text: "reactive", link: "/pages/vue3/basic/reactive" },
           { text: "ref", link: "/pages/vue3/basic/ref" },
-          { text: "v-model", link: "/pages/vue3/basic/v-models" },
+          { text: "v-model", link: "/pages/vue3/basic/v-model" },
           { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
         ],
       },

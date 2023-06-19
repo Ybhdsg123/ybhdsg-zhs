@@ -5,9 +5,10 @@
       placeholder="输入岗位名称搜索"
       v-model="job_name"
       @focus="focusHandler"
-      @blur="searchContentRef.style.transform = 'scale(0, 0)'"
+      @blur="blurHandler"
       v-debounceDir:[event]="iptHandler"
       :disabled="disabled"
+      ref="iptRef"
     />
     <div
       class="search-suggestions"
@@ -62,8 +63,8 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, nextTick } from "vue";
-import { fuzzySearchBykeyword, debounce } from "../tools/tool";
+import { ref, watchEffect, watch, nextTick } from "vue";
+import { fuzzySearchBykeyword } from "../tools/tool";
 
 // props
 const props = defineProps({
@@ -95,41 +96,32 @@ const event = {
   event: "input",
 };
 
-const VDebounceDir = {
-  mounted(el, binding) {
-    // 指令参数
-    // 格式：object {event:注册的事件,time:延时的时间}
-    const args = binding.arg;
-    if (!args) {
-      throw Error('请传入类似于{time:1000,event:"click"}格式的指令参数');
-    }
-    el.addEventListener(args.event, debounce(binding.value, args.time));
-  },
-};
-
 // emits
 const emits = defineEmits(["selectedJob"]);
 
 // ref
 const searchContentRef = ref(null);
+const iptRef = ref(null);
 
-//获取整个容器高度
+//获取整个容器高度 以左边容器为主
 const height = ref();
-onMounted(() => {
-  height.value = searchContentRef.value.offsetHeight + "px";
-});
 
 // 显示的名称
 const job_name = ref(props.defaultValue);
+
 // 当前活动的tab
 const activeIndex = ref(0);
 
 // 所有数据时 右边内容 默认数组第一条子节点
 const content = ref([]);
-watchEffect(() => {
-  content.value = props.data[0]?.child;
-  job_name.value = props.defaultValue;
-});
+
+watch(
+  () => props.defaultValue,
+  (newValue) => {
+    job_name.value = props.defaultValue;
+  },
+  { immediate: true }
+);
 
 // 获取所有的模糊搜索数据
 const fuzzySearchData = [];
@@ -156,12 +148,24 @@ const iptHandler = () => {
 const selected = (obj) => {
   job_name.value = obj.name;
   emits("selectedJob", obj);
+  // 选中数据时 将展示框缩小
+  blurHandler();
 };
 
 // 搜索框聚焦时
 const focusHandler = () => {
   iptHandler(); // 聚焦时搜索一下当前文本框内容
+  content.value = props.data[0]?.child; // 默认右边内容为第一个
+  height.value = searchContentRef.value.offsetHeight + "px"; // 获取整个容器高度
   searchContentRef.value.style.transform = " scale(1,1)";
+};
+
+// 搜索框失去焦点时
+const blurHandler = () => {
+  if (job_name.value !== "") {
+    // 缩小到 0 太快，有可能数据没选中之前已失去焦点，导致数据无法选中，所以判断一下当前是否有值
+    searchContentRef.value.style.transform = "scale(0, 0)";
+  }
 };
 
 // 总的数据时---滑动切换右边内容
@@ -169,12 +173,18 @@ const mouseenterHandler = (index) => {
   activeIndex.value = index;
   content.value = props.data[index].child;
 };
+
+// 清空选中的值
+const clearSelected = () => (job_name.value = "");
+
+defineExpose({
+  clearSelected,
+});
 </script>
 
 <style lang="scss" scoped>
 $bg-color: #f2f2f2;
 $color: #409eff;
-$base-bg-color: #ecf5ff;
 // 模糊数据
 $fd-bd-color: #ecf5ff; // border
 $fd-bg-color: #d9ecff; // bg
@@ -185,7 +195,7 @@ $fd-bg-color: #d9ecff; // bg
 .search-suggestions {
   position: absolute;
   z-index: 999;
-  transform-origin: top left;
+  transform-origin: top left; // 变换的中心
   transition: transform 0.6s;
   width: 100%;
   height: v-bind(height);
@@ -193,7 +203,7 @@ $fd-bg-color: #d9ecff; // bg
 
 // 没有数据时
 .no-data {
-  background-color: $base-bg-color;
+  background-color: #fff;
   text-align: center;
 }
 
@@ -201,11 +211,31 @@ $fd-bg-color: #d9ecff; // bg
 .fuzey-data {
   display: flex;
   flex-wrap: wrap;
-  background-color: $base-bg-color;
+  background-color: #fff;
   padding: 10px;
   height: auto;
   max-height: 100%;
-  overflow: scroll;
+  // overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  // 修改滚动条样式 大小
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  // 滚动条样式
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #888;
+  }
+  // 轨道
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+
+    /*滚动条里面轨道*/
+    // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
   .fuzey-data-item {
     padding: 0px 9px;
     height: 24px;
@@ -225,7 +255,7 @@ $fd-bg-color: #d9ecff; // bg
   display: flex;
   width: 100%;
   height: 100%;
-  background-color: $base-bg-color;
+  background-color: #fff;
 
   .left,
   .right {
@@ -238,11 +268,28 @@ $fd-bg-color: #d9ecff; // bg
     cursor: pointer;
   }
   .right {
-    // flex: 2;
-    overflow: scroll;
     background-color: $bg-color;
     padding-left: 20px;
     margin-left: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    // 修改滚动条样式 大小
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    // 滚动条样式
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #888;
+    }
+    // 轨道
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+
+      /*滚动条里面轨道*/
+      // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    }
   }
   .left-item {
     max-height: 100px;

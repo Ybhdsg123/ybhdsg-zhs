@@ -2,7 +2,15 @@
 
 [大佬特效仓库](https://gitee.com/wyanhui02/html_css_demo/blob/master/README.md)
 
-<!-- <TextExtensionLine/> -->
+<script setup>
+import TextSplitting from './components/textSplitting.vue'
+import SpecialIpt from './components/specialIpt.vue'
+import FlashCards from './components/flashCards.vue'
+import LoveLoading from './components/loveLoading.vue'
+import RhombusLoading from './components/rhombusLoading.vue'
+import DazzleLoading from './components/dazzleLoading.vue'
+import TextExtensionLine from './components/textExtensionLine.vue'
+</script>
 
 ## 1. 文字裂开特效
 
@@ -16,7 +24,9 @@
     <div v-for="item in 2" :key="item" class="item">
       <div class="a">文字裂开效果</div>
       <div class="a">文字裂开效果</div>
-      <a target="_blank" href="https://www.baidu.com/">点赞了解更多</a>
+      <a target="_blank" href="https://ybhdsg123.github.io/ybhdsg-zhs/"
+        >点赞了解更多</a
+      >
     </div>
   </div>
 </template>
@@ -951,13 +961,3 @@ h1::after {
 ```
 
 :::
-
-<script setup>
-import TextSplitting from './components/textSplitting.vue'
-import SpecialIpt from './components/specialIpt.vue'
-import FlashCards from './components/flashCards.vue'
-import LoveLoading from './components/loveLoading.vue'
-import RhombusLoading from './components/rhombusLoading.vue'
-import DazzleLoading from './components/dazzleLoading.vue'
-import TextExtensionLine from './components/textExtensionLine.vue'
-</script>

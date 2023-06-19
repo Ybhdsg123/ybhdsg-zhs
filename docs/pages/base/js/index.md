@@ -17,7 +17,7 @@ console.log(~~str); //2
 
 :::
 
-## 2. 数组扁平化
+## 2. flat 数组扁平化
 
 :::details 常规操作
 
@@ -38,7 +38,7 @@ console.log(flatten(arr))// [1, 2, 3, 4，5]
 `arr.flat ( [depth] )` 其中 depth 是 flat 的参数，depth 是可以传递数组的展开深度（**默认不填、数值是 1）**，即展开一层数组。如果层数不确定，参数可以传进 **Infinity，代表不论多少层都要展开：**
 :::
 
-:::details 骚操作
+:::details flat
 
 ```js
 let arr = [1, [2, [3, 4, 5]]];
@@ -210,7 +210,7 @@ function importCssByUrl(url) {
 
 - 返回一个对象，包含元素计算之后的 css 属性值
 - 语法：`window.getComputedStyle(element, [pseudoElt])` **pseudoElt 参数可以让它查询伪元素**
-- **注意此方式获取的是最终计算之后的样式值，而且会引起重排**
+- **注意此方式获取的是最终计算之后的样式值，而且会引起回流**
 
 :::details
 

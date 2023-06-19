@@ -64,3 +64,14 @@ origin  https://github.com/tianqixin/runoob-git-test (push)
 ```js
 $ git remote set-url origin git@github.com:tianqixin/runoob-git-test.git
 ```
+
+## 4. 上传时忘记弄 `gitignore` 文件，已上传到仓库时
+
+**清除缓存 重新提交**
+
+```js
+git rm --cached -r .  // 清除缓存
+git add .
+git commit -m '注释'
+git push
+```

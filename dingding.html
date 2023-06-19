@@ -31,21 +31,12 @@
         position: relative;
         margin: auto;
         display: grid;
+        /* 一行7个 */
         grid-template-columns: repeat(7, 1fr);
         background-color: #076493;
         padding: 0px;
-        animation: demo 3s linear;
         width: 980px;
       }
-      @keyframes demo {
-        0% {
-          scale: 0;
-        }
-        100% {
-          scale: 1;
-        }
-      }
-
       .container-wraper .ani-container .list .item {
         width: 60px;
         height: 60px;
@@ -99,8 +90,10 @@
       const list = document.querySelector(".list");
 
       // 主要函数，类似函数f(x) = kx + b 得出最终的y
+      // 一个坐标轴，y随着x的变化而变化，这里是随着滚动的距离变化而变化
       function fx(minX, maxX, minY, maxY) {
         return function (x) {
+          // console.log(x, "---");
           if (x < minX) {
             return minY;
           }
@@ -109,7 +102,6 @@
           }
 
           // 类似函数y = kx + b
-
           return ((maxY - minY) / (maxX - minX)) * (x - minX) + minY;
         };
       }
@@ -120,12 +112,13 @@
       // 辅助方法，生成每个节点应该更新的属性
       function getDomStylePropValue(dom, minX, maxX) {
         // 添加顺序，不同的x决定y的变化
+        // 自定义属性来设置出现的时间不同（不是一起出现）
         minX = minX + dom.getAttribute("order") * 300;
-
+        // 透明度
         const opacity = fx(minX, maxX, 0, 1);
-
+        // 缩放比例
         const scale = fx(minX, maxX, 0, 1);
-        const width = fx(minX, maxX, 0, 980);
+        // 偏移的距离
         const tx = fx(
           minX,
           maxX,
@@ -158,6 +151,8 @@
 
         items.forEach((dom) => {
           propObj.set(dom, getDomStylePropValue(dom, minX, maxX));
+          // 外层边框大小跟着变化
+          propObj.set(list, getDomStylePropValue(list, minX, maxX));
         });
       }
 
@@ -166,7 +161,7 @@
         for (const [dom, value] of propObj) {
           Object.keys(value).forEach((prop) => {
             dom.style[prop] = value[prop](window.scrollY);
-            console.log(prop, value[prop](window.scrollY));
+            // console.log(prop, value[prop](window.scrollY));
           });
         }
       }

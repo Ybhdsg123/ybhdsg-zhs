@@ -16,7 +16,6 @@
   );
   background-size: 100% 2px;
   // &:hover {
-
   //   background-color: aqua;
   //   background-size: 100% 2px;
   // }
