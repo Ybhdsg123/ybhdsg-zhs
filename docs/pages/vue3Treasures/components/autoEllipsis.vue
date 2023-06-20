@@ -102,14 +102,21 @@ const autoEllipsisHandler = (container, text) => {
   return { text, isShowEllipsis };
 };
 
-// 计算文字的宽度
+/**
+ * @description: 计算文字的宽度
+ * @param {*} text 展示的文本
+ * @param {*} fontSize 文本字体大小
+ * @return 文本的宽度
+ * @Author: zhs
+ */
 const getTextWidth = (text, fontSize = 10) => {
   // 创建一个canva元素
   const canvasDom = document.createElement("canvas");
   const ctx = canvasDom.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const fs = dpr * fontSize;
-  ctx.font = `${fs}px sans-serif`; // 设置字体样式 默认字体大小是10px
+  const fontStyle = optionsStyle.fontStyle || "sans-serif";
+  ctx.font = `${fs}px ${fontStyle}`; // 设置字体样式 默认字体大小是10px
   // 通过canvas来获取文本的宽度
   const textMetrics = ctx.measureText(text);
   // 直接得到文本的宽度
@@ -146,6 +153,7 @@ $color-info: #999;
   z-index: 99;
   &:before {
     content: attr(data-text); // 通过 attr 显示自定义文本
+    min-width: 230px;
     white-space: nowrap;
     position: absolute;
     top: -30px;

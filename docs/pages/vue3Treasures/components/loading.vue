@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 const props = defineProps({
   // loading 大小
   size: {
@@ -18,7 +19,12 @@ const mapSize = {
   large: 200,
 };
 const sizes = mapSize[props.size];
-const dpr = window.devicePixelRatio;
+
+let dpr;
+onMounted(() => {
+  dpr = window.devicePixelRatio;
+});
+
 // 判断输入的值是否为内置别名
 const loading_size = sizes ? sizes + "px" : props.size + "px";
 </script>

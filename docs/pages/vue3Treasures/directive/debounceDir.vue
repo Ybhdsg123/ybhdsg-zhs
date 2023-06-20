@@ -39,6 +39,7 @@ const debounce = (fn, wait = 1000) => {
 // 防抖指令
 const vDebounce = {
   mounted(el, binding) {
+    console.log(binding);
     // 指令参数
     // 格式：object {event:注册的事件,time:延时的时间}
     const args = binding.arg;

@@ -24,12 +24,12 @@ import CrashBallLoading from './components/crashBallLoading.vue'
 
 :::
 
-<div style="width:80px" >
-<AutoEllipsis  text="1. 单行展示默认省略"/>
+<div style="width:180px" >
+<AutoEllipsis  text="1. 单行展示默认省略 单行展示默认省略"/>
 </div>
-<AutoEllipsis style="width:100px" isShowSuffix text="2. 单行带后缀省略.jpeg"/>
+<AutoEllipsis style="width:200px" isShowSuffix text="2. 单行带后缀省略单行带后缀省略单行带后缀省略.jpeg"/>
 <AutoEllipsis style="width:80px"  :showLine="2" text="3. 多行展示默认省略展示默认省略.jpeg"/>
-<AutoEllipsis style="width:120px" isShowSuffix :showLine="2" text="4. 多行展示带后缀省略多行展示带后缀省略.jpg"/>
+<AutoEllipsis style="width:220px" isShowSuffix :showLine="2" text="4. 多行展示带后缀省略多行展示带后缀省略.jpg多行展示带后缀省略多行展示带后缀省略.jpg"/>
 
 :::details 使用
 

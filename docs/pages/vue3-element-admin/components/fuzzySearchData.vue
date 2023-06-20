@@ -6,8 +6,8 @@
       v-model="job_name"
       @focus="focusHandler"
       @blur="blurHandler"
-      v-debounceDir:[event]="iptHandler"
       :disabled="disabled"
+      v-debounceDir:[event]="iptHandler"
       ref="iptRef"
     />
     <div
@@ -94,6 +94,18 @@ const props = defineProps({
 const event = {
   time: props.delayTime,
   event: "input",
+};
+
+// 防抖指令
+const vDebounceDir = {
+  onMounted(el, binding) {
+    const args = binding.arg;
+    if (!args) {
+      throw Error('请传入类似于{time:1000,event:"click"}格式的指令参数');
+    }
+    // 注册点击事件，传入 binding.value => onClick，和延时时间 args.arg
+    el.addEventListener(args.event, debounce(binding.value, args.time));
+  },
 };
 
 // emits
