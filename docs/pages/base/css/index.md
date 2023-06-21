@@ -65,7 +65,7 @@ saturate 饱和度: -webkit-filter: saturate(1000%);
 
 ```css
 /* 用来限制在一个块元素显示的文本的行数 */
--webkit-line-clamp: v-bind("props.showLine");
+-webkit-line-clamp: 2;
 text-overflow: ellipsis;
 display: -webkit-box;
 -webkit-box-orient: vertical;

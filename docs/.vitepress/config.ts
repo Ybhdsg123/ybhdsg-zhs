@@ -163,6 +163,10 @@ export default defineConfig({
             link: "/pages/base/css/",
           },
           {
+            text: "CSS Demo",
+            link: "/pages/css/cssDemo.md",
+          },
+          {
             text: "CSS特效",
             link: "/pages/base/cssAnimation/",
           },

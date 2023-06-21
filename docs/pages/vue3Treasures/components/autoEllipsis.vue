@@ -80,7 +80,7 @@ const autoEllipsisHandler = (container, text) => {
   // 获取容器的宽度
   const autoEllipsisWidth = container && container.clientWidth;
   // 计算出文本宽度
-  const textWidth = getTextWidth(text.trim(), fs);
+  const textWidth = getTextWidth(text.trim(), optionsStyle);
   // 判断 文本宽度 和 容器宽度 * 展示的行数
   // 为 false 什么都不做，直接展示，否则添加类名 'overflow-hide-moreline'
   isShowEllipsis = textWidth >= autoEllipsisWidth * props.showLine;
@@ -109,13 +109,14 @@ const autoEllipsisHandler = (container, text) => {
  * @return 文本的宽度
  * @Author: zhs
  */
-const getTextWidth = (text, fontSize = 10) => {
+const getTextWidth = (text, optionsFontStyle) => {
+  const fontSize = parseInt(optionsFontStyle.fontSize);
   // 创建一个canva元素
   const canvasDom = document.createElement("canvas");
   const ctx = canvasDom.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
-  const fs = dpr * fontSize;
-  const fontStyle = optionsStyle.fontStyle || "sans-serif";
+  const fs = dpr * fontSize || dpr * 10;
+  const fontStyle = optionsFontStyle.fontStyle || "sans-serif";
   ctx.font = `${fs}px ${fontStyle}`; // 设置字体样式 默认字体大小是10px
   // 通过canvas来获取文本的宽度
   const textMetrics = ctx.measureText(text);
