@@ -639,3 +639,101 @@ function debounce(fn, delay = 300) {
   };
 }
 ```
+
+## 13. 发布订阅者模式
+
+:::details
+
+```js
+// 发布订阅者模式
+class PublishSubscribersPatterns {
+  constructor() {
+    // 创建一个缓存列表 调度中心
+    this.message = {};
+  }
+
+  /**
+   * @description:   向消息队列添加订阅者
+   * @param {*} type 事件名（事件类型）
+   * @param {*} callback 回调函数
+   * @Author: zhs
+   */
+  $on(type, callback) {
+    // 如果没有这个属性就初始化一个 存放callback的数组
+    if (!this.message[type]) {
+      this.message[type] = [];
+    }
+
+    // 有了就添加
+    this.message[type].push(callback);
+  }
+
+  /**
+   * @description:  删除消息队列的订阅者
+   * @param {*} type 事件名（事件类型）
+   * @param {*} callback 回调函数 不传直接删掉整个事件
+   * @Author: zhs
+   */
+  $off(type, callback) {
+    // 判断是否有 type 这个事件类型，没有直接return
+    if (!this.message[type]) return;
+
+    // 判断是否有 callback 这个回调函数
+    if (!callback) {
+      // 如果没有这个回调函数，直接删除整个注册的 事件类型
+      this.message[type] = [];
+    }
+
+    // 如果有这个 callback，就过滤出它
+    this.message[type] = this.message[type]?.filter((cb) => cb !== callback);
+  }
+
+  /**
+   * @description:  触发订阅者的执行
+   * @param {*} type 事件名（事件类型）
+   * @Author: zhs
+   */
+  $emit(type) {
+    // 判断是否有订阅
+    if (!this.message[type]) return;
+
+    // 如果有订阅，就对这个`type`事件做一个轮询 (for循环)，并执行回调函数
+    this.message[type].forEach((cb) => cb());
+  }
+}
+// 使用构造函数创建一个订阅者
+const subscribers1 = new PublishSubscribersPatterns();
+
+// 向这个  subscribers1 订阅者委托一些事情
+
+// 1. 注册事件 buy 并执行 handlerA handlerB
+subscribers1.$on("buy", handlerA);
+subscribers1.$on("buy", handlerB);
+
+// 取消单个
+subscribers1.$off("buy", handlerA);
+
+// 执行
+subscribers1.$emit("buy");
+
+// 2. 注册事件 eat 并执行 handlerC
+subscribers1.$on("eat", handlerC);
+
+// 取消全部
+subscribers1.$off("eat");
+
+// 执行
+subscribers1.$emit("eat");
+
+function handlerA() {
+  console.log("handlerA");
+}
+function handlerB() {
+  console.log("handlerB");
+}
+function handlerC() {
+  console.log("handlerC");
+}
+```
+
+:::

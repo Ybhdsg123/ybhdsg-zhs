@@ -11,8 +11,8 @@
     </div>
     4. 重复角向渐变 repeating-conic-gradient
     <div class="repeating-conic-gradient" />
-    5. 设置背景图片的大小，默认平铺
-    <div class="demo" />
+    <!-- 5. 设置背景图片的大小，默认平铺
+    <div class="demo" /> -->
   </div>
 </template>
 

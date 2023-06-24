@@ -79,7 +79,7 @@ function getContentChildren(g, s) {
 
 :::
 
-## 二分查找
+## 3. 二分查找
 
 **需满足的前提条件：**
 
@@ -147,3 +147,42 @@ const lengthOfLIS = (nums) => {
 ```
 
 :::
+
+## 4. 输出数组中占比超过一半的单个数字，如果没有就输出-1
+
+```js
+const nums = [1, 1, 2, 2, 2];
+function majorityElement(nums) {
+  // 出现的主要元素
+  let majorityEl = 1;
+  // 出现的次数
+  let count = 0;
+  // 循环数组找出这个主要元素
+  for (let num of nums) {
+    // 如果 count===0，将值给维护的主要元素
+    if (count === 0) {
+      majorityEl = num;
+    }
+    // 如果循环的元素 === 主要元素，count++，否则 count--，
+    // 就是将一个相同的和一个不相同的互相抵消掉，最后多的就是主要的那个元素
+    if (majorityEl === num) {
+      count++;
+    } else {
+      count--;
+    }
+  }
+
+  // 再次循环判断是否是有这个主要元素
+  count = 0;
+  for (let num of nums) {
+    // 元素 === 主要元素 count++
+    if (num === majorityEl) {
+      count++;
+    }
+  }
+  // 判断count是否大于循环数组长度的一半
+  return count * 2 > nums.length ? majorityEl : -1;
+}
+console.log(majorityElement(nums));
+// 输出 2
+```
