@@ -150,6 +150,8 @@ const lengthOfLIS = (nums) => {
 
 ## 4. 输出数组中占比超过一半的单个数字，如果没有就输出-1
 
+:::details
+
 ```js
 const nums = [1, 1, 2, 2, 2];
 function majorityElement(nums) {
@@ -186,3 +188,78 @@ function majorityElement(nums) {
 console.log(majorityElement(nums));
 // 输出 2
 ```
+
+:::
+
+## 5. 合并两个有序数组
+
+:::details
+
+```js
+const arr1 = [1, 2, 3, 0, 0, 0];
+const arr2 = [2, 5, 6];
+var merge = function (nums1, m, nums2, n) {
+  nums1 = nums1.filter((item) => item !== 0);
+  const result = new Array(m + n).fill(1);
+  if (m === 0) return nums2;
+  if (n === 0) return nums1;
+  let p1 = 0;
+  let p2 = 0;
+  let tail = 0;
+  let cur;
+  while (p1 < m || p2 < n) {
+    if (p1 === m) {
+      cur = nums2[p2++];
+    } else if (p2 === n) {
+      cur = nums1[p1++];
+    } else if (nums1[p1] < nums2[p2]) {
+      cur = nums1[p1++];
+    } else {
+      cur = nums2[p2++];
+    }
+    result[tail++] = cur;
+  }
+  console.log(result);
+  return result;
+};
+
+console.log(merge(arr1, 3, arr2, 3));
+```
+
+:::
+
+## 字符串的相加
+
+:::details
+
+```js
+const str1 = "1";
+const str2 = "9";
+function add(str1, str2) {
+  let s1 = str1.length - 1;
+  let s2 = str2.length - 1;
+  let result = [];
+  let current = 0; // 是否有进位
+  while (s1 >= 0 || s2 >= 0 || current !== 0) {
+    // 根据索引拿到字符串
+    const num1 = str1.charAt(s1);
+    const num2 = str2.charAt(s2);
+    // 判断当前位置是否有值，无值使用 0 代替
+    const current1 = num1 ? num1 : 0;
+    const current2 = num2 ? num2 : 0;
+    // 两值 + 进位 进行计算
+    const num = current + +current1 + +current2;
+    // 向下取整 为进位数
+    current = Math.floor(num / 10);
+    // 取余为需要的数字
+    result.push(num % 10);
+    // 改变指针
+    s1--;
+    s2--;
+  }
+  return result.reverse().join("");
+}
+console.log(add(str1, str2));
+```
+
+:::
