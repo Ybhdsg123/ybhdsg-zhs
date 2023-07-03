@@ -18,8 +18,8 @@ const props = defineProps({
   },
   // 字体大小
   fontSize: {
-    type: Number,
-    default: 16,
+    type: [Number, String],
+    default: 10,
   },
   // 间隙，平铺的间隙
   gap: {

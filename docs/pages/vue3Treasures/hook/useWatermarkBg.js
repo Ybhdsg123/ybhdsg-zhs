@@ -9,7 +9,8 @@ export default function useWatermarkBg(props) {
     const fontSize = props.fontSize * devicePixelRatio;
     const font = fontSize + "px serif"; // 设置绘制的字体样式
     // 获取文字宽度
-    ctx.font = font;
+    // ctx.font = font;
+    // 返回一个关于被测量文本包含的信息（例如宽度）
     const { width, actualBoundingBoxRight, actualBoundingBoxLeft } =
       ctx.measureText(props.text);
     // 得到 canva 元素的大小
@@ -27,6 +28,8 @@ export default function useWatermarkBg(props) {
     ctx.fillStyle = "#f40";
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
+    // 设置文本字体样式
+    ctx.font = font;
     // 绘制文本
     ctx.fillText(props.text, 0, 0);
     return {

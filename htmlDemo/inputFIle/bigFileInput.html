@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 多选 multiple -->
+    <input type="file" />
+    <!-- 使用spark-md5直接计算整个文件的hash值 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.2/spark-md5.min.js"></script>
+    <!-- 这样引入需要在 tool.js 文件中运行一个立即执行函数将需要用到的工具函数返回-->
+    <!-- <script src="./tools.js"></script> -->
+    <script type="module">
+      // 引入使用的工具函数
+      import {
+        sliceFile,
+        getFileSparkMd5,
+        getFileSparkMd5ByThread,
+      } from "./tools.js";
+      const inputDom = document.querySelector("input");
+      inputDom.onchange = async (e) => {
+        const file = e.target.files[0]; // 文件数组，多选可以有多个
+        if (!file) throw Error("没有选择文件！");
+        // 得到分块后的文件数组
+        const chunkFiles = sliceFile(file);
+        // 分片后计算得到的 hash
+        const hash = await getFileSparkMd5(chunkFiles);
+        console.log(hash, performance.now());
+        // 开启辅助线程计算 分块后的文件hash，这样更快
+        const hash1 = await getFileSparkMd5ByThread(chunkFiles);
+        console.log(hash1, performance.now());
+
+        // 使用 promise.allSettled 上传，不会错误一个就直接 reject
+
+        return;
+        // 实例化 spark-md5
+        const sparkMd5 = new SparkMD5.ArrayBuffer();
+        // 实例一个 文件读取器，使用 file ｜ bolb 对象指定要读取的文件或数据
+        const reader = new FileReader();
+        // 文件读取完成
+        reader.onload = (e) => {
+          sparkMd5.append(e.target.result); // 将文件添加到 sparkMd5 算法中计算
+          let hash = sparkMd5.end(); // 计算完成后得到的 hash 结果，文件过大，计算会变慢，可以进行分片
+          console.log("文件的hash值为:", hash);
+        };
+        // 将文件按照 assaybuffer 格式读取
+        reader.readAsArrayBuffer(file);
+      };
+
+      // function sliceFile(file,chunkSize=1*1024*1024)
+    </script>
+  </body>
+</html>

@@ -450,10 +450,12 @@ call() 方法使用一个指定的 this 值和单独给出的一个或多个参�
 
 ```js
 Function.prototype._call = function (ctx, ...args) {
-  // 如果不为空，则需要进行对象包装
+  // 判断传入的 ctx 是否为空，为空就挂在 全局window上，不然就创建一个对象
   const o = ctx == undefined ? window : Object(ctx);
-  // 给 ctx 添加独一无二的属性
+  // 给 ctx 对象添加独一无二的属性
   const key = Symbol();
+  // 绑定调用的 this，谁调用的， this 就为谁，这里就是 fun
+  // { name: "22",Symbol: fun() };
   o[key] = this;
   // 执行函数，得到返回结果
   const result = o[key](...args);
@@ -734,6 +736,37 @@ function handlerB() {
 function handlerC() {
   console.log("handlerC");
 }
+```
+
+:::
+
+## 14. 使用异步实现红绿灯效果
+
+:::details 大厂面试，异步实现红绿灯效果
+
+```js
+// 返回一个Promise对象，在指定的时间后会自动解析resolve
+const sleep = (time) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+
+// 改变颜色
+const changeColor = (color, time) => {
+  console.log("traffic-light", color);
+  return sleep(time);
+};
+
+const main = async () => {
+  // 无限循环
+  while (true) {
+    await changeColor("red", 2000);
+    await changeColor("yellow", 1000);
+    await changeColor("green", 3000);
+  }
+};
+
+main();
 ```
 
 :::

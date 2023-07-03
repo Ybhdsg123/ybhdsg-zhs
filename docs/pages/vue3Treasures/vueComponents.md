@@ -82,7 +82,7 @@ import CrashBallLoading from './components/crashBallLoading.vue'
 
 ## 3. 图片水印
 
-<ImgWatermark text="侵权必究">
+<ImgWatermark text="侵权必究" >
 <div >
   MutationObserver 接口提供了监视对 DOM 树所做更改的能力。它被设计为旧的 Mutation Events 功能的替代品，该功能是 DOM3 Events 规范的一部分。
 

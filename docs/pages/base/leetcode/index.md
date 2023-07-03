@@ -198,23 +198,32 @@ console.log(majorityElement(nums));
 ```js
 const arr1 = [1, 2, 3, 0, 0, 0];
 const arr2 = [2, 5, 6];
+// nums1 arr1, m arr1长度, nums2 arr2, n arr2的长度
 var merge = function (nums1, m, nums2, n) {
+  // 过滤出不为0的
   nums1 = nums1.filter((item) => item !== 0);
+  // 创建一个两个数组长度的 新数组
   const result = new Array(m + n).fill(1);
   if (m === 0) return nums2;
   if (n === 0) return nums1;
   let p1 = 0;
   let p2 = 0;
+  // 新数组的标识 初始为 0
   let tail = 0;
+  // 当前值
   let cur;
-  while (p1 < m || p2 < n) {
+  while (p1 <= m || p2 <= n) {
     if (p1 === m) {
+      // arr1 遍历到最后
       cur = nums2[p2++];
     } else if (p2 === n) {
+      // arr2 遍历到最后
       cur = nums1[p1++];
     } else if (nums1[p1] < nums2[p2]) {
+      // arr1值 < arr2值
       cur = nums1[p1++];
     } else {
+      // arr1值 > arr2值
       cur = nums2[p2++];
     }
     result[tail++] = cur;
