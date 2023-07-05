@@ -148,6 +148,10 @@ export default defineConfig({
         collapsed: false,
         items: [
           {
+            text: "公用demo",
+            link: "/pages/base/globalDemo",
+          },
+          {
             text: "算法",
             link: "/pages/base/leetcode/",
           },

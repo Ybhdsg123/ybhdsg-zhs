@@ -19,6 +19,7 @@ export const sliceFile = (file, ChuckSize = baseChuckSize) => {
   }
   return result;
 };
+
 /**
  * @description: 通过 SparkMD5 得到文件的 hash 值，FileReader 是异步的，所以返回 promise
  * @param {*} chunks 分好片的数组文件
