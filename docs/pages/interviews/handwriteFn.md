@@ -444,18 +444,34 @@ function myFun() {
 }
 ```
 
+:::tip this 指向
+
+- 词法作用域在词法分析阶段就被确定了（写代码的时候就确定了），**js 是解释型语言，没有编译时，有预编译阶段**
+- java 是编译型语言：java 的代码就是被编译为 .class 文件才能运行，这个**编译过程就是编译时**，**运行 `.class` 文件就是运行时。**
+
+- 箭头函数本身没有`this`，因为**基于闭包**(本身没有，去外层寻找)，会去外层寻找`this`，**闭包属于词法作用域**（词法作用域是在编译时确定的）
+- 箭头函数`this`指向谁，**决定于它定义的位置，而不是运行的位置**（因为**this => 闭包 => 词法作用域 => 编译时态确定**（js 没有编译，但是有预编译，编译时态就确定了词法作用域）
+
+- `B.apply(A, arguments)`：即 A 对象应用 B 对象的方法 **`arguments`为数组**
+
+- `B.call(A, arguments)`：即 A 对象应用 B 对象的方法 **`arguments`为列表项**
+
+- `const newFn = fn.bind(A, arguments)`的作用是**只修改`this`指向，但不会立即执行 fn；会返回一个修改了 this 指向后的 f**n。需要调用才会执行:bind(thisArg, arg1, arg2, arg3, ...)()。**bind 的传参和 call 相同。**
+
+:::
+
 ## 6. Function.prototype.call
 
 call() 方法使用一个指定的 this 值和单独给出的一个或多个参数来调用一个函数。
 
-```js
+```js {6,7}
 Function.prototype._call = function (ctx, ...args) {
   // 判断传入的 ctx 是否为空，为空就挂在 全局window上，不然就创建一个对象
   const o = ctx == undefined ? window : Object(ctx);
   // 给 ctx 对象添加独一无二的属性
   const key = Symbol();
-  // 绑定调用的 this，谁调用的， this 就为谁，这里就是 fun
-  // { name: "22",Symbol: fun() };
+  // 绑定 this，谁调用， this 就为谁，这里为 obj.fun  { name: "22",Symbol: fun(...args) };
+  // (这里是为了实现call，改变第一个参数的this指向，所以将第一个参数设置为对象，)
   o[key] = this;
   // 执行函数，得到返回结果
   const result = o[key](...args);
@@ -466,7 +482,7 @@ Function.prototype._call = function (ctx, ...args) {
 
 const obj = {
   name: "11",
-  fun() {
+  fun(...args) {
     console.log(this.name);
   },
 };
@@ -474,7 +490,7 @@ const obj = {
 const obj2 = { name: "22" };
 obj.fun(); // 11
 obj.fun.call(obj2); // 22
-obj.fun._call(obj2); // 22
+obj.fun._call(obj2, 1, 2); // 22 1 2
 ```
 
 ## 7. Function.prototype.bind
