@@ -355,7 +355,7 @@ function showAge() {
 **
  * @description: 根据字段对数据进行分组
  * @param {*} arr 要处理的源数据
- * @param {*} fn 传入一个方法，指定根据什么字段返回数据(传入string类型的时候，特殊处理)
+ * @param {*} fn 传入一个方法，指定分类的依据(传入string类型的时候，特殊处理)
  * @return 处理过的数据
  * @Author: zhs
  */
@@ -368,17 +368,19 @@ export function groupBy(arr, fn) {
     .toLowerCase();
   // 如果传入的是 string 类型的话，就将其包装成 function
   if (fnTypeOf === "string") {
+  // 先将字段保存起来，例如指定根据性别分类（例2）
     const fnStr = fn;
+    // 创建一个 fn，返回指定字段的分类
     fn = (obj) => obj[fnStr];
   }
   for (let obj of arr) {
-    // 拿到处理的字段对应的值
+    // 拿到要处理的数据，传入方法中进行分类
     const field = fn(obj);
-    // 没有就创建一个数组
+    // 判断 result 有无这个 分类，没有就创建一个
     if (!result[field]) {
       result[field] = [];
     }
-    // 否则就添加进去
+    // 有这个分类，就将 值 加入到该 分类 中
     result[field].push(obj);
   }
   return result;
@@ -388,15 +390,16 @@ const demo = [
   { name: "ls", age: 13, gender: "男" },
   { name: "zscs", age: 12, gender: "女" },
 ];
-// 处理数组
+// 处理数组 返回 => {奇数:[1,3,1,49,9],偶数:[2,8]}
 // const stra = groupBy([1, 2, 3, 1, 49, 9, 8], (obj) =>
 //   obj % 2 === 0 ? "偶数" : "奇数"
 // );
-// 传入 string 类型数据
-// console.log(groupBy(demo, "gender"));
-// 处理复杂的 多字段 数据
-// console.log(groupBy(demo, (obj) => `${obj.age}-${obj.gender}`));
 
+// 传入 string 类型数据 返回 => {女:Array(2),男:Array(1)}
+// console.log(groupBy(demo, "gender"));
+
+// 处理复杂的 多字段 数据  返回 => {12-女:Array(2),13-男:Array(1)}
+// console.log(groupBy(demo, (obj) => `${obj.age}-${obj.gender}`));=
 ```
 
 :::

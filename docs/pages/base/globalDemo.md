@@ -91,9 +91,12 @@ var cat = require("/home/user/lib/cat/index");
 - 引入 ` const fs = require('fs')`
 - `fs.readFileSync(文件路径,options)` ：从源路径读取文件内容
 - `fs.writeFileSync(目标文件路径（无新建）`,写入文件,options)：写入文件
+- `fs.readdirSync(dir)` 读取目录内容
+
 - `fs.createReadStream()`：创建一个源文件的只读的数据流
 - `fs.createWriteStream()`：创建一个目标文件的只写数据流
 - `.pipe`进行连接：`js fs.createReadStream(src).pipe(fs.createWriteStream(dst));`
+
 - **文件属性读写**。
 
 其中常用的有`fs.stat`、`fs.chmod`、`fs.chown`等等。
@@ -105,6 +108,33 @@ var cat = require("/home/user/lib/cat/index");
 - **底层文件操作**。
 
 其中常用的有`fs.open`、`fs.read`、`fs.write`、`fs.close`等等。
+
+:::
+
+:::details `fs.stat(), fs.statsync() `: 获取文件信息状态
+
+1. 异步方法 `fs.stat()`
+   fs.stat(path,callback)，path 表示文件路径； callback 是指回调函数，有两个参数：(err,stats)，其中 stats 是 fs.stat 的实例；
+2. 同步方法 `fs.statsync()`
+   fs.statsync(path),只接收一个 path 变量，fs.statSync(path)其实是一个 fs.stats 的一个实例
+
+**常用的方法：**
+
+1. `stats.isFile()`: 如果是文件则返回 true,否则返回 false;
+
+2. `stats.isDirectiory()`: 如果是目录则返回 true,否则返回 false;
+
+3. `stats.isBlockDevice()`: 如果是块设备则返回 true，否则返回 false;
+
+4. `stats.isCharacterDevice()`: 如果是字符设备返回 true,否则返回 false;
+
+5. `stats.isSymbolicLink()`: 如果是软链接返回 true,否则返回 false;
+
+6. `stats.isFIFO()`: 如果是 FIFO,则返回 true,否则返回 false.FIFO 是 UNIX 中的一种特殊类型的命令管道；
+
+7. `stats.isSocket()`: 如果是 Socket 则返回 true,否则返回 false;
+
+8. `stats.size()`: 文件的大小（以字节为单位）。
 
 :::
 
@@ -150,3 +180,46 @@ var cat = require("/home/user/lib/cat/index");
   ```
 
 :::
+
+## 6 .单字节编码
+
+:::details
+
+1. `ASCII编码`：单字节编码。最初的编码，由一个字节组成，因此只能表示 256 个字符，但只表示 0-9，a-z，A-Z，和一些加减乘除百分号，够老美用了
+2. `ANSI编码`：多字节编码。
+
+- 由于一个字节只能表示 255 个数字，所以**中国**约定了**GBK 编码规则**，约定用 `0x80-0xFF` 范围内的某两个字节来表示某一个中文字符。
+
+- 日本约定了 JIS 编码规则，他们约定 0x80-0xFF 范围内的某两个字节来表示某个日文字符。
+
+- 台湾约定了 BIG5 编码规则，约定 0x80-0xFF 范围内的某两个字节表示某个繁体中文字符。
+
+- 所以我们拿到了一个 ANSI 字节串的时候，我们还必须知道这个字节串的编码，才能将这个字节串转换成相应国家的字符串。
+
+3. `UNICODE编码`：宽字节编码。
+
+:::
+:::tip
+
+1. 字节： **字节（Byte）是一种计量单位，表示数据量多少**，它是计算机信息技术用于计量存储容量的一种**计量单位**。
+2. 字符：字符是指计算机中使用的文字和符号，比如 1、2、3、A、B、C、~！·#￥%……—\*（）——+、等等。
+
+- ①ASCII 码中，一个英文字母（不分大小写）占一个字节的空间，一个中文汉字占两个字节的空间。一个二进制数字序列，在计算机中作为一个数字单元，一般为 8 位二进制数，换算为十进制。**最小值 0，最大值 255**。
+
+- ②UTF-8 编码中，一个英文字符等于一个字节，一个中文（含繁体）等于三个字节。
+
+- ③Unicode 编码中，一个英文等于两个字节，一个中文（含繁体）等于两个字节。符号：英文标点占一个字节，中文标点占两个字节。举例：英文句号“.”占 1 个字节的大小，中文句号“。”占 2 个字节的大小。
+
+- ④UTF-16 编码中，一个英文字母字符或一个汉字字符存储都需要 2 个字节（Unicode 扩展区的一些汉字存储需要 4 个字节）。
+
+- ⑤UTF-32 编码中，世界上任何字符的存储都需要 4 个字节。
+
+:::
+
+## 7. `http`模块
+
+**'http'模块提供两种使用方式：**
+
+- 作为服务端使用时，创建一个 HTTP 服务器，监听 HTTP 客户端请求并返回响应。
+
+- 作为客户端使用时，发起一个 HTTP 客户端请求，获取服务端响应。

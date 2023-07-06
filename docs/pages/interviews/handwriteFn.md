@@ -464,14 +464,16 @@ function myFun() {
 
 call() 方法使用一个指定的 this 值和单独给出的一个或多个参数来调用一个函数。
 
+**基本思想是把 fn.call(obj,args)中的 fn 赋值为 obj 的属性，然后调用 obj.fn 即可实现 fn 中 this 指向的改变**
+
 ```js {6,7}
 Function.prototype._call = function (ctx, ...args) {
   // 判断传入的 ctx 是否为空，为空就挂在 全局window上，不然就创建一个对象
   const o = ctx == undefined ? window : Object(ctx);
   // 给 ctx 对象添加独一无二的属性
   const key = Symbol();
-  // 绑定 this，谁调用， this 就为谁，这里为 obj.fun  { name: "22",Symbol: fun(...args) };
-  // (这里是为了实现call，改变第一个参数的this指向，所以将第一个参数设置为对象，)
+  // 绑定 this，谁调用， this 就为谁，这里为 obj.fun,(这里是为了实现call，改变this指向，就是让使用这个函数的this，指向 ctx)
+  // 这里的 o = { name: "22",Symbol: fun(...args) }
   o[key] = this;
   // 执行函数，得到返回结果
   const result = o[key](...args);
@@ -493,7 +495,31 @@ obj.fun.call(obj2); // 22
 obj.fun._call(obj2, 1, 2); // 22 1 2
 ```
 
-## 7. Function.prototype.bind
+## 7. Function.prototype.apply
+
+```js
+Function.prototype.myApply = function (ctx) {
+  const context = ctx == undefined ? window : Object(ctx);
+  let key = Symbol();
+  context[key] = this;
+  let result;
+  if (arguments[1]) {
+    //判断是否有第二个参数
+    result = context[key](...arguments[1]); // 调用该方法，该方法this指向context
+  } else {
+    result = context[key]; // 调用该方法，该方法this指向context
+  }
+  delete context[key];
+  return result;
+};
+
+const r = Math.max.myApply(null, [12, 3]);
+const r1 = Math.max.apply(null, [12, 3]);
+console.log(r); // 12
+console.log(r1); //  12
+```
+
+## 8. Function.prototype.bind
 
 `bind() `方法创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数，供调用时使用。
 
@@ -521,7 +547,7 @@ fn(); // 22
 fn2(); // 22
 ```
 
-## 8. New 关键字
+## 9. New 关键字
 
 new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。
 
@@ -538,7 +564,7 @@ const _new = function(constructor) {
 }
 ```
 
-## 9. 浅拷贝
+## 10. 浅拷贝
 
 ```js
 const _shallowClone = (target) => {
@@ -564,7 +590,7 @@ const _shallowClone = (target) => {
 };
 ```
 
-## 10. 深拷贝
+## 11. 深拷贝
 
 实现思路和浅拷贝一致，只不过需要注意几点
 
@@ -620,7 +646,7 @@ function deepClone(obj) {
 }
 ```
 
-## 11. 节流
+## 12. 节流
 
 节流函数（throttle）就是让事件处理函数（handler）在大于等于执行周期时才能执行，周期之内不执行，**即事件一直被触发，那么事件将会按每小段固定时间一次的频率执行。**
 
@@ -641,7 +667,7 @@ function throttle(fn, delay = 300) {
 }
 ```
 
-## 12. 防抖
+## 13. 防抖
 
 事件响应函数在一段时间后才执行，如果这段时间内再次调用，则重新计算执行时间
 
@@ -658,7 +684,7 @@ function debounce(fn, delay = 300) {
 }
 ```
 
-## 13. 发布订阅者模式
+## 14. 发布订阅者模式
 
 :::details
 
@@ -756,7 +782,7 @@ function handlerC() {
 
 :::
 
-## 14. 使用异步实现红绿灯效果
+## 15. 使用异步实现红绿灯效果
 
 :::details 大厂面试，异步实现红绿灯效果
 
