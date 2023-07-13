@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>提示信息</title>
+    <style>
+      @keyframes identifier {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="msg-box">
+      <div class="iconfont icon-success msg-box-icon"></div>
+      <div class="msg-box--text">
+        提示信息提示信息提示信息提示信息提示信息提示信息
+      </div>
+      <div class="close">X</div>
+    </div>
+    <script type="module">
+      import { setEl, addIconfontLink } from "./index.js";
+      // 添加字体样式，文件位置相对于本文件，工程化中好处理，否则需要注意路径不对
+      addIconfontLink("./style/incofont.css");
+    </script>
+  </body>
+</html>

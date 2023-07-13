@@ -30,6 +30,8 @@ export default defineConfig({
       placeholder: "请输入关键词",
       buttonText: "搜索",
     },
+    outline: [2, 6], // 侧边栏显示的目录，除 h1 外都显示
+    outlineTitle: "目录", // 右边目录标题
     // 网站的标题和logo
     logo: "/cat.svg",
     siteTitle: "哑巴湖大水怪的山水游记", // 这里写 false 就不显示，不写读取上面的 title

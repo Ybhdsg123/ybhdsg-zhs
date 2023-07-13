@@ -403,3 +403,29 @@ const demo = [
 ```
 
 :::
+
+## 23.解决数字相加精度损失问题
+
+```js
+//默认传入的都是数字类型  解决数字相加精度损失问题
+export function commonAdd(number1, number2) {
+  let result = 0;
+  if (Number.isInteger(number1) || Number.isInteger(number2)) {
+    result = number1 + number2;
+  } else {
+    //两个都是纯小数
+    const number1Array = number1.toString().split(".");
+    const number2Array = number2.toString().split(".");
+    //最大的除数位数
+    let maxBit = 1;
+    if (number1Array[1].length >= number2Array[1].length) {
+      maxBit = number1Array[1].length + 1;
+    } else {
+      maxBit = number2Array[1].length + 1;
+    }
+    const divisor = parseInt("1".padEnd(maxBit, 0));
+    result = (number1 * divisor + number2 * divisor) / divisor;
+  }
+  return result;
+}
+```

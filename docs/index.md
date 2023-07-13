@@ -1,6 +1,8 @@
 ---
 layout: home
 
+lastUpdated: true
+
 hero:
   name: 哑巴湖大水怪的故事
   text: 前端学习笔记

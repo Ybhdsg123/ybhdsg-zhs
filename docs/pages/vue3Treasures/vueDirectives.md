@@ -6,7 +6,7 @@
 
 ## 一、注册自定义指令
 
-1. 在 `<script setup>` 中，**任何以 v 开头的驼峰式命名的变量都可以被用作一个自定义指令**。`vFocus `即可以在模板中以 `v-focus` 的形式使用。
+### 1. 在 `<script setup>` 中，**任何以 v 开头的驼峰式命名的变量都可以被用作一个自定义指令**。`vFocus `即可以在模板中以 `v-focus` 的形式使用。
 
 ::: details 在 `<script setup>` 中
 
@@ -24,7 +24,7 @@ const vFocus = {
 
 :::
 
-2. 在没有使用 `<script setup>` 的情况下，自定义指令需要通过 `directives` 选项注册：
+### 2. 在没有使用 `<script setup>` 的情况下，自定义指令需要通过 `directives` 选项注册：
 
 :::details 没有`<script setup>`
 
@@ -44,7 +44,7 @@ export default {
 
 :::
 
-3. 将一个自定义指令全局注册到应用层级
+### 3. 将一个自定义指令全局注册到应用层级
 
 :::details 全局注册
 
@@ -59,7 +59,7 @@ app.directive('focus', {
 
 :::
 
-4. 简化形式（在`mounted` 和 `updated` 上实现相同的行为，这种情况下我们可以直接用一个函数来定义指令）
+### 4. 简化形式（在`mounted` 和 `updated` 上实现相同的行为，这种情况下我们可以直接用一个函数来定义指令）
 
 :::details
 
@@ -147,7 +147,7 @@ onst myDirective = {
 
 ## 三、指令批量注册
 
-1. 自定义指令
+### 1. 自定义指令
 
 ```js
 // directives/index.js
@@ -162,7 +162,7 @@ export const disabledSelect = {
 };
 ```
 
-2. 注册
+### 2. 注册
 
 ```js
 // main.js
@@ -179,7 +179,7 @@ Object.keys(directives).forEach((key) => {
 
 ## 四、常用指令
 
-**1. `v-focus` 自动聚焦**
+### 1. `v-focus` 自动聚焦
 
 ::: details v-focus
 
@@ -203,9 +203,7 @@ const vFocus = {
 
 :::
 
-**2. `v-debounce` 点击防抖**
-
-#### 例子
+### 2. `v-debounce` 点击防抖
 
 <DebounceDir/>
 
@@ -230,6 +228,12 @@ const demo = ref({
   time: 1000,
   event: "click",
 });
+
+// 延时指令的参数
+// const event = {
+//   time: props.delayTime,
+//   event: 'input'
+// }
 
 // 点击事件
 function onClick() {
@@ -268,7 +272,8 @@ const vDebounce = {
 
 :::
 
-**3. `v-throttle` 节流**
+### 3. `v-throttle` 节流
+
 ::: details v-throttle
 
 ```vue
@@ -310,7 +315,7 @@ const vDebounceClick = {
 
 :::
 
-4. **`v-disabledSelect` 禁止选中**
+### 4. `v-disabledSelect` 禁止选中
 
 :::details v-disabledSelect
 
@@ -324,6 +329,57 @@ export const disabledSelect = {
     // el.oncontextmenu = new Function("event.returnValue=false");
   },
 };
+```
+
+:::
+
+### 5. `v-elMaxHeightDir` 设置页面 table 列表最大高度，防止出现滚动条
+
+:::details `v-elMaxHeightDir`
+
+### 使用
+
+```html
+<table v-elMaxHeightDir:110="{parentEl: '.anxin-main'}" />
+```
+
+#### 指令
+
+```js
+/**
+ * @description: 防止页面出现滚动条，设置列表最大高度
+ * @Author: zhs
+ */
+export const elMaxHeightDir = {
+  mounted(el, binding) {
+    // 设置高度
+    setHeight(el, binding);
+    // 监听resize
+    window.addEventListener("resize", () => {
+      setHeight(el, binding);
+    });
+  },
+  unmounted(el) {
+    // 卸载
+    window.removeEventListener("resize", () => {
+      setHeight(el, binding);
+    });
+  },
+};
+
+function setHeight(el, binding) {
+  // 距离底部的距离，一般写死的，通过参数传递(binding.arg)
+  const bottomHeight = binding.arg;
+  // 获取父级容器元素 如果有 通过 binding.value.parentEl
+  const parentEl = document.querySelector(binding.value.parentEl);
+  // 获取要对应容器的高度  一般为父级容器 不传的话 为页面大小
+  const parentElHeight = parentEl
+    ? parentEl.offsetHeight
+    : document.body.clientHeight;
+  // 当前元素距离上方的高度
+  const disTopHeight = el.offsetTop;
+  el.style.height = parentElHeight - disTopHeight - bottomHeight + "px";
+}
 ```
 
 :::
