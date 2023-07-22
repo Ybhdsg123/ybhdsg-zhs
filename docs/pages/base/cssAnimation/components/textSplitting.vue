@@ -1,11 +1,12 @@
 <template>
   <div class="items">
     <div v-for="item in 2" :key="item" class="item">
+      <!-- <div class="item"> -->
       <div class="a">文字裂开效果</div>
       <div class="a">文字裂开效果</div>
-      <a target="_blank" href="https://ybhdsg123.github.io/ybhdsg-zhs/"
-        >点赞了解更多</a
-      >
+      <a target="_blank" href="https://ybhdsg123.github.io/ybhdsg-zhs/">
+        点赞了解更多
+      </a>
     </div>
   </div>
 </template>

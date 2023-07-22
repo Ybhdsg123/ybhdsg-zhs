@@ -91,3 +91,49 @@ display: -webkit-box;
   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 ```
+
+## 6. `scss`定义方法，并在`vite`下注册全局可用
+
+:::details utils.scss
+
+```scss
+@use "sass:math";
+// 默认设计稿的宽度
+$designWidth: 1920;
+// 默认设计稿的高度
+$designHeight: 1080;
+
+// px 转为 vw 的函数
+@function vw($px) {
+  @return math.div($px, $designWidth) * 100vw;
+}
+
+// px 转为 vh 的函数
+@function vh($px) {
+  @return math.div($px, $designHeight) * 100vh;
+}
+```
+
+:::
+
+:::details 在`vite.config.js`下定义使用的方法
+
+```js
+export default ({ mode, command }) => {
+  const env = loadEnv(mode, process.cwd());
+  return defineConfig({
+    plugins: [vue()],
+    css: {
+      // 指定传递给 CSS 预处理器的选项。文件扩展名用作选项的键
+      preprocessorOptions: {
+        scss: {
+          // 为每个样式内容注入额外代码
+          additionalData: `@import "@/styles/utils.scss";`,
+        },
+      },
+    },
+  });
+};
+```
+
+:::

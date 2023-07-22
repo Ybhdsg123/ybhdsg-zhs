@@ -22,7 +22,11 @@ features:
   - icon: 👍
     title: vue3相关
     details: vue3常用api知识点...
-    link: "/pages/vue3/basic/note"
+    link: "/pages/vue3-base/basic/note"
+  - icon: 🛠️
+    title: 工具函数
+    details: 各种常用的工具函数等...
+    link: "/pages/toolFun/tools"
   - icon: 🖖
     title: vite相关
     details: vite...
@@ -30,10 +34,11 @@ features:
   - icon: 🤪
     title: 面试相关
     details: 面试相关的知识点...
-    link: "/pages/interviews/html"
+    link: "/pages/interviews/browser"
   - icon: 🧚🏼‍♀️
     title: git相关
     details: vue2常用api知识点...
+    link: "/pages/git/githubQuestion/"
   - icon: 🥳
     title: vs code相关
     details: vs code常用插件和快捷键...
@@ -42,8 +47,4 @@ features:
   #   title: git相关
   #   details: git相关知识和遇到的问题...
   #   link: "/pages/git/githubQuestion/"
-  - icon: 🛠️
-    title: 工具函数
-    details: 各种常用的工具函数等...
-    link: "/pages/toolFun/timeTool.md"
 ---

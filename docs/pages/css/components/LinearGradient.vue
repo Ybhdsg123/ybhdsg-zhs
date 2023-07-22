@@ -17,7 +17,7 @@
 
 <style lang="scss" scoped>
 $color: #0396ff;
-// 背景色渐变画三角形
+// 1. 背景色渐变画三角形
 .bg-triangles {
   width: 50px;
   height: 50px;
@@ -30,7 +30,7 @@ $color: #0396ff;
   );
 }
 
-// 背景色画内切四边形
+// 2. 背景色画内切四边形
 .notching {
   width: 80px;
   height: 80px;
@@ -47,7 +47,7 @@ $color: #0396ff;
   background-repeat: no-repeat;
 }
 
-// repeating-linear-gradient
+// 3.  repeating-linear-gradient 画 进度条
 .process {
   width: 200px;
   height: 30px;

@@ -181,3 +181,136 @@ const text = useDebouncedRef("cehsi");
 ```
 
 :::
+
+## 7. 在 `vue` 中使用 `xlsx-populate`库加密`excel`文件，并且开启 `new worker()`
+
+### 7.1 下载 `xlsx-populate`，这是一个 `node`的库
+
+- `js  npm i -D xlsx-populate `
+
+:::details nodejs 版本
+
+```js
+// 导入 xlsx-populate 库
+const XlsxPopulate = require("xlsx-populate");
+XlsxPopulate.fromBlankAsync().then((workbook) => {
+  // 写入内容
+  workbook.sheet("Sheet1").cell("A1").value("Some  text");
+  // 写入 /test.xlsx 文件 并加密
+  return workbook.toFileAsync("./test.xlsx", { password: "$secret_password" });
+});
+```
+
+:::
+
+:::details 浏览器版本 https://github.com/dtjohnson/xlsx-populate
+
+```js
+// 下载  pnpm i xlsx-populate -D
+import XlsxPopulate from "xlsx-populate"; // 导入
+// 加密文件 file 获取后端请求的excel文件为二进制，设置 { responseType: "blob" }
+const worksheets = await XlsxPopulate.fromDataAsync(file);
+// 也可以这么写入文件，一个单元格一个单元格的写
+// workbook.sheet("Sheet1").cell("A1").value("Some  text");
+
+// 对文件进行加密
+const workbook = await worksheets.outputAsync({
+  password: "$secret_password", // 密码
+});
+// downloadExcel下载方法 挂载 a 元素下载
+this.downloadExcel(workbook, "导出文件"); // 导出excel
+```
+
+:::
+
+### 7.2 在 `vue` 中使用 `new worker()`，
+
+- 1. 需要通过 `worker-loader`配置，配置了之后 worker.js 后缀的文件就会被 loader 处理，但我没整好
+
+- 2. **我采用的方法**：直接把`demo.worker.js`文件放到目录`public`下了，这样就不会报各种奇怪问题，最简单直接
+
+### 7.3 下载加密的`excel`
+
+:::details 主线程
+
+```js
+let worker
+async workerDemo(file, ps) {
+      return new Promise((resolve, reject) => {
+        // 实例化一个主线程，地址为 public 下的 demo.worker.js
+        worker = new Worker("demo.worker.js");
+        // 发送信息
+        worker.postMessage({ file });
+        // 接受信息
+        worker.onmessage = (e) => {
+          const { workbook } = e.data;
+          // 异步的话感觉时间和正常加密差不多，不懂
+          resolve(workbook);
+          // 同步，直接在这就下载了，
+          // this.downloadExcel(workbook, "导出文件"); // 导出excel
+        };
+      });
+},
+async quitExport() {
+      // 请求获取文件的二进制数据
+      const file = await this.$http.exportExcel(url,data {
+        responseType: "blob",
+      });
+      const t0 = window.performance.now();
+      // 调用 workerDemo 并且传入 file
+      const workbook = await this.workerDemo(file);
+      // 立即终止 Worker 的行为
+      worker.terminate()
+      // downloadExcel()方法，看 工具函数/文件相关
+      this.downloadExcel(workbook, "导出文件"); // 导出excel
+      const t1 = window.performance.now();
+      console.log(" 函数执行了" + (t1 - t0) + "毫秒。");
+},
+
+```
+
+:::
+
+:::details 子线程
+
+```js
+// self 和 this 是一样的，代表子进程的全局对象
+// 引入 xlsx-populate 库的cdn文件
+self.importScripts(
+  "https://cdnjs.cloudflare.com/ajax/libs/xlsx-populate/1.21.0/xlsx-populate.min.js"
+);
+// 接受信息
+self.onmessage = async (e) => {
+  const { file } = e.data;
+  if (!file) {
+    // 关闭进程
+    self.close();
+  } else {
+    // 处理传入的 file 文件对象
+    const worksheets = await XlsxPopulate.fromDataAsync(file);
+    // 进行加密处理
+    const workbook = await worksheets.outputAsync({
+      password: "123", //  密码
+    });
+    // 向父进程传输数据
+    self.postMessage({ workbook });
+    // 关闭进程
+    self.close();
+  }
+};
+```
+
+:::
+
+## 8. `el-form`弹窗中表单的初始化
+
+```js
+// vue2
+Object.assign(this.formData, this.$options.data());
+```
+
+:::tip
+
+1. vue2：`this.$options.data()`，拿到 data 中定义的初始数据
+
+:::

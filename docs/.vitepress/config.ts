@@ -1,5 +1,7 @@
 // defineConfig 帮助程序应该提供智能感知，无需JSDOC注释
 import { defineConfig } from "vitepress";
+import nav_router from "./nav";
+import sidebar_router from "./sidebar";
 export default defineConfig({
   base: "/ybhdsg-zhs/",
   // 页面标题
@@ -30,7 +32,7 @@ export default defineConfig({
       placeholder: "请输入关键词",
       buttonText: "搜索",
     },
-    outline: [2, 6], // 侧边栏显示的目录，除 h1 外都显示
+    outline: [2, 6], // 文章右边显示的目录等级，除 h1 外都显示
     outlineTitle: "目录", // 右边目录标题
     // 网站的标题和logo
     logo: "/cat.svg",
@@ -50,201 +52,8 @@ export default defineConfig({
       },
     ],
     // 主题色按钮 左侧导航
-    nav: [
-      {
-        text: "Threejs",
-        link: "../pages/threejs/threejs.md",
-      },
-      {
-        text: "cancvs",
-        items: [
-          { text: "基础知识", link: "../pages/canvas/index.md" },
-          { text: "小demo", link: "../pages/canvas/demo.md" },
-        ],
-      },
-      {
-        text: "面试相关",
-        items: [
-          {
-            text: "网络分层模型和应用协议",
-            link: "/pages/interviews/networkrotocols",
-          },
-          {
-            text: "浏览器的通信能力",
-            link: "/pages/interviews/browser",
-          },
-          { text: "Webpack面试题", link: "/pages/interviews/webpack" },
-          { text: "html方面", link: "/pages/interviews/html" },
-          { text: "css方面", link: "/pages/interviews/css" },
-          { text: "js方面", link: "/pages/interviews/js" },
-          { text: "http方面", link: "/pages/interviews/http" },
-          { text: "git方面", link: "/pages/interviews/git" },
-          { text: "vue方面", link: "/pages/interviews/vue" },
-          { text: "事件循环", link: "/pages/interviews/eventLoop" },
-        ],
-      },
-      {
-        text: "vue3后台系统",
-        items: [
-          { text: "搭建过程", link: "/pages/vue3-element-admin/anxinPC" },
-          {
-            text: "element plus组件",
-            link: "/pages/vue3-element-admin/epComponents",
-          },
-        ],
-      },
-      { text: "常见手写函数", link: "../pages/interviews/handwriteFn.md" },
-      { text: "node", link: "../pages/node/" },
-      { text: "rollup打包", link: "../pages/rollup-build/rollup.md" },
-      // { text: "掘金", link: "https://juejin.cn/user/761326894326280" },
-      { text: "简书", link: "https://www.jianshu.com/u/ac97502b9e92" },
-    ],
-    // 侧边栏
-    sidebar: [
-      {
-        text: "vue3宝藏🏴‍☠️",
-        items: [
-          {
-            text: "vue组件",
-            link: "/pages/vue3Treasures/vueComponents",
-          },
-          {
-            text: "vue常见技巧",
-            link: "/pages/vue3Treasures/vueCommonTips",
-          },
-          {
-            text: "vue常用指令",
-            link: "/pages/vue3Treasures/vueDirectives",
-          },
-        ],
-      },
-      {
-        text: "vue 核心",
-        items: [
-          {
-            text: "响应式原理",
-            link: "/pages/vueCore/responsivePrinciples",
-          },
-          {
-            text: "虚拟dom",
-            link: "/pages/vueCore/virtualDom",
-          },
-          {
-            text: "diff算法",
-            link: "/pages/vueCore/diff",
-          },
-        ],
-      },
-      {
-        text: "工具函数",
-        items: [
-          { text: "常用的方法", link: "/pages/toolFun/tools" },
-          { text: "文件相关", link: "/pages/toolFun/download" },
-          { text: "时间相关", link: "/pages/toolFun/timeTool" },
-          { text: "图片相关", link: "/pages/toolFun/imgTool" },
-        ],
-      },
-      {
-        text: "好记性不如烂笔头",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: false,
-        items: [
-          {
-            text: "公用demo",
-            link: "/pages/base/globalDemo",
-          },
-          {
-            text: "算法",
-            link: "/pages/base/leetcode/",
-          },
-          {
-            text: "JavaScript",
-            link: "/pages/base/js/",
-          },
-          {
-            text: "HTML",
-            link: "/pages/base/html/",
-          },
-          {
-            text: "CSS",
-            link: "/pages/base/css/",
-          },
-          {
-            text: "CSS Demo",
-            link: "/pages/css/cssDemo.md",
-          },
-          {
-            text: "CSS特效",
-            link: "/pages/base/cssAnimation/",
-          },
-          {
-            text: "文件上传（原生）",
-            link: "/pages/base/uploadFile",
-          },
-        ],
-      },
-      {
-        text: "vue3基础",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [
-          { text: "注意点", link: "/pages/vue3/basic/note" },
-          { text: "reactive", link: "/pages/vue3/basic/reactive" },
-          { text: "ref", link: "/pages/vue3/basic/ref" },
-          { text: "v-model", link: "/pages/vue3/basic/v-model" },
-          { text: "计算属性和侦听器", link: "/pages/vue3/basic/computed" },
-        ],
-      },
-      {
-        text: "vue3组件",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [
-          {
-            text: "组件的一些注意点",
-            link: "/pages/vue3/components/componentNote",
-          },
-          { text: "组件注册", link: "/pages/vue3/components/reg" },
-          { text: "组件插槽", link: "/pages/vue3/components/slot" },
-          { text: "依赖注入", link: "/pages/vue3/components/provide" },
-        ],
-      },
-
-      {
-        text: "uniapp相关",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [
-          { text: "常用api等", link: "/pages/uniapp/" },
-          { text: "上传图片组件", link: "/pages/uniapp/components-uploadImg" },
-          { text: "日历组件", link: "/pages/uniapp/calendar" },
-        ],
-      },
-      {
-        text: "vite",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [
-          { text: "vite相关", link: "/pages/vite/" },
-          { text: "vitepress相关", link: "/pages/vite/vitepress" },
-        ],
-      },
-
-      {
-        text: "vscode相关插件和快捷键",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [{ text: "相关插件", link: "/pages/vscodeTool/" }],
-      },
-
-      {
-        text: "git相关",
-        collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
-        collapsed: true, // 默认收缩
-        items: [
-          { text: "gitHub遇到的问题", link: "/pages/git/githubQuestion/" },
-        ],
-      },
-    ],
+    nav: nav_router,
+    // 侧边栏 🔥 🌈 🚀 💪 📖 🍭 🌍
+    sidebar: sidebar_router,
   },
 });

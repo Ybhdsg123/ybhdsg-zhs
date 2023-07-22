@@ -22,6 +22,7 @@
 $colors: ();
 $colorsTotal: 20;
 
+// 1. 角向渐变实现色相环
 // to：不包含 end($colorsTotal)，through：包含end($colorsTotal)
 @for $i from 0 through $colorsTotal {
   // comma:列表项以逗号分隔，space:列表项以空格分隔
@@ -34,7 +35,7 @@ $colorsTotal: 20;
   background: conic-gradient($colors);
 }
 
-// 实现饼图
+// 2. 实现饼图
 .bar {
   width: 200px;
   height: 200px;
@@ -42,7 +43,7 @@ $colorsTotal: 20;
   background: conic-gradient(red 0 30%, green 0 60%, blue 0 100%);
 }
 
-// 贴图
+// 3. 贴图
 .poster {
   display: flex;
 }
@@ -65,7 +66,7 @@ $colorsTotal: 20;
   background-size: 30px 30px;
 }
 
-// 重复角向渐变
+// 4. 重复角向渐变
 .repeating-conic-gradient {
   width: 90px;
   height: 90px;
