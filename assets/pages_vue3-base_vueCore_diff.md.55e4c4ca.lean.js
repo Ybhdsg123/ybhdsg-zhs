@@ -1,0 +1,1 @@
+import{_ as e,o,c as t,a as s}from"./app.88185e12.js";const h=JSON.parse('{"title":"Diff \u7B97\u6CD5","description":"","frontmatter":{},"headers":[],"relativePath":"pages/vue3-base/vueCore/diff.md"}'),d={name:"pages/vue3-base/vueCore/diff.md"},c=s("",3),r=[c];function n(a,i,f,p,_,g){return o(),t("div",null,r)}const u=e(d,[["render",n]]);export{h as __pageData,u as default};
