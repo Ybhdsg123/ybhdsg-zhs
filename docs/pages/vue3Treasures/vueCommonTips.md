@@ -306,7 +306,7 @@ self.onmessage = async (e) => {
 
 ```js
 // vue2
-Object.assign(this.formData, this.$options.data());
+Object.assign(this.formData, this.$options.data().formData);
 ```
 
 :::tip

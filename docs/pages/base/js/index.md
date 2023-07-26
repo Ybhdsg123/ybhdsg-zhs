@@ -248,40 +248,77 @@ function importCssByUrl(url) {
 ### 1.第一种方式
 
 ```js
-// 这里的 i 为全局定义的
 for (var i = 0; i <= 5; i++) {
-  // 同步代码 ==》  这里依次输出 i 的值为，0，1，2，3，4，5
-  console.log(i);
-  // 异步代码 ==》 定时器，里面的i使用了闭包，
-  // 1. 每隔一秒推入任务队列中一个定时任务，定时 1s，为 6个 st(fn,1s)，1s内全部执行完毕了
+  console.log(i); // 0，1，2，3，4，5
+  // 1. 在 6次 循环中，推入任务队列中 6个 定时任务，在 1s 内全部执行完毕了
   // 2. performance.now() 大小基本相同，瞬间执行完 0-5 次循环推入的 6 个定时器，都在 1s 内执行完
   setTimeout(() => {
     console.log(performance.now());
     // i 为全局最终值 6，虽然在循环时引用到定义的 i，但是这个 i 是全局的
     // 所以在 定时器执行时(同步代码执行完毕后) 这个 i 已经变为 6 了，输出6
-    console.log(i);
+    console.log(i); // 1s 输出 6个6
   }, 1000);
 }
-// 输出全局定义的i，上面执行完 i 最终值为6
-console.log(i);
+console.log(i); // 6
 ```
 
 ### 2.第二种方式
 
 ```js
-// 这里的 i 为全局定义的
 for (var i = 0; i <= 5; i++) {
-  console.log(i);
-  // 异步代码 ==》 定时器，里面的i使用了闭包，
-  // 1. 在 0s,1s,2s,3s,4s,5s 推入任务队列中一个定时任务，
+  console.log(i); // 0，1，2，3，4，5
+  // 1. 间隔 1s 推入任务队列中一个定时任务， 0s,1s,2s,3s,4s,5s。
   // 2. 依次为 st(fn,0s)，st(fn,1s)，st(fn,2s)，st(fn,3s)，st(fn,4s),st(fn,5s),st(fn,6s),
   // 3. performance.now() 大小相差大概 1s，因为在 0-5 次循环推入的 6个定时器， 定时间隔为 1s
   setTimeout(() => {
     console.log(performance.now());
-    console.log(i); // i 为全局最终值 6
+    console.log(i); // i 为全局最终值 6，每隔 1s 输出 1个 6
   }, i * 1000);
 }
 console.log(i);
+```
+
+:::
+
+## 8. 监听中文输入开始和结束
+
+1. `compositionstart`: 当用户使用拼音输入法开始输入汉字拼音时，这个事件就会被触发。
+2. `compositionupdate`: 拼音输入法，输入中触发
+3. `compositionend`: 拼音输入法，输入结束触发
+
+:::details 例子
+
+```vue
+<template>
+  <input
+    type="text"
+    v-model="demo"
+    @compositionstart="compositionstart"
+    @compositionupdate="compositionupdate"
+    @compositionend="compositionend"
+  />
+  <!--  elelment元素上需要 ➕ 修饰符 native -->
+  <el-input
+    @compositionstart.native="compositionstart"
+    @compositionupdate.native="compositionupdate"
+    @compositionend.native="compositionend"
+    v-model="demo"
+  />
+</template>
+
+<script setup>
+import {ref} from 'vue'
+const demo= ref('')
+compositionend(e) {
+  console.log("end", e.target.value);
+},
+compositionstart(e) {
+  console.log("start", e.target.value);
+},
+compositionupdate(e) {
+  console.log("update", e.target.value);
+},
+</script>
 ```
 
 :::

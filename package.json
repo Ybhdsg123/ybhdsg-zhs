@@ -12,7 +12,7 @@
   },
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "vitepress build docs --trace-warnings",
     "docs:serve": "vitepress serve docs"
   }
 }

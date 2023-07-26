@@ -3,6 +3,14 @@ export const js_router = {
   text: "js相关",
   items: [
     {
+      text: "this的指向",
+      link: "/pages/base/js/this.md",
+    },
+    {
+      text: "原型与原型链",
+      link: "/pages/base/js/prototype.md",
+    },
+    {
       text: "JavaScript",
       link: "/pages/base/js/",
     },
