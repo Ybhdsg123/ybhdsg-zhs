@@ -322,3 +322,9 @@ compositionupdate(e) {
 ```
 
 :::
+
+## 9. 哪些事件无法进行冒泡
+
+- ui 事件：`load、unload、scroll、resize`；
+- 鼠标移动事件：`mouseenter、mouseleave`;
+- 焦点事件：`blur、focus`

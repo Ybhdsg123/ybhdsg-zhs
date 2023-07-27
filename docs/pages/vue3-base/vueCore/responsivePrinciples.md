@@ -6,11 +6,7 @@
 
 ## 2. Vue2 响应式：基于 `Object.defineProperty()`实现的。
 
-::: info 有以下缺点：
-<span style="color:#0396FF"><strong>defineProperty</strong> 定义对象不能监听添加额外属性或修改额外添加的属性的变化</span>
-
-<span style="color:#0396FF"><strong>defineProperty</strong> 定义对象不能监听根据自身数组下标修改数组元素的变化</span>
-:::
+<span style="color:#0396FF"><strong>Object.defineProperty</strong> 只会对属性进行监测，而不会对对象进行监测，所以对于对象不能监听添加额外属性或修改额外添加的属性的变化</span>
 
 Vue2 提供了两个属性方法解决了这个问题：`Vue.$set`和`Vue.$delete`。
 
@@ -464,7 +460,8 @@ export function trigger(target: object,type: TriggerOpTypes,key?: unknown,newVal
 
 ## 6. Object.defineProperty 真的不能监听数组的变化吗？
 
-数组就是一个特殊的对象，它的下标就可以看作是它的 key，`Object.defineProperty` 是可以监听数组的变化的。
+- 数组就是一个特殊的对象，它的下标就可以看作是它的 key，`Object.defineProperty` 是可以监听数组的变化的。
+- 由于 vue2 放弃了这个方式进行监听，所以对于像`this.list[0]='xxx'`、`this.list.length=0`这样的操作是无法实现响应式操作的
 
 Vue2 弃用了这个方案的原因：
 
@@ -474,7 +471,28 @@ Vue2 弃用了这个方案的原因：
 
 ## 7. Vue2 中是怎么监测数组的变化的？
 
-原理：使用拦截器覆盖 `Array.prototype`，之后再去使用 Array 原型上的方法的时候，其实使用的是拦截器提供的方法，在拦截器里面才真正使用原生 Array 原型上的方法去操作数组。
+原理：使用拦截器覆盖 `Array.prototype`，之后再去使用 `Array` 原型上的方法的时候，其实使用的是拦截器提供的方法，在拦截器里面才真正使用原生 Array 原型上的方法去操作数组。
+
+```js
+// 拦截器其实就是一个和 Array.prototype 一样的对象。
+const arrayProto = Array.prototype;
+const arrayMethods = Object.create(arrayProto);
+["push", "pop", "shift", "unshift", "splice", "sort", "reverse"].forEach(
+  function (method) {
+    // 缓存原始方法
+    const original = arrayProto[method];
+    Object.defineProperty(arrayMethods, method, {
+      value: function mutator(...args) {
+        // 最终还是使用原生的 Array 原型方法去操作数组
+        return original.apply(this, args);
+      },
+      eumerable: false,
+      writable: false,
+      configurable: true,
+    });
+  }
+);
+```
 
 ## 8. Vue3 中是怎么监测数组的变化？
 

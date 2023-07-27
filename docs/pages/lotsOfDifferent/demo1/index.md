@@ -1,15 +1,15 @@
 # 杂七杂八系列一
 
 <script setup>
-// import BgFollowImg from './components/bgFollowImg.vue'
+import BgFollowImg from './components/bgFollowImg.vue'
 
 </script>
 
 ## 1. 跟随图片变化的背景色
 
-因为组件中使用了 cdn 引入的方式，打包错误，组件地址为 `./components/bgFollowImg.vue`
+通过 cdn 引入第三方包的方式，在打包时因为 ESM 不支持，所以需要将文件下载下来引入
 
-<!-- <BgFollowImg/> -->
+<BgFollowImg/>
 
 :::tip
 

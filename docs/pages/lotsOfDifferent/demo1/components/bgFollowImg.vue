@@ -19,7 +19,10 @@
 <script setup>
 import { ref } from "vue";
 // 通过cnd方式引入 ColorThief
-import "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js";
+// import "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js";
+
+// 通过cdn引入的方式，在打包时ESM不支持，所以需要将文件下载下来引入
+import "../color_thief";
 const images = [];
 for (let i = 0; i < 4; i++) {
   images.push(`https://picsum.photos/200?r=${i}`);

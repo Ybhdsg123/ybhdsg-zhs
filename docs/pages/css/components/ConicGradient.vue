@@ -19,6 +19,7 @@
 <script setup></script>
 
 <style lang="scss" scoped>
+@use "sass:math";
 $colors: ();
 $colorsTotal: 20;
 
@@ -26,7 +27,12 @@ $colorsTotal: 20;
 // to：不包含 end($colorsTotal)，through：包含end($colorsTotal)
 @for $i from 0 through $colorsTotal {
   // comma:列表项以逗号分隔，space:列表项以空格分隔
-  $colors: append($colors, hsl($i * (360deg / $colorsTotal), 100%, 50%), comma);
+  // $colors: append($colors, hsl($i * (360deg / $colorsTotal), 100%, 50%), comma);
+  $colors: append(
+    $colors,
+    hsl($i * calc(360deg / $colorsTotal), 100%, 50%),
+    comma
+  );
 }
 .ranbow {
   width: 200px;
