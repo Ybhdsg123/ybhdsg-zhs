@@ -65,7 +65,9 @@ origin  https://github.com/tianqixin/runoob-git-test (push)
 $ git remote set-url origin git@github.com:tianqixin/runoob-git-test.git
 ```
 
-## 4. 上传时忘记弄 `gitignore` 文件，已上传到仓库时
+## 4. 上传时忘记弄 `gitignore` 文件，已上传到仓库时（git 添加.gitignore 后不生效问题）
+
+原因：`.gitignore`文件的用途，该文件只能作用于`Untracked Files`，也就是那些从来没有被 `Git` 记录过的文件（自添加以后，从未 add 及 commit 过的文件）。
 
 **清除缓存 重新提交**
 
@@ -75,3 +77,43 @@ git add .
 git commit -m '注释'
 git push
 ```
+
+## 5. nvm 相关
+
+> http://test.runoob.com/w3cnote/nvm-manager-node-versions.html
+
+## 6. Git 创建本地分支并关联远程分支
+
+创建本地分支：`git branch 分支名`
+切换到本地分支：`git checkout 分支名`
+
+创建本地分支并切换：`git checkout -b 分支名`
+
+提交本地分支到远程仓库：`git push origin 本地分支名`
+新建本地分支与远程分支关联
+`git branch –set-upstream 本地新建分支名 origin/远程分支名`
+例如：
+`git branch –set-upstream dev origin/dev`
+`git branch --set-upstream-to=origin/dev dev`
+
+将本地 dev 和远程 dev 分支相关联
+`git push --set-upstream origin dev`
+
+## 6. `.gitignore`：https://juejin.cn/post/7290210264728469504#comment
+
+1. 通配符`!`表示：否定模式，表示指定不忽略某些文件或文件夹。
+
+```js
+# 匹配根目录下的 unpackage 文件夹
+/unpackage/
+
+# 取消对 unpackage 下的 dist 文件夹的忽略
+!/unpackage/dist/
+
+# 取消对 unpackage 下的 dist 文件夹的忽略
+!/unpackage/res/
+```
+
+## 7. git 操作误将本地代码被线上覆盖，导致以前更改代码消失的处理方法
+
+找回操作记录，可以使用`git reflog`、`git cherry-pick`

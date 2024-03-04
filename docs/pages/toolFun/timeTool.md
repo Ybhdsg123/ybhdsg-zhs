@@ -1,5 +1,11 @@
 # 时间相关
 
+## 0！. 一天的秒数 8.64e7
+
+`8.64e7` 是科学计数法 8.64 乘以 10 的 7 次方，即为 86400000 也就是 1000*60*60\*24 也就是一天的毫秒数。因为 Date.now()
+方法能够返回得到自 1970 年 1 月 1 日 00:00:00(UTC)到当前时间的毫秒数。咱们是北京时间的时区，也就是为东 8 区，
+起点时间对应就是："1970/01/01 08:00:00"
+
 ## 1. 获取当天时间
 
 ```js
@@ -155,4 +161,99 @@ const isWeekday = (date) => date.getDay() % 6 !== 0;
 
 isWeekday(new Date(2022, 03, 11));
 // true
+```
+
+## 7. 将时间转换为 `几秒/分钟/小时...前`、或者`未来多少时间`
+
+```js
+/**
+ * 函数接收一个日期作为参数，并返回一个字符串
+ * @param {Date|String} date 需要计算时间间隔的日期
+ * @return String
+ */
+function timeIntervalFormat(date) {
+  let t,
+    p,
+    l = [
+      { n: "年", s: 3600 * 24 * 365 * 1e3 },
+      { n: "个月", s: 3600 * 24 * 30 * 1e3 },
+      { n: "天", s: 3600 * 24 * 1e3 },
+      { n: "小时", s: 3600 * 1e3 },
+      { n: "分钟", s: 60 * 1e3 },
+      { n: "秒", s: 1 * 1e3 },
+      { n: "刚刚", s: 0 },
+    ];
+  t = Date.now() - new Date(date || Date.now()).getTime();
+
+  // 考虑传入的并不是一个可以被Date对象解析的日期字符串，避免错误影响程序运行
+  if (Number.isNaN(t)) return "-";
+  if (t === 0) return l.find((e) => e.s === t).n;
+
+  // t < 0 时，说明是未来时间
+  t < 0 && ((p = !!t), (t = -t));
+
+  for (let i = 0; i < l.length; i++) {
+    const { n, s } = l[i];
+    if (t >= s) {
+      const v = Math.floor(t / s);
+      return p ? `未来${v}${n}` : `${v}${n}前`;
+    }
+  }
+}
+```
+
+## 8. 获取相距今天多少天的日期，返回格式参考函数
+
+:::details 用到的 formatTime 函数
+
+```js
+/**
+ * @description:  时间格式化 默认 2022-09-06 12:00:00
+ * 如果需要显示成  2023年03月08日 11:00 传入 YYYY[年]-MM[月]-DD[日] HH:mm
+ * @param {number} val : 秒数
+ * @param {string} formatTime : 格式同dayjs
+ * @Author: zhs
+ */
+import dayjs from "dayjs";
+export const formatTime = (val, formatTime = "YYYY-MM-DD HH:mm") => {
+  if (!Number(val)) {
+    return "-";
+  }
+  let value = Number(val) * 1000;
+  return dayjs(value).format(formatTime);
+};
+```
+
+:::
+
+```js
+/**
+ * @description:  获取相距今天多少天的日期
+ * @param {Date} currentDay : 从那天开始，不传默认是今天
+ * @param {number} interveningDate : 相距日期，默认14天
+ * @Author: zhs
+ */
+
+export const get14DaysDates = (currentDay, interveningDate = 14) => {
+  const today = currentDay ? new Date(currentDay) : new Date();
+  const end = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + interveningDate
+  );
+  const dates = [];
+  let date = today;
+  const weeks = ["日", "一", "二", "三", "四", "五", "六"];
+  while (date < end) {
+    const time = date / 1000;
+    const t = weeks[formatTime(time, "d")];
+    dates.push({
+      time: formatTime(time, "YYYY-MM-DD"),
+      day: formatTime(time, "DD"),
+      week: "周" + t,
+    });
+    date.setDate(date.getDate() + 1);
+  }
+  return dates;
+};
 ```

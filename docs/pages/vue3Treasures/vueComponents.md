@@ -5,6 +5,7 @@ import AutoEllipsis from './components/autoEllipsis.vue'
 import Loading from './components/loading.vue'
 import ImgWatermark from './components/imgWatermark.vue'
 import CrashBallLoading from './components/crashBallLoading.vue'
+import TextLoading from './components/textLoading.vue'
 
 </script>
 
@@ -54,9 +55,28 @@ import CrashBallLoading from './components/crashBallLoading.vue'
 
 ## 2. loading 效果
 
-### 2.1 转圈 loading
+## 2.1 加载文字 loading
+
+<TextLoading/>
+<TextLoading :loadingText="'正在加载中...'"/>
+<TextLoading :loadingText="'请稍后...'"/>
+
+:::details 使用
+
+1. **loadingText**: [string] 加载文字
+
+```js
+<TextLoading/> // 默认值: 暂无更多数据...
+<TextLoading :loadingText="'正在加载中...'"/>
+<TextLoading :loadingText="'请稍后...'"/>
+```
+
+:::
+
+### 2.2 转圈 loading
 
 <Loading />
+
 <Loading :size="30"/>
 
 :::details 使用
@@ -74,7 +94,7 @@ import CrashBallLoading from './components/crashBallLoading.vue'
 
 > 代码地址：pages/vue3Treasures/components/loading.vue
 
-### 2.2 小球碰撞 loading
+### 2.3 小球碰撞 loading
 
 <CrashBallLoading/>
 

@@ -314,3 +314,5 @@ Object.assign(this.formData, this.$options.data().formData);
 1. vue2：`this.$options.data()`，拿到 data 中定义的初始数据
 
 :::
+
+## 9. [Element UI 中国省市区级联数据](https://www.npmjs.com/package/element-china-area-data)

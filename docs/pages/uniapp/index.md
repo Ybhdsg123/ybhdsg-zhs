@@ -187,3 +187,23 @@ onReady() {
 ```
 
 :::
+
+## 4. `uni.showModal` 异步变为同步
+
+```js
+return new Promise(async (resolve) => {
+  uni.showModal({
+    title: "title",
+    content: "content",
+    success: (res) => {
+      resolve(res);
+    },
+  });
+});
+```
+
+## 5. 把对象中的数据给了某个变量，改变一个对象的值，另一个对象也变化的解决办法！
+
+`this.dataB = JSON.parse(JSON.stringify(this.dataA));`
+
+`https://blog.csdn.net/jiangwei1994/article/details/83068944`

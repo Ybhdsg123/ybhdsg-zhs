@@ -149,3 +149,128 @@ const beforeUpload = (file, filelist) => {};
 ## 3. 图片上传组件
 
 组件位置：`pages/vue3-element-admin/components/imgUpload.vue`
+
+## 4. element plus 日期组件，禁止选中当天以前时间和后面一年的时间
+
+:::tip
+
+时间组件，限制时间和快捷选项
+
+:::
+
+::: details 源码
+
+```js
+// 时间限制
+export const pickerOptions = {
+  // 禁止时间
+  disabledDate(time) {
+    return (
+      // 当天以前禁止 和 往后一年时间
+      time.getTime() <= Date.now() - 3600 * 1000 * 24 ||
+      time.getTime() >= Date.now() + 3600 * 1000 * 24 * 365
+    );
+  },
+  // 快捷选项
+  shortcuts: [
+    {
+      text: "最近一个月",
+      onClick(picker) {
+        const start = new Date();
+        const end = new Date();
+        end.setTime(start.getTime() + 3600 * 1000 * 24 * 30);
+        picker.$emit("pick", [start, end]);
+      },
+    },
+    {
+      text: "最近三个月",
+      onClick(picker) {
+        const start = new Date();
+        const end = new Date();
+        end.setTime(start.getTime() + 3600 * 1000 * 24 * 90);
+        picker.$emit("pick", [start, end]);
+      },
+    },
+    {
+      text: "最近六个月",
+      onClick(picker) {
+        const start = new Date();
+        const end = new Date();
+        end.setTime(start.getTime() + 3600 * 1000 * 24 * 180);
+        picker.$emit("pick", [start, end]);
+      },
+    },
+    {
+      text: "最近一年",
+      onClick(picker) {
+        const start = new Date();
+        const end = new Date();
+        end.setTime(start.getTime() + 3600 * 1000 * 24 * 365);
+        picker.$emit("pick", [start, end]);
+      },
+    },
+  ],
+};
+```
+
+:::
+
+## 5. 在`el-table`内循环嵌套使用 `el-date-picker`和`el-select`时，弹框跟随页面滚动的解决方式
+
+:::tip 问题
+
+`el-date-picker`和`el-select`弹框出现但没有选择（其实就是没有失去焦点）时，滚动页面，弹框会跟随页面滚动的解决方式
+
+:::
+
+:::info
+
+单独使用`el-select`时，出现弹框时，滚动页面弹框会跟随页面滚动的解决方式：直接设置`:popper-append-to-body='false'`可以解决
+
+:::
+
+::: details 在`el-table`里的解决方式
+
+### 注意：
+
+1. 设置 `ref` 时需要注意，循环产生的是多个元素，所以需要使用 `${index}` 来设置 `ref` , 确保每一个 `ref` 都不一样
+2. 在页面的滚动事件中去循环 `ref` 来关闭弹框，
+3. `el-select`关闭方式：调用 `blur()` 方法
+4. `el-date-picker`关闭方式： 设置 `pickerVisible` 为 false
+
+```vue
+<template>
+  <div @scroll="onScroll">
+    <el-table class="MT20" :data="specsTableData" size="small">
+      <el-table-column label="使用有效期">
+        <!-- 重点 -->
+        <template slot-scope="{ row, $index }">
+          <el-date-picker :ref="'listDateRef' + $index" />
+        </template>
+      </el-table-column>
+      <el-table-column label="物理房型">
+        <!-- 重点 -->
+        <template slot-scope="{ row, $index }">
+          <el-date-picker :ref="'listDateRef' + $index" />
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+<script>
+export default {
+  methods: {
+    // 滚动页面时，弹框未关闭时，关闭弹框
+    onScroll() {
+      this.specsTableData.forEach((_, index) => {
+        // 重点
+        this.$refs["listRoomModelIdsRef" + index].blur(); // 关闭el-select
+        this.$refs["listDateRef" + index].pickerVisible = false; // 关闭el-data-picker
+      });
+    },
+  },
+};
+</script>
+```
+
+:::

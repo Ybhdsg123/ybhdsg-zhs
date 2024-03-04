@@ -28,10 +28,10 @@
         const chunkFiles = sliceFile(file);
         // 分片后计算得到的 hash
         const hash = await getFileSparkMd5(chunkFiles);
-        console.log(hash, performance.now());
+        console.log(hash, performance.now(),'hash和时间');
         // 开启辅助线程计算 分块后的文件hash，这样更快
         const hash1 = await getFileSparkMd5ByThread(chunkFiles);
-        console.log(hash1, performance.now());
+        console.log(hash1, performance.now(),'开启辅助线程后计算的hash和时间');
 
         // 使用 promise.allSettled 上传，不会错误一个就直接 reject
 

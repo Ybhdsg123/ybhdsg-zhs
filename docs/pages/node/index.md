@@ -1,5 +1,9 @@
 ## node 相关
 
+## **Node.js 并不是语言，而是一个 JavaScript 运行时环境，它的语言是 JavaScript。**
+
+这就跟 PHP、Python、Ruby 这类不一样，它们既代表语言，也可代表执行它们的运行时环境（或解释器）。
+
 ## 📖 [Node.js 入门指南和实践](https://mp.weixin.qq.com/s/x8DrHpNNGvMDOw9IjEHruQ)
 
 ## 🚀 [7 天学会 node.js](http://www.nodejs.com.cn/7-days-nodejs/#2.5.5)

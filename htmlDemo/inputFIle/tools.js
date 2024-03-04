@@ -75,7 +75,7 @@ export const getFileSparkMd5ByThread = (chunks) => {
       const { hash, hashProgress } = e.data;
       //  更改进度条数据
       let progress = hashProgress;
-      console.log(progress, hash);
+      console.log(progress, hash, "进度和hash");
       if (hash) {
         // 当hash值被算出来时，就可以关闭主线程了
         worker.terminate();
