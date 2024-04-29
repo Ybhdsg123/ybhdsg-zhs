@@ -9,6 +9,21 @@
 
 > 1.3 出现 gitHub 说密钥文件权限不对问题时，可以使用 `chmod 700 .ssh/id_rsa`修改权限，权限值 700，默认 600
 
+**1.3删除分支**
+
+```js
+删除本地分支：
+git branch -d <branch_name>  # 安全删除，只有当分支已经合并到其它分支时才会删除
+git branch -D <branch_name>  # 强制删除，不论分支是否合并都会被删除
+删除远程分支：
+git push <remote_name> --delete <branch_name>  # 删除远程分支
+```
+
+git branch -r  # 查看远程分支
+git checkout -b 本地分支 origin/远程分支  # 创建本地分支并关联
+git branch --set-upstream-to origin/远程分支名 本地分支名  # 已有本地分支创建关联
+git pull  # 拉取
+
 **1.4 本地分支**
 
 > `git branch`：查看所有分支
@@ -62,7 +77,7 @@ origin  https://github.com/tianqixin/runoob-git-test (push)
 **第二步**：`git remote set-url origin  remote's URL` 修改当前链接的远程仓库形式
 
 ```js
-$ git remote set-url origin git@github.com:tianqixin/runoob-git-test.git
+git remote set-url origin git@github.com:tianqixin/runoob-git-test.git
 ```
 
 ## 4. 上传时忘记弄 `gitignore` 文件，已上传到仓库时（git 添加.gitignore 后不生效问题）
@@ -78,9 +93,15 @@ git commit -m '注释'
 git push
 ```
 
+```js 清除对于 unpackage的缓存
+git rm -r --cached unpackage
+git commit -m "Remove unpackage from tracking"
+git push
+```
+
 ## 5. nvm 相关
 
-> http://test.runoob.com/w3cnote/nvm-manager-node-versions.html
+> <http://test.runoob.com/w3cnote/nvm-manager-node-versions.html>
 
 ## 6. Git 创建本地分支并关联远程分支
 
@@ -99,7 +120,7 @@ git push
 将本地 dev 和远程 dev 分支相关联
 `git push --set-upstream origin dev`
 
-## 6. `.gitignore`：https://juejin.cn/post/7290210264728469504#comment
+## 6. `.gitignore`：<https://juejin.cn/post/7290210264728469504#comment>
 
 1. 通配符`!`表示：否定模式，表示指定不忽略某些文件或文件夹。
 
@@ -117,3 +138,7 @@ git push
 ## 7. git 操作误将本地代码被线上覆盖，导致以前更改代码消失的处理方法
 
 找回操作记录，可以使用`git reflog`、`git cherry-pick`
+
+## 8. 将当前分支的最新提交推送到远程仓库的指定分支
+
+`git push origin HEAD:develop_statement`：这个命令是用于将**当前分支的最新提交推送到远程仓库的指定分支**。其中`origin`是远程仓库的名称，`HEAD`是一个指向当前分支最新提交的指针，而`develop_statement`是目标分支的名称

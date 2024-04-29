@@ -64,11 +64,11 @@ saturate 饱和度: -webkit-filter: saturate(1000%);
 ## 4. 多行省略
 
 ```css
-/* 用来限制在一个块元素显示的文本的行数 */
--webkit-line-clamp: 2;
-text-overflow: ellipsis;
 display: -webkit-box;
+-webkit-line-clamp: 2; /* 用来限制在一个块元素显示的文本的行数 */
+text-overflow: ellipsis;
 -webkit-box-orient: vertical;
+overflow: hidden;
 ```
 
 ## 5. 滚动条样式改变

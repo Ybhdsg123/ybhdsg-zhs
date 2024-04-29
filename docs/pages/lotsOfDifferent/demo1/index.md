@@ -1,4 +1,4 @@
-# 杂七杂八系列一
+# 系列一
 
 <script setup>
 import BgFollowImg from './components/bgFollowImg.vue'
@@ -15,7 +15,7 @@ import BgFollowImg from './components/bgFollowImg.vue'
 
 1. 通过 cdn 引入 `colorThief`，`import "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js"`
 
-   - 或者 `npm i colorthief `
+   - 或者 `npm i colorthief`
 
 2. 通过 `https://picsum.photos` 网址获取随机图片，通过 `colorThief` 获取颜色的话会有**跨域污染（因为里面使用了 canvas，会污染画布）**，在`img`标签上设置
    `crossorigin="anonymous"`解决
@@ -37,11 +37,11 @@ const mainColor = await colorThief.getColor(e.target);
 
 ## 2. [纯 CSS 图标 (Anthony Fu 系列文章)](https://antfu.me/posts/icons-in-pure-css-zh)
 
-### 图标库
+### 2.1 图标库
 
 [Iconify](https://iconify.design/) 一个统一的图标框架，它通过单个 CDN 条目和按需加载提供来自 80 多个流行图标集的 6,000 多个图标。
 
-### Iconify 使用
+### 2.2 Iconify 使用
 
 ```js
 <!--Import Framework 引入-->
@@ -58,11 +58,11 @@ const mainColor = await colorThief.getColor(e.target);
 
 ```
 
-### VS Code 插件
+### 2.3 VS Code 插件
 
 Iconify IntelliSense（加载图标数据并按需缓存它们，它将 svgs 编码为数据 url，以便在 VS Code 中显示为图像。）
 
-### unplugin-icons 插件相关
+### 2.4 -icons 插件相关
 
 - [unplugin-icons - npm 网站](https://www.npmjs.com/package/unplugin-icons)
 
@@ -72,6 +72,25 @@ Iconify IntelliSense（加载图标数据并按需缓存它们，它将 svgs 编
 
 - [unplugin-vue-components - 按需组件自动导入](https://github.com/unplugin/unplugin-vue-components)
 
-* [unplugin-auto-import - 按需自动导入 API](https://github.com/unplugin/unplugin-auto-import)
+- [unplugin-auto-import - 按需自动导入 API](https://github.com/unplugin/unplugin-auto-import)
 
-* [更多请查看...](https://antfu.me/posts/journey-with-icons-continues)
+- [更多请查看...](https://antfu.me/posts/journey-with-icons-continues)
+
+## 3. vue中img标签引入图片时
+
+```html
+:src="require('@/assets/images/hotel/zsr.png')"
+```
+
+## 4. Array.includes() 在进行比较时使用的是强等于（===）比较
+
+## 4. MD5 加密
+
+## 4.1 文件地址：`./utils/md5.js`
+
+## 4.2 使用方法
+
+```js
+import md5 from './utils/md5.js'
+const token = hex_md5('dvjhkl1234567890');
+```

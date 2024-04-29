@@ -1,0 +1,51 @@
+/* 改变主题色变量 */
+$--color-primary: #199b46;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+// 输入框的背景
+.el-select,
+.el-cascader,
+.el-input-number,
+.el-range-editor.el-input__inner,
+.el-input .el-input__inner,
+.el-range-editor--mini.el-input__inner,
+.el-range-editor--mini .el-range-input,
+.el-picker-panel .el-date-picker,
+.el-range-editor--small.el-input__inner,
+.vue-treeselect__menu,
+.vue-treeselect__option,
+.el-textarea__inner,
+.bonc-tree-select .vue-treeselect__single-value {
+  width: 100%;
+  height: 30px;
+  //   background: rgba(217, 217, 217, 0.3);
+  //   border-color: rgba(217, 217, 217, 0.3);
+  border-radius: 2px;
+}
+// 输入框的背景，form表单下有背景色
+.custom-form {
+  // .el-input-number,
+  .el-range-editor.el-input__inner,
+  .el-input .el-input__inner,
+  .el-range-editor--mini.el-input__inner,
+  .el-range-editor--mini .el-range-input,
+  .el-picker-panel .el-date-picker,
+  .el-range-editor--small.el-input__inner,
+  .vue-treeselect__menu,
+  .vue-treeselect__option,
+  .el-textarea__inner,
+  .bonc-tree-select .vue-treeselect__single-value {
+    width: 100%;
+    height: 30px;
+    background: rgba(217, 217, 217, 0.3);
+    border-color: rgba(217, 217, 217, 0.3);
+    border-radius: 2px;
+  }
+  .el-range-editor .el-range-input {
+    background-color: transparent;
+  }
+}

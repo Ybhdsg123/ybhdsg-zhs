@@ -302,17 +302,3 @@ self.onmessage = async (e) => {
 
 :::
 
-## 8. `el-form`弹窗中表单的初始化
-
-```js
-// vue2
-Object.assign(this.formData, this.$options.data().formData);
-```
-
-:::tip
-
-1. vue2：`this.$options.data()`，拿到 data 中定义的初始数据
-
-:::
-
-## 9. [Element UI 中国省市区级联数据](https://www.npmjs.com/package/element-china-area-data)
