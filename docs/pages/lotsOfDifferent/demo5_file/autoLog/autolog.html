@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            margin: 100px auto;
+            width: 300px;
+            height: 300px;
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+   <div class="box">
+    <input id="ipt" placeholder="请输入文本"></input>
+    <div id="btns" >
+        <button data-type=""> 素框没有icon</button>
+        <button data-type="success">成功</button>
+        <button data-type="error" >错误</button>
+        <button data-type="warn">警告</button>
+        <button data-type="info">默认</button>
+    </div>
+   </div>
+</body>
+
+<script type="module">
+import autolog from './index.js'
+
+const iptDom = document.querySelector('#ipt')
+const btnsDom = document.querySelector('#btns')
+// 给btnss绑定事件，通过冒泡来获取点击的按钮
+    btnsDom.addEventListener('click', (event) => {
+         const target = event.target; // 当前点击的具体button
+         const type = target.dataset.type;// 拿到自定义属性的值，设置提示的type
+        autolog.log(iptDom.value, type, 2500);
+    })
+</script>
+
+
+</html>

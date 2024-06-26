@@ -1,0 +1,43 @@
+.ljs-tree-select-treeOne{
+	>.ljs-tree-select-treeOne-one{
+		height: 60upx;
+		overflow: hidden;
+		&.disabled{
+			background-image: url(./images/ico_close.png);
+			background-position: center right 20upx;
+			background-size: 20upx 20upx;
+			background-repeat: no-repeat;
+			opacity: 0.5;
+		}
+		&.active{
+			color: #5c70fe;
+			border-bottom: 4upx solid #5c70fe;
+		}
+		>.ljs-tree-select-treeOne-jt{
+			width: 60upx;
+			height: 60upx;
+			padding: 15upx;
+			float: left;
+			box-sizing: border-box;
+		}
+		>.ljs-tree-select-treeOne-null{
+			width: 60upx;
+			height: 60upx;
+			float: left;
+		}
+		>.ljs-tree-select-treeOne-chooseTag{
+			width: 30upx;
+			height: 30upx;
+			float: left;
+			margin-top: 15upx;
+			margin-right: 10upx;
+		}
+		>.ljs-tree-select-treeOne-label{
+			line-height: 60upx;
+			float: left;
+		}
+	}
+	>.ljs-tree-select-treeOne-children{
+		padding-left: 50upx;
+	}
+}

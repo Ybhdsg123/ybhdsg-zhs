@@ -2,6 +2,7 @@
 export const vue3Treasures_router = {
   // vue3宝藏🏴‍☠️
   text: "vue3宝藏🏴‍☠️",
+  collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
   items: [
     {
       text: "vue常用组件",

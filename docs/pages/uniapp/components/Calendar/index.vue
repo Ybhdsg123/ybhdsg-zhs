@@ -1,8 +1,3 @@
-# 日历组件
-
-## 1. 组件内容
-
-```vue
 <template>
   <view class="calendar">
     <slot name="header"> </slot>
@@ -31,8 +26,8 @@
           <text class="fs-xl calendar-week-text">{{ week }}</text>
         </view>
       </view>
-      // 这里将计算的宽度 dayWidthComputed
-      通过作用域插槽传出去，复杂组件可以使用
+      <!--这里将计算的宽度 dayWidthComputed
+      通过作用域插槽传出去，复杂组件可以使用 -->
       <slot name="calendarDay" :width="dayWidthComputed">
         <view class="calendar-day">
           <view
@@ -45,32 +40,33 @@
             ]"
             v-for="(item, index) in 42"
             :key="index"
-            v-if="item - beginDay <= endDay"
           >
-            <view
-              @click="getCurrentDay(item, beginDay)"
-              class="calendar-every-day"
-              :style="[
-                {
-                  width: dayWidthComputed * 0.7 + 'px',
-                  height: dayWidthComputed * 0.7 + 'px',
-                },
-              ]"
-              :class="[
-                `${year}-${month}-${item - beginDay}` == curDate
-                  ? 'calendar-now-day'
-                  : '',
-                deadLine &&
-                new Date(`${year}-${month}-${item - beginDay}`) / 1000 -
-                  new Date(deadLine) / 1000 >
-                  0
-                  ? 'deadLineStyle'
-                  : '',
-              ]"
-              v-if="item - beginDay > 0 && item - beginDay <= endDay"
-            >
-              <text class="fs-xl">{{ item - beginDay }}</text>
-            </view>
+            <template v-if="item - beginDay <= endDay">
+              <view
+                @click="getCurrentDay(item, beginDay)"
+                class="calendar-every-day"
+                :style="[
+                  {
+                    width: dayWidthComputed * 0.7 + 'px',
+                    height: dayWidthComputed * 0.7 + 'px',
+                  },
+                ]"
+                :class="[
+                  `${year}-${month}-${item - beginDay}` == curDate
+                    ? 'calendar-now-day'
+                    : '',
+                  deadLine &&
+                  new Date(`${year}-${month}-${item - beginDay}`) / 1000 -
+                    new Date(deadLine) / 1000 >
+                    0
+                    ? 'deadLineStyle'
+                    : '',
+                ]"
+                v-if="item - beginDay > 0 && item - beginDay <= endDay"
+              >
+                <text class="fs-xl">{{ item - beginDay }}</text>
+              </view>
+            </template>
           </view>
         </view>
       </slot>
@@ -317,79 +313,3 @@ export default {
   color: #030303;
 }
 </style>
-```
-
-## 2. 使用
-
-```js
-<Calendar :calendarWidth="650" @getCurrentDay="getCurrentDay" :deadLine="currentDay" />
-```
-
-## 3. 复杂应用
-
-> 主要就是使用了传出的 `width` 再加上日历组件本来的样式，在外面重新画了一边日历组件形式，为了不再传入组件里面遍历多次而这样使用（应该有更好的办法，还没想到）
-
-```vue
-<template>
-  <Calendar
-    :planList="planList"
-    ref="calendarRef"
-    :calendarWidth="650"
-    @getCurrentDay="getCurrentDay"
-  >
-    <template #calendarDay="{ width }">
-      <view class="slotDayBox">
-        // weekDay是获取今天是周几，就在前面填补几个空白
-        <view
-          :style="[{ width: width + 'px', height: width + 'px' }]"
-          v-for="item in weekDay"
-          :key="item"
-        >
-          <view>
-            <view
-              class="calendar-every-day"
-              :style="[
-                { width: width * 0.7 + 'px', height: width * 0.7 + 'px' },
-              ]"
-            >
-            </view>
-          </view>
-        </view>
-        // planList 是获取到的数据真正展示的内容
-        <view
-          :style="[{ width: width + 'px', height: width + 'px' }]"
-          v-for="(obj, key) in planList"
-          :key="obj.id"
-        >
-          <view class="calendar-every-day-box">
-            <view
-              @click="checkInsReport(obj)"
-              class="calendar-every-day"
-              :class="[obj.status ? 'special-text' : '']"
-              :style="[
-                {
-                  width: width * 0.7 + 'px',
-                  height: width * 0.7 + 'px',
-                  background: textColor[obj.status],
-                },
-              ]"
-            >
-              {{
-                key.split("-")[2] >= 10
-                  ? key.split("-")[2]
-                  : key.split("-")[2][1]
-              }}
-            </view>
-            <text class="tag-text" :style="{ color: textColor[obj.status] }">
-              {{ obj.status ? planStatus[obj.status] : planStatus[4] }}
-            </text>
-          </view>
-        </view>
-      </view>
-    </template>
-  </Calendar>
-</template>
-```
-
-**效果：**
-![效果](./imgs//calendar.png)

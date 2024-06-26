@@ -1,0 +1,112 @@
+.ljs-tree {
+  width: 100%;
+  .ljs-tree-select {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background-color: rgba(0, 0, 0, 0.3);
+    .ljs-tree-select-box {
+      width: 100%;
+      height: 80%;
+      background-color: #fff;
+      border-radius: 10upx;
+      position: absolute;
+      top: 10%;
+      left: 0;
+      .ljs-tree-select-title {
+        border-bottom: 2upx solid #eee;
+        height: 90upx;
+        line-height: 90upx;
+        padding-left: 20upx;
+        font-size: 32upx;
+        font-weight: 600;
+        .ljs-tree-select-closeBut {
+          width: 90upx;
+          height: 90upx;
+          float: right;
+          .ljs-tree-select-ico {
+            width: 30upx;
+            height: 30upx;
+            margin: 30upx;
+          }
+        }
+      }
+      .ljs-tree-select-con {
+        width: 100%;
+        height: calc(100% - 190upx);
+        padding: 20upx;
+        box-sizing: border-box;
+        overflow-y: auto;
+        .ljs-tree-select-search {
+          width: 100%;
+          height: 60upx;
+          border: 2upx solid #ccc;
+          border-radius: 8upx;
+          padding: 0 15upx;
+          box-sizing: border-box;
+        }
+      }
+      .ljs-tree-select-but {
+        height: 100upx;
+        .ljs-tree-select-botton {
+          width: 120upx;
+          height: 60upx;
+          line-height: 60upx;
+          text-align: center;
+          border-radius: 10upx;
+          padding: 0;
+          margin: 20upx;
+          float: right;
+          font-size: 26upx;
+          &.yes {
+            background-color: #1890ff;
+            color: #fff;
+          }
+          &.no {
+            background-color: #fff;
+            border: 2upx solid #ccc;
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+
+  .myInput {
+    .input {
+      width: 100%;
+      height: 80upx;
+      line-height: 80upx;
+      // border: 2upx solid #ccc;
+      border-radius: 10upx;
+      font-size: 28upx;
+      //   padding: 0 20upx;
+      box-sizing: border-box;
+    }
+  }
+
+  .myInput2 {
+    .input {
+      width: 100%;
+      min-height: 80upx;
+      line-height: 50upx;
+      // padding: 24upx 20upx;
+      // border: 2upx solid #ccc;
+      border-radius: 10upx;
+      font-size: 28upx;
+      box-sizing: border-box;
+      overflow: hidden;
+      .one {
+        background-color: #eee;
+        border-radius: 8upx;
+        padding: 6upx 8upx;
+        float: left;
+        margin: 4upx;
+      }
+    }
+  }
+}

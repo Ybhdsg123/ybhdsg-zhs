@@ -141,6 +141,7 @@ export function deepClone(obj) {
     // 循环对象类型的obj
     for (var key in obj) {
       // 判断obj中是否存在key属性
+      // hasOwnProperty() 方法返回一个布尔值，表示对象自有属性（而不是继承来的属性）中是否具有指定的属性。
       if (obj.hasOwnProperty(key)) {
         // 判断如果obj[key]存在并且obj[key]是对象类型的时候应该深拷贝，即在堆内存中开辟新的内存
         if (obj[key] && typeof obj[key] === "object") {
@@ -154,6 +155,24 @@ export function deepClone(obj) {
   }
   return objClone;
 }
+
+function deepClone (obj) {
+    if (typeof obj !== 'object' || obj == null) {
+        return obj;
+    }
+    
+    let deepCloneObj = Array.isArray(obj) ? [] : {}
+    
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            deepCloneObj[key] = deepClone(obj[key]);
+        }
+    }
+    
+    return deepCloneObj;
+}
+
+
 ```
 
 ## 10. 校验数据类型
@@ -171,8 +190,9 @@ export const myTypeOf = function (obj) {
 
 ## 11. 从 url 获取参数并转为对象
 
-- **11.1 第一种**
-  > > `decodeURI()函数`: 可对 encodeURI() 函数编码过的 URI 进行解码。
+### 11.1 第一种
+
+ `decodeURI()函数`: 可对 encodeURI() 函数编码过的 URI 进行解码。
 
 ```js
 const getParameters = (URL) =>
@@ -187,16 +207,16 @@ getParameters("https://www.google.com.hk/search?q=js+md&newwindow=1");
 // {q: 'js+md', newwindow: '1'}
 ```
 
-- **11.2 第二种**
+### 11.2 第二种
 
-> 1. `window.location.search`: 获取当前页面 `?` 以及跟随其后的一串 URL 查询参数
-> 2. `URLSearchParams`: 接口定义了一些实用的方法来处理 URL 的查询字符串。
-> 3. MDN 文档： https://developer.mozilla.org/zh-CN/docs/Web/API/URLSearchParams
+- 1. `window.location.search`: 获取当前页面 `?` 以及跟随其后的一串 URL 查询参数
+- 2. `URLSearchParams`: 接口定义了一些实用的方法来处理 URL 的查询字符串。
+- 3. MDN 文档： <https://developer.mozilla.org/zh-CN/docs/Web/API/URLSearchParams>
 
 ```js
 export const getSearchParams = () => {
   const searchPar = new URLSearchParams(window.location.search);
-  conssole.log(searchPar);
+  console.log(searchPar);
   const paramsObj = {};
   for (const [key, value] of searchPar.entries()) {
     paramsObj[key] = value;
@@ -214,7 +234,6 @@ getSearchParams(); // {id: "132333", age: "18"}
 > 2. **参数**：获取自身属性键的目标对象，**返回值**：由目标对象的自身属性键组成的 `Array`, **异常**：如果目标不是 Object，抛出一个 TypeError。
 > 3. `Reflect.ownKeys([])` => `['length']`， 传入数组返回值
 > 4. `Reflect.ownKeys([1,2,3])` => `['0', '1', '2', 'length']`
-
 [Reflect.ownKeys()的 MDN 链接](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys)
 
 ```js
@@ -428,4 +447,127 @@ export function commonAdd(number1, number2) {
   }
   return result;
 }
+```
+
+## 24. 数组递归查找节点
+
+```js
+// 数组递归查找节点
+export function findNodeById(tree, targetId, options = { id: 'id', children: 'children' }) {
+  const { id, children } = options
+  for (const node of tree) {
+    // 检查当前节点的ID是否匹配
+    if (node[id] === targetId) {
+      return node;
+    }
+    // 如果当前节点有子节点，递归查找
+    if (node[children] && node[children].length > 0) {
+      const foundNode = findNodeById(node[children], targetId);
+      // 如果在子节点中找到了匹配项，立即返回
+      if (foundNode) {
+        return foundNode;
+      }
+    }
+  }
+  // 如果遍历完所有节点仍未找到，返回null
+  return null;
+}
+```
+
+## 25. 百分比计算 - 最大余额法
+
+计算百分比时，由于四舍五入，各个比例相加可能不等于 1，通过最大余额法可以保证总数为 1。
+
+```js
+// 输出 ['32.56%', '6.97%', '27.91%', '32.56%']
+getPercentWithPrecision([56, 12, 48, 56], 2)
+
+// 具体最大余额法算法可以网上搜索查看
+function getPercentWithPrecision(valueList, precision) {
+  // 根据保留的小数位做对应的放大
+  const digits = Math.pow(10, precision)
+  const sum = valueList.reduce((total, cur) => total + cur, 0)
+  
+  // 计算每项占比，并做放大，保证整数部分就是当前获得的席位，小数部分就是余额
+  const votesPerQuota = valueList.map((val) => {
+      return val / sum * 100 * digits
+  })
+  // 整数部分就是每项首次分配的席位
+  const seats = votesPerQuota.map((val) => {
+    return Math.floor(val);
+  });
+  // 计算各项的余额
+  const remainder = votesPerQuota.map((val) => {
+    return val - Math.floor(val)
+  })
+    
+  // 总席位
+  const totalSeats = 100 * digits
+  // 当前已经分配出去的席位总数
+  let currentSeats = votesPerQuota.reduce((total, cur) => total + Math.floor(cur), 0)
+    
+  // 按最大余额法分配
+  while(totalSeats - currentSeats > 0) {
+    let maxIdx = -1 // 余数最大的 id
+    let maxValue = Number.NEGATIVE_INFINITY // 最大余额, 初始重置为无穷小
+
+    // 选出这组余额数据中最大值
+    for(var i = 0; i < remainder.length; i++) {
+      if (maxValue < remainder[i]) {
+        maxValue = remainder[i]
+        maxIdx = i
+      }
+    }
+        
+    // 对应的项席位加 1，余额清零，当前分配席位加 1
+    seats[maxIdx]++
+    remainder[maxIdx] = 0
+    currentSeats++
+  }
+    
+  return seats.map((val) => `${val / totalSeats * 100}%`)
+}
+
+```
+
+## 26. 限制并发
+
+```js
+async function asyncPool(poolLimit, iterable, iteratorFn) {
+  // 用于保存所有异步请求
+  const ret = [];
+  // 用户保存正在进行的请求
+  const executing = new Set();
+  for (const item of iterable) {
+    // 构造出请求 Promise
+    const p = Promise.resolve().then(() => iteratorFn(item, iterable));
+    ret.push(p);
+    executing.add(p);
+    // 请求执行结束后从正在进行的数组中移除
+    const clean = () => executing.delete(p);
+    p.then(clean).catch(clean);
+    // 如果正在执行的请求数大于并发数，就使用 Promise.race 等待一个最快执行完的请求
+    if (executing.size >= poolLimit) {
+      await Promise.race(executing);
+    }
+  }
+  // 返回所有结果
+  return Promise.all(ret);
+}
+
+// 使用方法
+const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
+asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(results => {
+  console.log(results)
+})
+```
+
+## 27. uuid(生成 uuid 的代码片段)
+
+```js
+const uuid = (a) =>
+  a
+    ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+    : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid)
+
 ```

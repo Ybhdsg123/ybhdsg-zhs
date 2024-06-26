@@ -1,5 +1,6 @@
 export const lotsOfDifferent_router = {
   text: "杂七杂八",
+  collapsible: true, // 显示了一个切换按钮来隐藏/显示每个分组
   items: [
     { text: "系列一", link: "/pages/lotsOfDifferent/demo1/" },
     {
@@ -11,8 +12,8 @@ export const lotsOfDifferent_router = {
       link: "/pages/lotsOfDifferent/demo3_elementUi/",
     },
     {
-      text: "系列四 —— uniapp 相关",
-      link: "/pages/lotsOfDifferent/demo4_uniapp/",
+      text: "系列四 —— 本地文件 相关",
+      link: "/pages/lotsOfDifferent/demo5_file/",
     },
   ],
 };

@@ -1,15 +1,32 @@
 <template>
   <view class="form-upload-wrap">
     <template v-if="list?.length">
-      <view class="form-upload" v-for="(item, index) in list" :key="index" @click="handlePreviewImage(index)">
-        <text class="icon-close iconfont icon-guanbi2fill" @click.stop="handleClose(index)"></text>
-        <image class="form-upload-image" :src="baseImgApi + item" mode="aspectFill"></image>
+      <view
+        class="form-upload"
+        v-for="(item, index) in list"
+        :key="index"
+        @click="handlePreviewImage(index)"
+      >
+        <text
+          class="icon-close iconfont icon-guanbi2fill"
+          @click.stop="handleClose(index)"
+        ></text>
+        <!-- 必须使用 image 标签，使用原生img标签在真机模拟下不展示图片 -->
+        <image
+          class="form-upload-image"
+          :src="baseImgApi + item"
+          mode="aspectFill"
+        ></image>
       </view>
     </template>
     <view v-if="list?.length < count" @click="handleUpload">
       <slot name="uploadImgIcon">
         <view class="form-upload form-upload-camera">
-          <image class="upload-icon" src="/static/images/global/upload-img.png" mode="scaleToFill" />
+          <image
+            class="upload-icon"
+            src="/static/images/global/upload-img.png"
+            mode="scaleToFill"
+          />
         </view>
       </slot>
     </view>
@@ -17,7 +34,7 @@
 </template>
 
 <script setup>
-import { baseImgApi } from '@/config'
+import { baseImgApi } from "@/config";
 import { uploadImageApi } from "@/api/modules/upload.js";
 const props = defineProps({
   disabled: {
@@ -70,7 +87,7 @@ const handleUpload = () => {
             emits("uploadSuccess", resultArr);
           }
         });
-      } catch (e) { }
+      } catch (e) {}
     },
   });
 };
@@ -82,7 +99,7 @@ const handleClose = (index) => {
 
 // 预览
 const handlePreviewImage = (index = 0) => {
-  const previewImages = props.list.map(item => baseImgApi + item)
+  const previewImages = props.list.map((item) => baseImgApi + item);
   uni.previewImage({
     urls: previewImages,
     current: index,
@@ -125,7 +142,7 @@ const handlePreviewImage = (index = 0) => {
   align-items: center;
   width: 150rpx;
   height: 150rpx;
-  background: #F7F7F7;
+  background: #f7f7f7;
   border-radius: 16rpx;
 
   .upload-icon {

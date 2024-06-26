@@ -142,3 +142,71 @@ git push
 ## 8. 将当前分支的最新提交推送到远程仓库的指定分支
 
 `git push origin HEAD:develop_statement`：这个命令是用于将**当前分支的最新提交推送到远程仓库的指定分支**。其中`origin`是远程仓库的名称，`HEAD`是一个指向当前分支最新提交的指针，而`develop_statement`是目标分支的名称
+
+要在Git中创建一个新的本地分支并且与远程分支建立追踪关系，你可以按照以下步骤操作：
+
+首先，确保你的本地仓库的信息是最新的，通过执行 git fetch 获取远程仓库的最新信息。
+
+接下来，创建一个新的本地分支，并切换到这个分支上。例如，如果你想基于远程的 feature-branch 创建一个新的本地分支 my-new-branch，你可以这样做：
+
+git checkout -b my-new-branch origin/feature-branch
+如果远程仓库中还没有这个分支，你可以先创建这个分支并推送到远程仓库。例如，如果你想在远程仓库中创建一个名为 new-remote-branch 的分支，并且希望它跟踪你的本地分支 my-new-branch，你可以这样做：
+
+git push -u origin my-new-branch:new-remote-branch
+这个命令会创建一个新的远程分支 new-remote-branch，并将你的本地分支 my-new-branch 推送到这个远程分支，同时建立两者之间的追踪关系。
+
+请注意，如果远程分支已经存在并且你想跟踪它，你可以使用 git checkout --track origin/new-remote-branch 来创建一个跟踪远程分支的本地分支。
+
+如果你只是想查看当前分支关联的远程分支，可以使用以下命
+git branch -vv
+
+设置本地分支关联的远程分支：
+git branch --set-upstream-to=origin/new-remote-branch your-branch
+
+### 面试问题
+
+2024年2年前端社招bitget面经，期望薪资16K
+【一面】
+
+1、自我介绍
+2、小程序跟H5的区别是什么？
+3、react和vue的语法是是如何在小程序中运行的？
+4、uni-app是如何打包成各个平台能运行的代码的？
+5、vue3中做了哪些优化？
+6、vue2和vue3的响应式有什么区别？
+7、vue中的watchEffect是什么？
+8、nextjs中运行时机制什么样？你们自己封装的还是？
+9、interface和type的区别是什么？
+10、vite、webpack、rollup的区别是什么？你怎么选择
+11、promise有哪些方法？
+12、coding题
+13、手写Promise.all
+
+【二面】
+1、自我介绍
+2、工作经历
+3、为什么一直在教育行业
+4、前端监控如何设计
+5、讲一个你过往项目中遇到的问题，如何解决的
+
+一个轻量化小弹窗，无需任何依赖，一行代码即可弹出，并自动管理状态。
+
+安装
+
+```shell
+npm i autolog.js
+```
+
+使用
+
+```js
+import aotolog from "autolog.js";
+
+autolog.log("Hello World", "success", 2500);
+// 其中 "success" 和 2500 都是可选项
+```
+
+git checkout -b 新分支名 origin/远程分支名
+这将会创建一个新的本地分支，并且自动跟踪远程分支。
+
+例如，如果你想创建一个名为feature-x的本地分支，并且想要拉取远程仓库的origin上同名的feature-x分支的代码，你可以这样做：

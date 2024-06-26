@@ -15,6 +15,8 @@ export default sidebar_router = [
   vue3Treasures_router,
   // 工具函数
   toolFun_router,
+  // uniapp
+  uniapp_router,
   // 杂七杂八
   lotsOfDifferent_router,
   // js相关
@@ -31,6 +33,5 @@ export default sidebar_router = [
   git_router,
   // vscode
   vscode_router,
-  // uniapp
-  uniapp_router,
+
 ];

@@ -83,3 +83,10 @@ export const disabledAfterNowPickerOptions = {
 ```
 
 :::
+
+## 8. `el-table`中放入`el-input`后，界面未更新问题解决方法
+
+ 问题描述：在验证`el-input`输入值是否正确后，修改`input`的值（打印值改变，界面未更新，使用`this.set`没用）
+
+  解决方法：1.  在`el-table`上设置属性`:key=key`，会导致界面强制刷新，体验感很差，
+            2.  在`el-input`上设置属性`:key=key`，可以解决

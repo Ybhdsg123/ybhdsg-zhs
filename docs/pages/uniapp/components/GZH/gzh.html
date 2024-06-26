@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>微信授权中...</title>
+</head>
+<body>
+</body>
+
+</html>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script>
+  
+
+  //获取url上的参数
+  function getParameterByName(name, url) {
+    const code = (new URLSearchParams(window.location.search)).get('code')
+    console.log('code:', code)
+    return code
+  }
+
+  //获取openId
+  function getOpenId() {
+    const code = getParameterByName("code")
+    wx.miniProgram.redirectTo({ url: "/pages/index/vrShow?code=" + code })
+    return
+    var httpRequest = new XMLHttpRequest();
+    var url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbe66b1b2181e6903&secret=4f3d1a66e0485bb99ff4e6c8d0151b4e&code=CODE&grant_type=authorization_code";
+    httpRequest.open('GET', url, true);
+    httpRequest.send();
+    var res;
+    httpRequest.onreadystatechange = function () {
+      if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+        var openId = httpRequest.responseText;
+        console.log("openId{}", httpRequest.responseText)
+
+        if (openId) {
+          console.log("openId{}", openId)
+          //跳回小程序首页，把公众号的openId带过去
+          // wx.miniProgram.redirectTo({ url: "/pages/index/index?mpOpenid=" + openId })
+        } else {
+          /**公众号授权方法*/
+          var uri = window.location.href;
+          const redirectUrl = encodeURIComponent("127.0.0.1:5500");
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbe66b1b2181e6903&redirect_uri=" + redirectUrl + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+        }
+      }
+    };
+  }
+
+  getOpenId();
+
+</script>

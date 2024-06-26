@@ -1,4 +1,4 @@
-# 系列一
+# 系列一 —— 杂七杂八
 
 <script setup>
 import BgFollowImg from './components/bgFollowImg.vue'
@@ -76,7 +76,7 @@ Iconify IntelliSense（加载图标数据并按需缓存它们，它将 svgs 编
 
 - [更多请查看...](https://antfu.me/posts/journey-with-icons-continues)
 
-## 3. vue中img标签引入图片时
+## 3. vue中img标签引入图片时，需要使用`require('图片地址')`
 
 ```html
 :src="require('@/assets/images/hotel/zsr.png')"
@@ -84,13 +84,86 @@ Iconify IntelliSense（加载图标数据并按需缓存它们，它将 svgs 编
 
 ## 4. Array.includes() 在进行比较时使用的是强等于（===）比较
 
-## 4. MD5 加密
+## 5. MD5 加密文件和使用
 
-## 4.1 文件地址：`./utils/md5.js`
+### 5.1 文件地址：`./utils/md5.js`
 
-## 4.2 使用方法
+### 5.2 使用方法
 
 ```js
 import md5 from './utils/md5.js'
 const token = hex_md5('dvjhkl1234567890');
+```
+
+## 6. 如何中断`forEach`
+
+### 6.1 理解`forEach`
+
+- `JavaScript` 中的 `forEach` 方法用于遍历数组。**它对数组中的每个元素执行一次回调函数**。然而，与传统的 `for` 或 `while` 循环不同，`forEach` 被设计为在没有内置机制的情况下，为每个元素执行函数，**无法提前停止或中断循环**。
+
+### 6.2 使用 `break` 中断`forEach`
+
+- 如果尝试在 `forEach` 中使用 `break`，你会遇到语法错误，**因为 `break` 在回调函数内不适用**
+
+```js
+const numbers = [1, 2, 3, 4, 5];  
+numbers.forEach(number => {  
+    if (number > 3) {  
+        break; // Syntax Error: Illegal break statement  
+    }  
+    console.log(number);  
+});
+```
+
+### 6.3 使用 `return` 中断`forEach`
+
+- 在`forEach` 中，`return` 并不能中断循环。相反，**它仅仅退出当前回调函数的迭代，然后继续处理数组中的下一个元素**。
+
+```js {6}
+const numbers = [1, 2, 3, 4, 5];  
+numbers.forEach(number => {  
+    if (number === 3) {  
+        return; // Exits only the current iteration  
+    }  
+    console.log(number);  // 1,2,4,5
+});
+
+```
+
+### 6.4 使用异常中断 `forEach` 循环
+
+- 通过抛出异常技术上可以中断 `forEach` 循环。**通常不建议使用**，因为它对代码的可读性和错误处理有影响，但它可以有效地停止循环。。
+
+```js {10}
+const numbers = [1, 2, 3, 4, 5];  
+try {  
+    numbers.forEach(number => {  
+        if (number > 3) {  
+            throw new Error('Loop stopped');  
+        }  
+        console.log(number);  
+     });  
+} catch (e) {  
+    console.log('Loop was stopped due to an exception.');  
+}  
+// Output: 1, 2, 3, Loop was stopped due to an exception.
+
+```
+
+## 7. 打开新页签(防止恶意网站重定向你的网站地址)
+
+- 如果要打开外链，建议将 `rel`设置为 `noopener noreferrer`，避免一些恶意网站通过 `window.opener.location` 重定向你的网站地址。`window.open` 方法同理。
+- [相关文章链接](https://www.cnblogs.com/never404/p/15723254.html)
+
+```js
+// 高版本浏览器 rel 默认为 noopener，不过建议显示设置，兼容低版本。
+<a target="_blank" rel="noopener noreferrer">...</a>
+
+// window.open rel 默认为 opener，需要自己设置
+window.open('https://baidu.com', 'baidu', 'noopener,noreferrer')
+
+// 以下有安全漏洞，打开的新页签可以通过 window.opener.location 重定向你的网站
+<a target="_blank" rel="opener">...</a>
+window.opener.location = 'http://fake.website.here';
+
 ```

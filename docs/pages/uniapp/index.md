@@ -1,209 +1,117 @@
-# 常用 api 等
+# uniapp —— 组件相关
 
-## 1. 状态栏高度
+<script setup>
+ import HighlightText from './components/HighlightText/index.vue'
+  import EllipsisText from './components/EllipsisText/index.vue'
+</script>
 
-> js 获取状态栏高度
+## 1. 滑块组件（单/双滑块）
 
-```js
-onLoad() {
-		this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight; // 获取状态栏高度
-},
-```
+### 1.1  组件地址： `./components/SliderRange/index.vue`
 
-> [uni-app 提供内置 CSS 变量](https://uniapp.dcloud.net.cn/tutorial/syntax-css.html#css-%E5%8F%98%E9%87%8F)
-
-> 当设置 `"navigationStyle":"custom"` 取消原生导航栏后，由于窗体为沉浸式，占据了状态栏位置。此时可以使用一个高度为 `var(--status-bar-height)` 的 view 放在页面顶部，避免页面内容出现在状态栏。
-
-```css
-.navBar {
-  height: calc(var(--status-bar-height) + 44px);
-}
-```
-
-## 2. 自定义状态栏
-
-:::details
+### 1.2  组件使用
 
 ```vue
 <template>
-  <view class="cunstom-box" :style="{ backgroundColor: backgroundColor }">
-    <view class="status-bar"></view>
-    <view class="cunstom-nav">
-      <view @click="back" class="cunstom-left">
-        <text v-if="isBack" class="iconfont icon-31fanhui1 back-icon" />
-      </view>
-      <view class="cunstom-title">{{ title }}</view>
-      <view class="cunstom-right">
-        <slot name="options"></slot>
-      </view>
-    </view>
-  </view>
+ <SliderRange @change="handleRangeChange" :currentValue="sliderRangeValue" />
 </template>
+ <script setup>
+ const sliderRangeValue = ref([0, 1200]); // 滑块当前区间的值
+ const handleRangeChange = (e) => {}; // 获取选中的值
+</script>
+```
 
-<script>
-export default {
-  props: {
-    title: String, //标题
-    isBack: Boolean, //是否需要左侧返回
-    backgroundColor: {
-      type: String,
-      default: "#fff",
-    },
-  },
-  methods: {
-    back() {
-      uni.navigateBack();
-    },
-  },
+## 2. 顶部导航栏组件
+
+### 2.1  组件地址： `./components/CustomNavigation/index.vue`
+
+### 2.2  组件使用方法
+
+```vue
+<template>
+ <CustomNavigation v-bind="basePageOptions" @getHeight="getHeight" />
+  <view :style="{ paddingTop: pt + 'rpx' }"> </view>
+</template>
+<script setup>
+import {ref} from 'vue';
+const pt = ref(0); // 自定义导航栏上方安全距离
+const getHeight = (e) => {pt.value = e};
+</script>
+```
+
+## 3. 搜索时高亮`搜索关键字`组件
+
+ <HighlightText text="这是测试搜索关键字的文本" keyword="搜索关键字" />
+
+### 3.1  组件地址：`./components/HighlightText/index.vue`
+
+### 3.2  组件使用方法
+
+```vue
+<template>
+ <HighlightText text="这是测试搜索关键字的文本" keyword="搜索关键字" />
+</template>
+```
+
+## 4. 省略文本（展开和收起）
+
+### 4.1  组件地址：`./components/EllipsisText/index.vue`
+
+### 4.2  组件使用方法
+
+```vue
+<template>
+ <EllipsisText content="这是测试省略文本的文本" lines="2" prefixText="前缀文本" />
+</template>
+```
+
+## 5. 上传图片
+
+### 5.1  组件地址：`./components/ImgUpload/index.vue`
+
+### 5.2  组件使用方法
+
+:::details  组件使用方法
+
+```vue
+<template>
+    <ImgUpload :list="imgList" :count="5" @uploadSuccess="uploadSuccessHandler"
+     @deleteImage="deleteImageHandler" />
+</template>
+<script setup>
+const imgList = ref([]);
+const uploadSuccessHandler = (imgs) => {
+    const result = imgs.map((item) => item.url);
+    imgList.value = [...imgList.value, ...result];
+};
+const deleteImageHandler = (i) => {
+    imgList.value.splice(i, 1);
 };
 </script>
-
-<style lang="scss" scoped>
-.cunstom-box {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 750rpx;
-  height: calc(var(--status-bar-height) + 44px);
-  z-index: 9998;
-}
-.status-bar {
-  height: var(--status-bar-height);
-}
-.cunstom-nav {
-  height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 20rpx;
-}
-.cunstom-left {
-  flex: 1;
-}
-
-.back-icon {
-  font-size: 40rpx;
-}
-
-.cunstom-title {
-  flex: 1;
-  text-align: center;
-  font-weight: bold;
-  font-size: $uni-font-size-lg;
-}
-
-.cunstom-right {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-</style>
 ```
 
 :::
 
-## 3. 滚动过程中实现吸顶效果
+## 6. 类似于PC的TREE组件（无限层级选择）
 
-> 1. 主要实现思路：获取某个元素在页面上**距离**顶部的距离，然后**监听**页面的滚动，当页面**滚动的距离-元素距离顶部距离>0**,就让该元素的 position 为`fixed`，否则就让其为 `relative`
+### 6.1  组件地址：`./components/ljs-treeChoose/ljs-treeChoose.vue`
 
-> 2. `uni.createSelectorQuery()`返回一个 `SelectorQuery` 对象实例。可以在这个实例上使用 `select` 等方法选择节点，并使用 `boundingClientRect` 等方法选择需要查询的信息。
->    **tips:**
->    > 2.1 使用 `uni.createSelectorQuery()` 需要在生命周期 `mounted` 后进行调用。
->    > 默认需要使用到 `selectorQuery.in` 方法。
+### 6.2  组件使用demo: `./components/ljs-treeChoose/demo.vue`
 
-[**代码实例**](https://uniapp.dcloud.net.cn/api/ui/nodes-info.html#createselectorquery)
-:::details
+## 7. 类似于PC的TREE组件（无限层级选择）
 
-```js
-const query = uni.createSelectorQuery().in(this);
-query
-  .select("#id")
-  .boundingClientRect((data) => {
-    console.log("得到布局位置信息" + JSON.stringify(data));
-    console.log("节点离页面顶部的距离为" + data.top);
-  })
-  .exec();
-```
+### 7.1  组件地址：`./components/Calendar/index.vue`
 
-:::
-
-### 主要实现代码
-
-:::details
+### 7.2  组件使用demo
 
 ```vue
 <template>
-  <view id="attendance-list" :style="fixedStyle"> </view>
+<Calendar :calendarWidth="650" @getCurrentDay="getCurrentDay" :deadLine="currentDay" />
 </template>
-<script>
-data(){
-	return{
-		toTop: 0, //距离顶部距离
-		fixedStyle:{},
-	}
-}
-// 监听页面滚动，动态设置头部滚动过程中固定
-		onPageScroll(obj) {
-			if (obj.scrollTop - this.toTop > 0) {
-				this.fixedStyle = {
-					position: 'fixed',
-					top: '0rpx',
-					background: '#fff',
-					zIndex: 3
-				}
-
-			} else {
-				this.fixedStyle = {
-					position: 'relative',
-				}
-			}
-		},
-mounted() {
-		this.listToTop()
-},
-methods:{
-	// 距离顶部距离
-			listToTop() {
-				uni.createSelectorQuery().in(this).select('#attendance-list')
-					.boundingClientRect(rect => {
-						this.toTop = rect.top
-					}).exec()
-			},
-}
-</script>
 ```
 
-:::
+### 7.3  组件复杂的应用使用demo:  `./components/Calendar/CustomCalendar.vue`
 
-4. 修改标题
+主要是使用传出的 `width` 再加上日历组件本来的样式，在外面重新画一遍日历组件形式，为了不再传入组件里面遍历多次而这样使用（应该有更好的办法，还没想到）
 
-:::details
-
-```js
-onReady() {
-			uni.setNavigationBarTitle({
-				title: this.status
-			});
-		},
-```
-
-:::
-
-## 4. `uni.showModal` 异步变为同步
-
-```js
-return new Promise(async (resolve) => {
-  uni.showModal({
-    title: "title",
-    content: "content",
-    success: (res) => {
-      resolve(res);
-    },
-  });
-});
-```
-
-## 5. 把对象中的数据给了某个变量，改变一个对象的值，另一个对象也变化的解决办法！
-
-`this.dataB = JSON.parse(JSON.stringify(this.dataA));`
-
-`https://blog.csdn.net/jiangwei1994/article/details/83068944`
+![效果](./imgs//calendar.png)

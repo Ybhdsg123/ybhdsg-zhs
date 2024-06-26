@@ -214,13 +214,29 @@ function timeIntervalFormat(date) {
  * @param {string} formatTime : 格式同dayjs
  * @Author: zhs
  */
-import dayjs from "dayjs";
+
 export const formatTime = (val, formatTime = "YYYY-MM-DD HH:mm") => {
-  if (!Number(val)) {
+  const time = new Date(val);
+  if (!Number(time)) {
     return "-";
   }
-  let value = Number(val) * 1000;
-  return dayjs(value).format(formatTime);
+  const result = dayjs(time).format(formatTime);
+  return result == "1970-01-21"
+    ? dayjs(time * 1000).format(formatTime)
+    : result;
+};
+export const formatTime = (val, formatTime = "YYYY-MM-DD HH:mm") => {
+  let t = null
+  if(Number(val)){
+    t = isDecimal(val) ?val * 1000: val 
+  }else{
+    t = val.replaceAll("-", "/");
+  }
+  const time = +new Date(t);
+  if (!Number(time)) {
+    return "-";
+  }
+  return dayjs(time).format(formatTime);
 };
 ```
 
