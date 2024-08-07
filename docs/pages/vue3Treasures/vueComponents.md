@@ -6,7 +6,7 @@ import Loading from './components/loading.vue'
 import ImgWatermark from './components/imgWatermark.vue'
 import CrashBallLoading from './components/crashBallLoading.vue'
 import TextLoading from './components/textLoading.vue'
-
+import MultilineTextErasingEffect from './components/MultilineTextErasingEffect.vue'
 </script>
 
 ## 1. 自动省略文本
@@ -55,7 +55,7 @@ import TextLoading from './components/textLoading.vue'
 
 ## 2. loading 效果
 
-## 2.1 加载文字 loading
+### 2.1 加载文字 loading
 
 <TextLoading/>
 <TextLoading :loadingText="'正在加载中...'"/>
@@ -118,3 +118,54 @@ takeRecords():从 MutationObserver 的通知队列中删除所有待处理的通
 > 代码地址：pages/vue3Treasures/components/imgWatermark.vue
 
 > [MutationObserver----MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)
+
+## 4. 多行文本擦除效果出现
+
+<MultilineTextErasingEffect/>
+
+### 4.1 使用`css`实现
+
+- 使用两个相同的文本，第二个文本用定位的方式覆盖到上面（第二个文本嵌套一层`span`元素，因为`span`元素是一个行内元素，它的宽度和高度是由其内容决定的。当给 `span` 元素设置背景色时，背景色会应用于 `span` 元素的内容区域，而不会自动扩展到整个行)
+- 使用自定义属性`@property`加动画渐变实现文本擦除效果
+
+:::tip 注意点
+
+1. 判断某个css属性是否可用（无法判断`@property`，因为是自定义属性，但可以判断其设置的`syntax`或者`inherits`属性）
+
+```js
+// 判断某个css属性是否可用
+function isCssPropertySupported(property) {
+  let div = document.createElement("div");
+  let style = getComputedStyle(div);
+  return property in style;
+}
+```
+
+2. 使用`css`判断 `@property` 是否可用
+
+``` css
+@supports ( @property : --my-color ) {
+  /* 如果支持 @property 规则，则执行这里的样式 */
+}
+
+```
+
+3. 使用`js`判断 `@property` 是否可用
+
+- `window.CSS.registerProperty`是一个用于注册自定义 CSS 属性的方法。
+- 通过检测`window.CSS.registerProperty`是否存在，可以判断浏览器是否支持@property规则。
+
+```js
+
+if (typeof window.CSS.registerProperty !== "undefined") {
+  console.log("浏览器支持 @property 规则");
+} else {
+  console.log("浏览器不支持 @property 规则");
+}
+```
+
+:::
+
+### 4.2 使用js实现
+
+<MultilineTextErasingEffect :isCss ="false" />

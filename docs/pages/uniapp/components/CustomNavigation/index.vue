@@ -1,34 +1,38 @@
 <template>
   <view
     class="custom-navigation"
-    :style="[{ height: getHeight() + 'rpx' }, { background: background }]"
+    :style="[{ height: getHeight() + 'rpx' }, { background: backgroundColor }]"
   >
     <!-- 顶部状态栏 -->
-    <view
-      class="status-bar"
-      :style="[
-        { height: statusBarHeight + 'px' },
-        { background: statusbarBackground },
-      ]"
-    />
+    <view class="status-bar" :style="[{ height: statusBarHeight + 'px' }]" />
 
-    <view :style="[{ background: titleBackground }]">
+    <view>
       <!-- 标题栏 -->
       <view class="title-bar" :style="[{ height: titleHeight + 'px' }]">
-        <view class="title-item title-bar-left">
-          <text
-            :style="[{ color: backColor }]"
-            v-if="back"
-            class="iconfont icon-fanhui"
-            @click="handleBack"
-          />
-        </view>
-        <view class="title-item title-bar-center">
-          <text :style="[{ color: titleColor }]">{{ title }}</text>
-        </view>
+        <view
+          class="title-bar-left iconfont icon-fanhui"
+          :style="[{ color: backColor }]"
+          v-if="back"
+          @click="handleBack"
+        />
+        <!-- 占位区大小，没有返回按钮时，这块区域还在，防止中间标题不在中间 -->
+        <view class="title-bar-left" v-else />
         <view class="title-item">
-          <text></text>
+          <!-- 插槽 -->
+          <slot>
+            <view
+              :style="[{ color: titleColor, lineHeight: titleHeight + 'px' }]"
+            >
+              {{ title }}
+            </view>
+          </slot>
         </view>
+        <!-- <view
+          class="title-item"
+          :style="[{ color: titleColor, lineHeight: titleHeight + 'px' }]"
+        >
+          {{ title }}
+        </view> -->
       </view>
       <!-- 多余的高度 装饰顶部栏 -->
       <view
@@ -51,9 +55,9 @@ export default {
       type: String,
       default: "#fff",
     },
-    background: {
+    backgroundColor: {
       type: String,
-      default: "#4980fa",
+      default: "#fff",
     },
     // 是否展示返回图标
     back: {
@@ -123,26 +127,26 @@ export default {
   .title-bar {
     display: flex;
     align-items: center;
-    padding: 0 30rpx;
+    padding-left: 30rpx;
+    padding-right: 180rpx;
 
     .title-item {
       flex: 1;
       height: 100%;
-      display: flex;
-      align-items: center;
+      font-size: 32rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
     }
 
     .title-bar-left {
+      display: flex;
       justify-content: flex-start;
-
-      .iconfont {
-        font-size: 40rpx;
-      }
-    }
-
-    .title-bar-center {
-      justify-content: center;
-      font-size: 32rpx;
+      align-items: center;
+      width: 150rpx; // bar-title的pr-pl的长度
+      height: 100%;
+      font-size: 40rpx;
     }
   }
 }

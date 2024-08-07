@@ -1,5 +1,7 @@
 # uniapp —— 组件相关
 
+<https://ext.dcloud.net.cn/plugin?id=7594#c8>
+
 <script setup>
  import HighlightText from './components/HighlightText/index.vue'
   import EllipsisText from './components/EllipsisText/index.vue'
@@ -98,7 +100,7 @@ const deleteImageHandler = (i) => {
 
 ### 6.2  组件使用demo: `./components/ljs-treeChoose/demo.vue`
 
-## 7. 类似于PC的TREE组件（无限层级选择）
+## 7. 日历组件
 
 ### 7.1  组件地址：`./components/Calendar/index.vue`
 
