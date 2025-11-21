@@ -19,7 +19,7 @@
 8. `open in browser`
    功能：在浏览器打开当前文件
 9. `auto-close-tag`：自动关闭标签。
-
+10. `pw-super-tinypng`: 内部使用TinyPng的api，可以无限制的压缩图片张数
 ## 好用插件
 
 1. `Code Spell Checker` ：一个用于检查单词拼写的插件。

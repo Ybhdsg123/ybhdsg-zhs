@@ -1,5 +1,31 @@
 ## 1. [`navigator.clipboard` 剪切板](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard/read)
 
+函数柯里化
+```js
+function add(...args) {
+  // 初始的和为传入参数的总和
+  let sum = args.reduce((acc, val) => acc + val, 0);
+
+  // 定义一个内部函数，用于继续接收参数
+  function curriedAdd(...newArgs) {
+    sum += newArgs.reduce((acc, val) => acc + val, 0);
+    return curriedAdd; // 返回自身以支持链式调用
+  }
+
+  // 添加 valueOf 方法，用于获取最终的和
+  curriedAdd.valueOf = function () {
+    return sum;
+  };
+
+  return curriedAdd;
+}
+
+// 测试用例
+console.log(add(1, 2, 3).valueOf()); // 6
+console.log(add(1, 2)(3)(4, 5).valueOf()); // 15
+console.log(add(1)(2)(3)(4, 5, 6)(7).valueOf()); // 28
+```
+
 ### 1.1 复制文本 （有兼容性）
 
 ```js
@@ -570,4 +596,45 @@ const uuid = (a) =>
     ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
     : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid)
 
+```
+
+## 28. 获取当前时间戳
+
+```js
+// 获取今天往后60天
+    getDatesForNext60Days() {
+      const dates = [];
+      const today = new Date();
+
+      for (let i = 0; i < 60; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        dates.push(date);
+      }
+
+      return dates;
+    },
+    // 按月份分类
+    groupDatesByMonth(dates) {
+      const groupedDates = {};
+      dates.forEach((date) => {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // 月份从0开始，所以加1
+        // String.prototype.padStart 方法用于确保日期和月份始终是两位数，例如 01 而不是 1。
+        const dateString = `${year}年-${String(month).padStart(2, "0")}月`;
+
+        if (!groupedDates[dateString]) {
+          groupedDates[dateString] = [];
+        }
+
+        const day = date.getDate();
+        groupedDates[dateString].push(
+          `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
+            2,
+            "0"
+          )}`
+        );
+      });
+      return groupedDates;
+    },
 ```

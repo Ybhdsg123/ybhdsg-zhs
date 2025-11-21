@@ -10,7 +10,13 @@ import { css_router } from "./router/css";
 import { html_router } from "./router/html";
 import { vite_router } from "./router/vite";
 import { lotsOfDifferent_router } from "./router/lotsOfDifferent";
+import { algorithm_router } from './router/algorithm'
+import { gzh_template_router } from "./router/gzh_template";
 export default sidebar_router = [
+  // 公众号模版
+  gzh_template_router,
+  // 算法
+  algorithm_router,
   // vue3宝藏
   vue3Treasures_router,
   // 工具函数
@@ -33,5 +39,4 @@ export default sidebar_router = [
   git_router,
   // vscode
   vscode_router,
-
 ];

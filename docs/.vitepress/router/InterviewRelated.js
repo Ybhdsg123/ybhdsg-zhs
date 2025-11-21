@@ -18,5 +18,6 @@ export const interviewRelated_router = {
     { text: "git方面", link: "/pages/interviews/git" },
     { text: "vue方面", link: "/pages/interviews/vue" },
     { text: "事件循环", link: "/pages/interviews/eventLoop" },
+    { text: "自己想到的一些", link: "/pages/interviews/notes" },
   ],
 };

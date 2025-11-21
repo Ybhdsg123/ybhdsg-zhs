@@ -73,7 +73,11 @@ overflow: hidden;
 
 ## 5. 滚动条样式改变
 
-```css
+```scss
+.scrollbar {
+ /* Firefox */
+  scrollbar-width: thin; /* 可选值为 'auto', 'thin', 'none' */
+  scrollbar-color: rgb(221 222 224) transparent; /* 滑块颜色、轨道颜色 */
 // 修改滚动条样式 大小
 &::-webkit-scrollbar {
   width: 8px;
@@ -84,11 +88,16 @@ overflow: hidden;
   border-radius: 10px;
   background-color: #888;
 }
-// 轨道
+// 滚动条轨道
 &::-webkit-scrollbar-track {
   border-radius: 10px;
   /*滚动条里面轨道*/
   // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+/* 滚动条滑块：hover状态 */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgb(199 201 203); /* 滑块hover颜色 */
+  }
 }
 ```
 

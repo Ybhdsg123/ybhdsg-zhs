@@ -16,10 +16,14 @@
 
 `git pull origin 拉取的分支名` # 拉取分支
 
+`git remote -v` 查看远程仓库地址
+`git remote set-url origin <url>` 修改远程仓库地址
 `git remote show <remote_name>`：查看远程分支和本地的对应关系 `git remote show origin`
 `git remote add [name] [url]`: 作用是添加远程版本库,name 是自己取的仓库的名字 url 是地址,新建仓库下面提示都有，直接复制就行
 `git remote rm name`: 删除远程仓库
 `git remote rename old_name new_name`: 修改仓库名
+
+`git checkout origin/develop_wdm_new  src\views\advanceSaleTicket\underwritingCentre\components\edit.vue ` 拉取另一分支某文件和本分支的合并
 ```
 
 ## 2. 删除分支
@@ -73,3 +77,6 @@ git push
 ## 6. nvm 相关
 
 <http://test.runoob.com/w3cnote/nvm-manager-node-versions.html>
+
+
+

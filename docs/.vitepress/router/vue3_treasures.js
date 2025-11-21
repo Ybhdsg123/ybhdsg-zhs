@@ -16,5 +16,9 @@ export const vue3Treasures_router = {
       text: "vue常用指令",
       link: "/pages/vue3Treasures/vueDirectives",
     },
+    {
+      text: "vue打包优化",
+      link: "/pages/webpack/",
+    },
   ],
 };

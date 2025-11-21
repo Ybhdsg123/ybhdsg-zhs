@@ -1,5 +1,44 @@
 # javaScript
 
+```js
+
+// 递归改变树列表数据（增加属性 ids)
+export function recurDepTree(treeList) {
+  return treeList.map((item) => {
+    const newItem = {
+      ...item,
+      ids: {
+        id: item.id || '',
+        parentId: item.parentId || '',
+        parkId: item.parkId || '',
+      },
+    }
+
+    if (item.children && item.children.length) {
+      newItem.children = recurDepTree(item.children)
+    }
+
+    return newItem
+  })
+}
+
+// 递归查找（根据 id 找到同一个元素）
+export function findNodeById(treeList, targetId) {
+  for (const node of treeList) {
+    if (node.id === targetId) {
+      return node
+    }
+    if (node.children && node.children.length) {
+      const found = findNodeById(node.children, targetId)
+      if (found)
+        return found
+    }
+  }
+  return null
+}
+````
+
+
 ## 1. 将一个字符串变成数字
 
 :::tip
@@ -328,3 +367,24 @@ compositionupdate(e) {
 - ui 事件：`load、unload、scroll、resize`；
 - 鼠标移动事件：`mouseenter、mouseleave`;
 - 焦点事件：`blur、focus`
+
+## 10. 柯里化事件
+
+**柯里化事件，就是将一个函数拆分成多个函数，每个函数只负责一个功能，然后通过组合这些函数来完成一个功能。**
+```js
+  console.log(this.add(1)(2).valueOf()); // 3
+  console.log(this.add(1, 2, 3).valueOf()); // 6
+  console.log(this.add(1, 2)(3)(4, 5).valueOf()); // 15
+  console.log(this.add(1)(2)(3)(4, 5, 6)(7).valueOf()); // 28
+  add(...attr) {
+      let args = [...attr];
+      const fn = (...attr1) => {
+        args = [...args, ...attr1];
+        return fn;
+      };
+      fn.valueOf = () => {
+        return args.reduce((a, b) => a + b, 0);
+      };
+      return fn;
+  },
+```

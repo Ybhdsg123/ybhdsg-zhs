@@ -1,0 +1,49 @@
+{
+  "scripts": {
+    "dev:h5": "npm run dev:h5",
+    "dev:app": "npm run dev:app",
+    "dev:weixin": "npm run dev:mp-weixin"
+  },
+  "dependencies": {
+    "big.js": "^6.2.1",
+    "dayjs": "^1.11.9",
+    "file-saver": "^2.0.5",
+    "image-tools": "^1.4.0",
+    "js-cookie": "^3.0.5",
+    "mqtt": "^2.18.8"
+  },
+  "uni-app": {
+    "scripts": {
+      "nb_novotel": {
+        "title": "宁波逸东诺富特酒店",
+        "env": {
+          "UNI_PLATFORM": "mp-weixin",
+          "NAME": "nb_novotel"
+        },
+        "define": {
+          "MP-NB_NOVOTEL": true
+        }
+      },
+      "xsjr_novotel": {
+        "title": "新市古镇假日酒店",
+        "env": {
+          "UNI_PLATFORM": "mp-weixin",
+          "NAME": "xsjr_novotel"
+        },
+        "define": {
+          "MP-XSJR_NOVOTEL": true
+        }
+      },
+      "nj_novotel": {
+        "title": "南京机场诺富特酒店",
+        "env": {
+          "UNI_PLATFORM": "mp-weixin",
+          "NAME": "nj_novotel"
+        },
+        "define": {
+          "MP-NJ_NOVOTEL": true
+        }
+      }
+    }
+  }
+}

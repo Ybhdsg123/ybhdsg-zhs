@@ -1,0 +1,52 @@
+{
+  "hash": "ea7586f2",
+  "configHash": "0068145c",
+  "lockfileHash": "cc781415",
+  "browserHash": "b2fbb6d0",
+  "optimized": {
+    "vue": {
+      "src": "../../../../node_modules/.pnpm/vue@3.5.24/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "83852f69",
+      "needsInterop": false
+    },
+    "vitepress > @vue/devtools-api": {
+      "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.7.9/node_modules/@vue/devtools-api/dist/index.js",
+      "file": "vitepress___@vue_devtools-api.js",
+      "fileHash": "b5ccfeea",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../../node_modules/.pnpm/@vueuse+core@12.8.2/node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "32458a56",
+      "needsInterop": false
+    },
+    "chinese-random-name": {
+      "src": "../../../../node_modules/.pnpm/chinese-random-name@2.0.1/node_modules/chinese-random-name/random.js",
+      "file": "chinese-random-name.js",
+      "fileHash": "1e10c850",
+      "needsInterop": true
+    },
+    "chinese-name": {
+      "src": "../../../../node_modules/.pnpm/chinese-name@0.3.0/node_modules/chinese-name/index.js",
+      "file": "chinese-name.js",
+      "fileHash": "6c27a90e",
+      "needsInterop": true
+    },
+    "@faker-js/faker": {
+      "src": "../../../../node_modules/.pnpm/@faker-js+faker@10.1.0/node_modules/@faker-js/faker/dist/index.js",
+      "file": "@faker-js_faker.js",
+      "fileHash": "97101dbe",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-CJQXGUVK": {
+      "file": "chunk-CJQXGUVK.js"
+    },
+    "chunk-KVCYZR2Q": {
+      "file": "chunk-KVCYZR2Q.js"
+    }
+  }
+}

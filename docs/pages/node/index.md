@@ -8,9 +8,25 @@
 
 ## 🚀 [7 天学会 node.js](http://www.nodejs.com.cn/7-days-nodejs/#2.5.5)
 
+## 🚀 [node.js 入门教程](https://juejin.cn/book/7304230207953567755/section/7304643411662635044?scrollMenuIndex=1)
+
+## 🔥 nodejs链接
+
+[1. 全局对象](https://juejin.cn/book/7304230207953567755/section/7304642080868204555?scrollMenuIndex=1) 
+`JavaScript` 中存在一个特殊的全局对象，可以在任意位置被访问，通常用 `globalThis` 指代。在浏览器中，指向 `window` 这个全局对象，而 `Node.js` 中指向 `global，`
+
+[2. path路径处理](https://juejin.cn/book/7304230207953567755/section/7304643411662635044?scrollMenuIndex=1)
+
+[3. fs文件系统](https://juejin.cn/book/7304230207953567755/section/7304642414130987020?scrollMenuIndex=1)
+`fs (File system)` 是文件系统模块，用于操作文件和目录。支持同步 (sync) 或者异步 (async/callback) 调用，其中同步调用会阻塞主线程，异步调用不会阻塞。
+
+[4. util 模块](https://juejin.cn/book/7304230207953567755/section/7304643989746450468?scrollMenuIndex=1)util 模块是一个工具模块，提供了一些常用的辅助函数。
+
 ## 🔥 node 常用
 
 ### 1. `process`全局变量
+
+
 
 - `process`：一个全局变量，提供了有关当前 Node.js 进程的信息并对其进行控制
 - 由于 JavaScript 是一个单线程语言，所以通过 node xxx 启动一个文件后，只有一条主线程
@@ -197,6 +213,9 @@ var cat = require("/home/user/lib/cat/index");
   // 如果当前工作目录是 /home/myself/node，
   // 则返回 '/home/myself/node/wwwroot/static_files/gif/image.gif'
   ```
+- `path.sep`：返回当前系统文件路径使用的分隔符，如在 Windows 操作系统上，path.sep 的值为反斜杠 \，而在 Unix 操作系统上则为正斜杠 /。
+
+
 
 :::
 
@@ -431,3 +450,5 @@ d.on("error", function () {
 
 - 官方建议无论是通过`process`还是`domian`处理异常后都要重启程序，因为处理异常后的程序处于一种**不确定的运行状态**，可能导致**内存泄漏**或者**表现的很奇怪**
 - JS 本身的 throw..try..catch 异常处理机制并不会导致内存泄漏，也不会让程序的执行结果出乎意料，但 NodeJS 并不是存粹的 JS。NodeJS 里大量的 API 内部是用 C/C++实现的，因此 NodeJS 程序的运行过程中，代码执行路径穿梭于 JS 引擎内部和外部，而 JS 的异常抛出机制可能会打断正常的代码执行流程，导致 C/C++部分的代码表现异常，进而导致内存泄漏等问题
+
+

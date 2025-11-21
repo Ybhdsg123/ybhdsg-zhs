@@ -1,11 +1,54 @@
 # uniapp —— 组件相关
 
-<https://ext.dcloud.net.cn/plugin?id=7594#c8>
-
 <script setup>
  import HighlightText from './components/HighlightText/index.vue'
   import EllipsisText from './components/EllipsisText/index.vue'
 </script>
+
+
+## 小程序登录流程
+
+用户点击登录
+     ↓
+wx.login → code
+     ↓
+后台换 openid + session_key
+     ↓
+用户授权手机号 → encryptedData + iv
+     ↓
+后台解密 → accessToken + phondeNumber
+     ↓
+调用 getUserInfoByPhone → userInfo
+     ↓
+本地存储 openid + accessToken + userInfo
+
+:::tips
+encryptedData：加密后的用户数据（如手机号、用户信息）
+iv：加密算法的初始化向量，用于解密时配合 session_key 使用
+:::
+
+```vue
+
+```
+
+## 小程序支付相关
+
+用户点击支付
+     ↓
+前端调用 wx.login 获取 code
+     ↓
+后端用 code 获取 openid
+     ↓
+后端生成预支付订单（统一下单）
+     ↓
+返回支付参数给前端
+     ↓
+前端调用 wx.requestPayment 发起支付
+     ↓
+支付成功/失败回调
+     ↓
+后端验证支付结果（如签名、订单状态）
+
 
 ## 1. 滑块组件（单/双滑块）
 
@@ -117,3 +160,23 @@ const deleteImageHandler = (i) => {
 主要是使用传出的 `width` 再加上日历组件本来的样式，在外面重新画一遍日历组件形式，为了不再传入组件里面遍历多次而这样使用（应该有更好的办法，还没想到）
 
 ![效果](./imgs//calendar.png)
+
+## 8. 关注公众号相关
+
+### 8.1  组件地址：`./components/SubscriptionInfo/index.vue`
+
+### 8.2  组件使用
+
+组件很简单，主要的方法在 `globalFn.js` 中
+    
+
+## 9. 瀑布流展示组件（copy来的）
+
+### 9.1  组件地址：
+vue2: `./components/Waterfalls/CustomWaterfallsFlow.vue`
+
+vue3: `./components/Waterfalls/CustomWaterfallsFlow3.vue`
+
+### 9.2  组件使用
+
+[组件相关说明](https://ext.dcloud.net.cn/plugin?id=7594#c8)

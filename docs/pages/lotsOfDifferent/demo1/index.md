@@ -167,3 +167,83 @@ window.open('https://baidu.com', 'baidu', 'noopener,noreferrer')
 window.opener.location = 'http://fake.website.here';
 
 ```
+
+## 8. [version-rocket](https://github.com/guMcrey/version-rocket/blob/main/README.zh-CN.md#%E5%AE%89%E8%A3%85) 一个用于 web 应用版本检测和部署通知的工具库。
+
+::: tip
+
+1. 看官网操作步骤直接设置好就ok了，打包时后面加上 `set EXTERNAL=some text && generate-version-file`
+2. 本地测试的话，可以直接在 `public` 目录下放一个 `version.json` 文件，写上`version`，字段，然后和`package.json` 中的`version`比较，不同就会提示更新，
+    **注意：** 放到服务端时，本地文件最好删除`version.json` 文件，因为`generate-version-file`已经自动生成了，除非你有自定义的东西
+3. 主要代码，只加下方代码后，打包就可有版本更新
+```js
+/** 1. package.json */
+
+{
+  ...
+  "scripts": {
+    "dev": "vite",
+    // 1. set EXTERNAL=some text 设置提示信息 用于 onVersionUpdate 自定义 UI 时
+    // 2. generate-version-file 生成 version.json 文件，version 默认取 package.json 的 version 字段
+    "build": "vite build && set EXTERNAL=some text && generate-version-file",
+    "test": "vite build --mode test && set EXTERNAL=some text && generate-version-file",
+    "preview": "vite preview"
+  },
+  ....
+}
+
+/** 2. App.vue */
+// 版本更新  https://github.com/guMcrey/version-rocket?tab=readme-ov-file
+import { checkVersion } from "version-rocket";
+// 推荐使用 package.json 中的 version 字段, 也可自定义 version
+import { version, name } from "../package.json";
+
+onBeforeMount(() => {
+  // 在生命周期钩子中调用 checkVersion
+  const { VITE_NODE_ENV } = import.meta.env;
+  if (VITE_NODE_ENV === "production") {
+    checkVersion(
+      // config
+      {
+        // 5分钟检测一次版本
+        pollingTime: 300000,
+        localPackageVersion: version,
+        originVersionFileUrl: `${location.origin}/version.json`,
+        immediate: true,
+      },
+      // options
+      {
+        title: name,
+        description: "检测到新版本",
+        buttonText: "立即更新",
+      }
+    );
+  }
+});
+
+```
+:::
+
+## 9. 访问本地文件
+
+### 9.1 使用 本地地址 访问文件内容
+
+可以直接访问  `[本地地址][[文件名]` 来访问，比如`http://localhost:8080/version.json` 访问 version.json文件
+
+### 9.2 方法来访问 
+
+```js
+function fetchData(path) {
+  fetch(path)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data, "data");
+    })
+    .catch((error) => {
+      console.error("Error fetching JSON data:", error);
+    });
+}
+```
+
+## 10. html快速调试样式快捷键 `Shift + Command/ctrl + C`
+
