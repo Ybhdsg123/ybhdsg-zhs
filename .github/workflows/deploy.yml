@@ -23,11 +23,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: yarn
-      - run: yarn install --frozen-lockfile
+          cache: pnpm # 改为 pnpm 缓存
+      - uses: pnpm/action-setup@v2  # 添加 pnpm 安装
+        with:
+          version: 8  # 指定 pnpm 版本    
+      - run: pnpm install --frozen-lockfile # 改为 pnpm 命令
       # 打包
       - name: Build
-        run: yarn docs:build
+        run: pnpm docs:build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
