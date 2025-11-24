@@ -22,7 +22,7 @@ const sizes = mapSize[props.size];
 
 let dpr;
 onMounted(() => {
-  dpr = window.devicePixelRatio;
+  dpr = window ? window.devicePixelRatio : 1;
 });
 
 // 判断输入的值是否为内置别名

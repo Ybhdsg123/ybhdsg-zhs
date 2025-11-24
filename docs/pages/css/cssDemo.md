@@ -1,7 +1,7 @@
 <script setup>
   import LinearGradient from './components/LinearGradient.vue'
   import RadialGradient from './components/RadialGradient.vue'
-  import ConicGradient from './components/ConicGradient.vue'
+  // import ConicGradient from './components/ConicGradient.vue'
 </script>
 
 css 渐变函数用于创建一个表示两种或多种颜色线性渐变的图片。其结果属于`<gradient>`数据类型，**是一种特别的`<image>`数据类型。**
@@ -76,4 +76,4 @@ filter: drop-shadow(-7px 4px 3px #333);
 
 :::
 
-<ConicGradient/>
+<!-- <ConicGradient/> -->

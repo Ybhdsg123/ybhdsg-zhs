@@ -1,5 +1,5 @@
 #### 使用方法 
-```使用方法
+``` 
 <!-- 自定义生成海报组件  注意⚠️图片地址需要是小程序白名单设置的IP地址-->
 <!-- @success：成功事件  imgSrc：图片地址 QrSrc：二维码图片地址  Title：标题 PriceTxt：价格 OriginalTxt：原始价格 LineType -->
 <cc-poster @success="posterSuccess" :imgSrc="goods.itempic" :QrSrc="erweimapath" :Title="goods.itemtitle" :PriceTxt="goods.itemendprice" :OriginalTxt="goods.itemprice":LineType="false"></cc-poster>					

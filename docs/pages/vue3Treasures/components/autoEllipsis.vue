@@ -114,7 +114,7 @@ const getTextWidth = (text, optionsFontStyle) => {
   // 创建一个canva元素
   const canvasDom = document.createElement("canvas");
   const ctx = canvasDom.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = window? window.devicePixelRatio : 1;
   const fs = dpr * fontSize || dpr * 10;
   const fontStyle = optionsFontStyle.fontStyle || "sans-serif";
   ctx.font = `${fs}px ${fontStyle}`; // 设置字体样式 默认字体大小是10px

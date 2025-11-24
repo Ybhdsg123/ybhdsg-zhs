@@ -3,8 +3,10 @@
     ? (module.exports = r())
     : "function" == typeof define && define.amd
     ? define(r)
-    : ((t || self).ColorThief = r());
-})(this, function () {
+    : ((
+        t || (typeof globalThis !== "undefined" ? globalThis : this)
+      ).ColorThief = r());
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
   if (!t)
     var t = {
       map: function (t, r) {

@@ -33,13 +33,14 @@ const contentText =
 // 判断是否支持 @property
 const isCssPropertySupported = isCssPropertySupportedHandler();
 function isCssPropertySupportedHandler() {
-  if (typeof window.CSS.registerProperty !== "undefined") {
-    console.log("浏览器支持 @property 规则");
-    return true;
-  } else {
-    console.log("浏览器不支持 @property 规则");
-    return false;
-  }
+  // if (typeof window.CSS.registerProperty !== "undefined") {
+  //   console.log("浏览器支持 @property 规则");
+  //   return true;
+  // } else {
+  //   console.log("浏览器不支持 @property 规则");
+  //   return false;
+  // }
+  return true
 }
 
 // js实现
