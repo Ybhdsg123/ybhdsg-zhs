@@ -20,13 +20,14 @@ jobs:
       #     APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
       #     API_KEY: ${{ secrets.API_KEY }}
       #     CONFIG: ${{ steps.algolia_config.outputs.config }}
+      - uses: pnpm/action-setup@v2  # 添加 pnpm 安装
+        with:
+          version: 8  # 指定 pnpm 版本    
+          
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: pnpm # 改为 pnpm 缓存
-      - uses: pnpm/action-setup@v2  # 添加 pnpm 安装
-        with:
-          version: 8  # 指定 pnpm 版本    
       - run: pnpm install --frozen-lockfile # 改为 pnpm 命令
       # 打包
       - name: Build
