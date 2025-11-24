@@ -9,29 +9,55 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # 完整检出
       
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # 升级到 Node.js 18+
+          cache: 'pnpm'
+          
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 8
-          
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'pnpm'
           
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       
+      # 关键修复：添加 crypto polyfill
+      - name: Setup environment variables
+        run: |
+          echo "NODE_OPTIONS=--no-warnings" >> $GITHUB_ENV
+          echo "VITE_CJS_IGNORE_WARNING=true" >> $GITHUB_ENV
+      
+      # 关键修复：在构建前注入 crypto polyfill
+      - name: Inject crypto polyfill
+        run: |
+          mkdir -p docs/.vitepress
+          cat > docs/.vitepress/config.js << EOF
+          import { defineConfig } from 'vitepress'
+          
+          // Crypto polyfill for Node.js environment
+          if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
+            const { webcrypto } = require('crypto')
+            global.crypto = webcrypto
+          }
+          
+          export default defineConfig({
+            // 保留你的原有配置
+          })
+          EOF
+      
       - name: Build
         run: pnpm docs:build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096 --openssl-legacy-provider
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/.vitepress/dist
+          publish_dir: ./docs/.vitepress/dist
