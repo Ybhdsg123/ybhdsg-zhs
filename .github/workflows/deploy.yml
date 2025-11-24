@@ -13,52 +13,39 @@ jobs:
         with:
           fetch-depth: 0
       
-      # 1. 先设置 Node.js (不启用 pnpm 缓存，因为 pnpm 还没安装)
+      # 1. 设置 Node.js (不启用缓存)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          # 暂时不启用 pnpm 缓存，避免找不到 pnpm 的错误
-          cache: 'npm'
+          # 不要在这里设置 pnpm 缓存！
       
-      # 2. 然后设置 pnpm
+      # 2. 设置 pnpm
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 8
-          # 启用 pnpm 缓存
-          run_install: false  # 不要在这里安装依赖，我们稍后统一安装
+          # 这里设置缓存
+          run_install: false
       
-      # 3. 现在可以安全地使用 pnpm 缓存了
+      # 3. 手动缓存 pnpm 依赖 (关键修复)
       - name: Cache pnpm dependencies
         uses: actions/cache@v4
+        id: pnpm-cache
         with:
           path: |
             ~/.pnpm-store
-            node_modules
-            */*/node_modules
+            **/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
       
-      # 4. 安装依赖
+      # 4. 安装依赖 (只有在缓存未命中时才需要安装)
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+        if: steps.pnpm-cache.outputs.cache-hit != 'true'
       
-      # 5. 注入 crypto polyfill (修复之前的 crypto 错误)
-      - name: Inject crypto polyfill
-        run: |
-          mkdir -p docs/.vitepress
-          echo "// Crypto polyfill for Node.js environment
-          if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
-            const { webcrypto } = require('crypto');
-            globalThis.crypto = webcrypto;
-          }
-          
-          export default {}" > docs/.vitepress/polyfill.js
-        shell: bash
-      
-      # 6. 构建
+      # 5. 构建 (带 crypto 修复)
       - name: Build
         run: |
           # 设置环境变量解决 crypto 问题
@@ -67,7 +54,7 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
       
-      # 7. 部署
+      # 6. 部署
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
