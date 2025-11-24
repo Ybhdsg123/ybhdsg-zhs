@@ -11,19 +11,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # 确保获取完整历史，包括 lockfile
+          fetch-depth: 0  # 完整检出
       
-      - uses: pnpm/action-setup@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
           version: 8
           
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: 'pnpm'
           
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile  # 修改这里
+        run: pnpm install --no-frozen-lockfile
       
       - name: Build
         run: pnpm docs:build
