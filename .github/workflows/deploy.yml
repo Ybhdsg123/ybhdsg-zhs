@@ -2,34 +2,29 @@ name: Deploy
 
 on:
   push:
-    # push 代码的时候 哪个分支会受到影响 这里 master 分支
     branches:
       - master
-# 推送之后执行一系列的任务
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - name: Get the content of algolia.json as config
-      #   id: algolia_config
-      #   run: echo "config=$(cat crawlerConfig.json | jq -r tostring)" >> $GITHUB_OUTPUT
-      # - name: Push indices to Algolia
-      #   uses: signcl/docsearch-scraper-action@master
-      #   env:
-      #     APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
-      #     API_KEY: ${{ secrets.API_KEY }}
-      #     CONFIG: ${{ steps.algolia_config.outputs.config }}
-      - uses: pnpm/action-setup@v2  # 添加 pnpm 安装
         with:
-          version: 8  # 指定 pnpm 版本    
+          fetch-depth: 0  # 确保获取完整历史，包括 lockfile
+      
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
           
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: pnpm # 改为 pnpm 缓存
-      - run: pnpm install --frozen-lockfile # 改为 pnpm 命令
-      # 打包
+          cache: 'pnpm'
+          
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile  # 修改这里
+      
       - name: Build
         run: pnpm docs:build
 
