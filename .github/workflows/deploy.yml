@@ -11,51 +11,63 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 完整检出
+          fetch-depth: 0
       
+      # 1. 先设置 Node.js (不启用 pnpm 缓存，因为 pnpm 还没安装)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # 升级到 Node.js 18+
-          cache: 'pnpm'
-          
+          node-version: 18
+          # 暂时不启用 pnpm 缓存，避免找不到 pnpm 的错误
+          cache: 'npm'
+      
+      # 2. 然后设置 pnpm
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 8
-          
+          # 启用 pnpm 缓存
+          run_install: false  # 不要在这里安装依赖，我们稍后统一安装
+      
+      # 3. 现在可以安全地使用 pnpm 缓存了
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pnpm-store
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+      
+      # 4. 安装依赖
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       
-      # 关键修复：添加 crypto polyfill
-      - name: Setup environment variables
-        run: |
-          echo "NODE_OPTIONS=--no-warnings" >> $GITHUB_ENV
-          echo "VITE_CJS_IGNORE_WARNING=true" >> $GITHUB_ENV
-      
-      # 关键修复：在构建前注入 crypto polyfill
+      # 5. 注入 crypto polyfill (修复之前的 crypto 错误)
       - name: Inject crypto polyfill
         run: |
           mkdir -p docs/.vitepress
-          cat > docs/.vitepress/config.js << EOF
-          import { defineConfig } from 'vitepress'
-          
-          // Crypto polyfill for Node.js environment
+          echo "// Crypto polyfill for Node.js environment
           if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
-            const { webcrypto } = require('crypto')
-            global.crypto = webcrypto
+            const { webcrypto } = require('crypto');
+            globalThis.crypto = webcrypto;
           }
           
-          export default defineConfig({
-            // 保留你的原有配置
-          })
-          EOF
+          export default {}" > docs/.vitepress/polyfill.js
+        shell: bash
       
+      # 6. 构建
       - name: Build
-        run: pnpm docs:build
+        run: |
+          # 设置环境变量解决 crypto 问题
+          export NODE_OPTIONS=--openssl-legacy-provider
+          pnpm docs:build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096 --openssl-legacy-provider
-
+          NODE_OPTIONS: --max-old-space-size=4096
+      
+      # 7. 部署
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
