@@ -1,17 +1,29 @@
 <template>
   <div class="wechat-moments-generator">
     <h1 class="title">公众号模版-朋友圈格式生成器</h1>
+    <div class="flex-base">
+      <div v-for="item in avatarLinks" :key="item.name">
+        {{ item.name }} <button class="btn" @click=" copyText(item.url)">复制</button>
+      </div>
+    </div>
     <!-- 动态输入区域 -->
     <div class="input-section">
       <div class="input-group">
         <label>头像预览:</label>
-        <img :src="newMoment.avatar" alt="头像预览" class="preview-img" />
+        <div class="flex-base">
+          <img :src="newMoment.avatar" alt="头像预览" class="preview-img" />
+          <button class="btn" @click="newMoment.avatar = generateRandomImages() ">更新头像</button>
+        </div>
         <label>头像链接:</label>
         <input v-model="newMoment.avatar" placeholder="输入头像链接（如：https://example.com/avatar.jpg）" />
       </div>
 
       <div class="input-group">
-        <label>昵称:</label>
+        <div class="flex-base">
+          <label>昵称:</label>
+          <button class="btn" @click="newMoment.nickname = generateChineseNickname()">更新昵称</button>
+        </div>
+
         <input v-model="newMoment.nickname" placeholder="输入昵称" />
       </div>
 
@@ -64,6 +76,20 @@
 import { ref, computed } from 'vue'
 import { showMessage, copyText, generateRandomImages, generateChineseNickname } from '../tools'
 
+// 头像链接数据
+const avatarLinks = [
+  { name: '头像1', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8gulyF5lfGZRGxHCtth0RRMXc7hylVJkrkrzKsr1SajvHlkoshO8hmb2mZ4uiarEaxOfr0tRO6rMw09w/0?wx_fmt=jpeg' },
+  { name: '头像2', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8gulyF5lfGZRGxHCtth0RRMXcg6cGO5coH6iaCz2dC5tRKPLhm9LxpNxqeoB1iboqfEUSjBReC4c7xt4A/0?wx_fmt=jpeg' },
+  { name: '头像3', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8gulyF5lfGZRGxHCtth0RRMXc6lIlaib6HAhyhpjjsFCFIJWN9oQOyia3ibsgd7yLibL1dbPIq80mc9dnhQ/0?wx_fmt=jpeg' },
+  { name: '头像4', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8gulyF5lfGZRGxHCtth0RRMXcmSW00dUY53tgf8icWTvHyQHr2Q1micbLux095fLrBgftdmDgSibzQJV3A/0?wx_fmt=jpeg' },
+  { name: '头像5', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8guk6FpciaGGYLnxu5eicRAYxveyiazPxicpkAywbdb4pdfQt2cUyH31iaicSVlqoOvKD9qDzQI64Oq6YAc1A/0?wx_fmt=jpeg' },
+  { name: '头像6', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8guk6FpciaGGYLnxu5eicRAYxveCA6ZgGTrZKCzt2tac5bGSbD4Ltr5yclX7FXEBvPeQvYpZl2AicgKE7Q/0?wx_fmt=jpeg' },
+  { name: '头像7', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8guk6FpciaGGYLnxu5eicRAYxveGIQTtSlUmEx1pfr1H5z2pgUNicPdtqNOoIouyRTax4r82ha9VgBviczw/0?wx_fmt=jpeg' },
+  { name: '头像8', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8guk6FpciaGGYLnxu5eicRAYxveKsZAOibbRJVumXd3uMm6jKTVvqZk1cZOAA2CHPyjerT2f40EzfiaqhOg/0?wx_fmt=jpeg' },
+  { name: '头像9', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8guk6FpciaGGYLnxu5eicRAYxveKsZAOibbRJVumXd3uMm6jKTVvqZk1cZOAA2CHPyjerT2f40EzfiaqhOg/0?wx_fmt=jpeg' },
+  { name: '头像10', url: 'https://mmbiz.qpic.cn/mmbiz_jpg/vbAy22U8guk6FpciaGGYLnxu5eicRAYxveUWdESvEGtgImmb0Q1SmWxM8AtgMAXkq59QsFAQ1ELRRbAMicaByudsw/0?wx_fmt=jpeg' },
+]
+
 // 动态数据
 const moments = ref([
   // {
@@ -95,19 +121,19 @@ const generatedHTML = computed(() => {
     const { avatar, nickname, time, content, images, likes, comments } = moment;
 
     html += `
-<div class="moment" style="padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0;">
-  <div class="moment-header" style="display: flex; align-items: flex-start; margin-bottom: 10px;">
-    <div class="avatar" style="min-width: 40px; min-height: 40px; width: 40px; height: 40px; border-radius: 4px; margin-right: 10px; overflow: hidden;">
+<div  style="padding: 15px; background: #fff;">
+  <div  style="display: flex; align-items: flex-start; margin-bottom: 10px;">
+    <div style="min-width: 40px; min-height: 40px; width: 40px; height: 40px; border-radius: 4px; margin-right: 10px; overflow: hidden;">
       <img src="${avatar}" alt="头像" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
-    <div class="user-info" style="flex: 1;">
-      <div class="username" style="font-weight: 500; font-size: 16px; margin-bottom: 2px; color: #61739B;">${nickname}</div>
-      <div class="moment-content" style="margin-bottom: 10px; font-size: 16px; line-height: 1.5;">${content}</div>
+    <div style="flex: 1;">
+      <div  style="font-weight: 500; font-size: 16px; margin-bottom: 2px; color: #61739B;">${nickname}</div>
+      <div style="margin-bottom: 10px; font-size: 16px; line-height: 1.5;">${content}</div>
       ${images ? `
-        <div class="moment-images" style="margin-bottom: 10px;">
-          <div class="image-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
+        <div style="margin-bottom: 10px;">
+          <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 5px;">
             ${images.split(',').map(img => `
-              <div class="image-item" style="aspect-ratio: 1; background-color: #f0f0f0; border-radius: 4px; overflow: hidden;">
+              <div style="aspect-ratio: 1; background-color: #f0f0f0; border-radius: 4px; overflow: hidden;">
                 <img src="${img.trim()}" alt="图片" style="width: 100%; height: 100%; object-fit: cover;">
               </div>
             `).join('')}
@@ -117,30 +143,33 @@ const generatedHTML = computed(() => {
     </div>
   </div>
 
-  <div class="moment-actions" style="display: flex; justify-content: space-between; color: #999; font-size: 14px; padding-top: 8px;">
-    <div class="action-item" style="display: flex; align-items: center;">${time||'13分钟前'}</div>
-    <div class="action-btn" style="display: flex; justify-content: center; align-items: center; width: 40px; height: 16px; border-radius: 2px; background-color: #f0f0f0;">
-      <span class="circle" style="width: 4px; height: 4px; background-color: #61739B; border-radius: 50%; margin: 0 4px;"></span>
-      <span class="circle" style="width: 4px; height: 4px; background-color: #61739B; border-radius: 50%; margin: 0 4px;"></span>
+  <div style="display: flex; justify-content: space-between; color: #999; font-size: 14px; padding-top: 8px;">
+    <div style="display: flex; align-items: center;">${time||'13分钟前'}</div>
+    <div style="display: flex; justify-content: center; align-items: center; width: 40px; height: 16px; border-radius: 2px; background-color: #f0f0f0;">
+      <span style="width: 4px; height: 4px; background-color: #61739B; border-radius: 50%; margin: 0 4px;"></span>
+      <span  style="width: 4px; height: 4px; background-color: #61739B; border-radius: 50%; margin: 0 4px;"></span>
     </div>
   </div>
 
   ${likes || comments ? `
-  <div class="likes-comments" style="background-color: #f7f7f7; border-radius: 4px; padding: 8px; margin-top: 8px; font-size: 14px;">
+  <div style="background-color: #f7f7f7; border-radius: 4px; padding: 8px; margin-top: 8px; font-size: 14px;">
     ${likes ? `
-      <div class="likes" style="display: flex; align-items: center; color: #61739B; margin-bottom: 5px;">
+      <div style="display: flex; align-items: center; color: #61739B; margin-bottom: 5px;">
         &#9825; ${likes.split(',').join(', ')}
       </div>
     ` : ''}
     
     ${comments ? `
-      <div class="comments" style="border-top: 1px solid #e0e0e0; padding-top: 10px; font-size: 13px;">
+      <div style="padding-top: 10px; font-size: 13px;">
         ${comments.split(';').map(comment => {
-      const [name, text] = comment.split(':');
+          // 1. 用正则匹配中英文冒号（：|:）
+          // 2. 对分割后的内容去前后空格（trim）
+          // 3. 处理text为空的情况（避免undefined）
+          const [name, text] = comment.split(/：|:/).map(item => item?.trim() || '');
       return `
-          <div class="comment-item" style="margin-bottom: 4px;">
-            <span class="comment-author" style="color: #576b95;">${name}：</span>
-            <span class="comment-text" style="color: #666;">${text}</span>
+          <div style="margin-bottom: 4px;">
+            <span style="color: #576b95;">${name}：</span>
+            <span style="color: #666;">${text}</span>
           </div>
           `;
     }).join('')}
@@ -176,15 +205,27 @@ function addMoment() {
 
 // 复制代码到剪贴板
 function copyToClipboard() {
-  const result = generatedHTML.value += `<section style="text-align: center; padding:8px 16px;line-height:1.6">
-  <span leaf="">感谢您的赞赞和关注❤️ </span>
+  const result = generatedHTML.value += `<section style="font-size:14px;text-align: center; padding:8px 16px;line-height:1.3">
+  <span>感谢您的赞赞和关注❤️ </span>
   <br>
-  <span leaf="">愿钱和爱都奔你而来🌹 </span>
+  <span style="color:#ff6827;line-height:1.6">愿钱和爱都奔你而来🌹 </span>
   <br>
-  <section leaf="">喜欢就关注 <span
-      style="font-weight:700;font-size:18px;line-height:1.6;color:#f40;position:relative;">  翻个页先 </span> 👇👇👇</section>
+  <section>喜欢就关注 <span
+      style="font-weight:700;font-size:16px;line-height:1.3;color:#07c160">  翻个页先 </span> 👇👇👇</section>
   <br>
-</section>`;
+</section>
+<section class="mp_profile_iframe_wrp" nodeleaf="">
+  <mp-common-profile class="js_uneditable custom_select_card mp_profile_iframe" data-pluginname="mpprofile" data-nickname="翻个页先" data-from="0" data-headimg="http://mmbiz.qpic.cn/mmbiz_png/vbAy22U8gunPtwvgZTxaydq6S2rL8icRG2eAwATlRt7rWAHadyqH8MhVIN5OW2hhW64PyfibhicTuJicCGqKRzWcYw/0?wx_fmt=png" data-signature="▸ 在这里，每一页都是新风景 ▸ 专治「书荒」「读不完」「不知道读啥」三大顽疾 ▸ 每周不定期更新：快闪书单｜脑洞书评｜冷门好书彩蛋 ▸ 支持许愿：后台扔书名，给你不一样的惊喜" data-id="MzkzOTQxOTMwMQ==" data-is_biz_ban="0" data-service_type="1" data-verify_status="0">
+  </mp-common-profile>
+</section>
+<section style="font-size:14px;text-align: center;padding:8px 16px;line-height:1.3;">
+  <span leaf=""><br></span>
+</section>
+<p style="display: none;">
+  <mp-style-type data-value="3">
+  </mp-style-type>
+</p>
+`;
   copyText(result)
   showMessage('代码已复制到剪贴板！');
 }
@@ -198,6 +239,20 @@ function selectCode() {
 </script>
 
 <style scoped>
+.flex-base {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+}
+  .btn{
+    padding: 2px 4px;
+    background-color: #06a050;
+    color: #fff;
+    border-radius: 4px;
+    margin: 3px;
+    font-size: 12px;
+  }
 .wechat-moments-generator {
   margin-top: 20px;
   padding: 20px;
@@ -316,10 +371,13 @@ function selectCode() {
 }
 
 .code-section {
+  position: fixed;
+  right: 100px;
+  top: 230px;
   background: white;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 10000;
 }
 
 .code-output {
