@@ -88,7 +88,9 @@
     <!-- 输出区 -->
     <section style="position: fixed;
   right: 100px;
-  top: 230px;">
+  top: 230px;
+  z-index: 10000;
+  ">
       <h3 style="margin-bottom: 12px;">公众号 HTML 源码（复制到源代码模式）：</h3>
       <textarea :value="outputHtml" readonly rows="12"
         style="width: 100%; padding: 12px; font-family: monospace; font-size: 14px; background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;"></textarea>
@@ -134,8 +136,8 @@ const outputHtml = computed(() => {
 
       return `<div>
   <section style="position: relative;display: flex;justify-content: center;align-items: center;height: 66px;">
-    <section style="position: absolute;left: 46%;top: 50%; border: 1px solid rgb(167, 167, 167); display: inline-block; margin-top: 8px; margin-bottom: 8px; transform: rotate(45deg) translate(-50%,-50%); box-sizing: border-box;">
-      <section style="transform: rotate(-45deg); padding: 4px; box-sizing: border-box;">
+    <section style=" display: inline-block; margin-top: 8px; margin-bottom: 8px; transform: rotate(45deg) translate(-50%,-50%); box-sizing: border-box;">
+      <section style="padding: 4px; box-sizing: border-box;">
         <section style="text-align: center; width: 1.6em; height: 1.6em; line-height: 1.6em; font-size: 19px; border-radius: 50%; color: rgb(255, 255, 255); background-color: rgb(255, 129, 36); box-sizing: border-box;">
         ${num}
         </section>
